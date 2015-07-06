@@ -1,0 +1,22 @@
+name: AnimalEssentials
+main: tk.justramon.animalessentials.core.AnimalEssentials
+version: 0.1
+author: [JustRamon, bl4ckscor3]
+description: Several animal essentials such as renaming/teleporting and many others!
+commands:
+    animalessentials:
+        description: Main command.
+        usage: /<command>
+        aliases: [ae, animaless, aess]
+        
+permissions:
+    aess.*:
+        description: Gives acces to all commands of AnimalEssentials.
+        children:
+          aess.reload: true
+          aess.help: true
+        default: op
+    aess.reload:
+        description: Reloads the configuration.
+    aess.help:
+        description: Shows the help menu and help for commands.
