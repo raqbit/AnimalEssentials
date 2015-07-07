@@ -61,12 +61,6 @@ public class AECommands implements CommandExecutor
 				}
 			}
 		}
-		
-		if(p != null) //if the sender is not a player...
-			Utilities.sendConsoleMessage(ChatColor.DARK_RED + "[SEVERE] " + ChatColor.RESET + "The executed command could not be found."); //...send this message to the console...
-		if(p != null) //...but if it is...
-			Utilities.sendChatMessage(p, ChatColor.DARK_RED + "[SEVERE] " + ChatColor.RESET + "The executed command could not be found."); //...send that same message to the player
-		
-		return true; //finally return true so we don't get the command echo
+		return false;
 	}
 }
