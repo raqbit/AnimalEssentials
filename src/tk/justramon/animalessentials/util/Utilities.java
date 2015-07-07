@@ -17,7 +17,7 @@ public class Utilities
 	 */
 	public static void sendConsoleMessage(String msg)
 	{
-		Bukkit.getConsoleSender().sendMessage("[" + ChatColor.GREEN + pl.getDescription().getName() + ChatColor.RESET + " ] " + msg);
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + ChatColor.DARK_GREEN + pl.getDescription().getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
 	}
 	
 	/**
@@ -27,6 +27,6 @@ public class Utilities
 	 */
 	public static void sendChatMessage(Player p, String msg)
 	{
-		p.sendMessage("[" + ChatColor.GREEN + pl.getDescription().getName() + ChatColor.RESET + " ] " + msg);
+		p.sendMessage(ChatColor.GOLD + "[" + ChatColor.DARK_GREEN + pl.getDescription().getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
 	}
 }

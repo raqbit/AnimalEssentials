@@ -7,9 +7,9 @@ import tk.justramon.animalessentials.util.Utilities;
 public class Config
 {
 	/**
-	 * Sets up the config when the server is started, and when /ae reload is called
+	 * Sets up the config when the server is started
 	 */
-	public static void handle(Plugin pl)
+	public static void createConfig(Plugin pl)
 	{
 		pl.reloadConfig();
 		/* add
@@ -18,6 +18,6 @@ public class Config
 		 */
 		pl.getConfig().options().copyDefaults(true);
 		pl.saveConfig();
-		Utilities.sendConsoleMessage("Config successfully created/reloaded!");
+		Utilities.sendConsoleMessage("Config successfully created/enabled!");
 	}
 }

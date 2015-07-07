@@ -10,8 +10,10 @@ public interface IAECommand
 	 * Executes the command.
 	 * @param pl The plugin the command is from
 	 * @param p The player who issued the command
+	 * @param cmd The command issued
+	 * @param args The arguments of the command
 	 */
-	public void exe(Plugin pl, Player p, Command cmd);
+	public void exe(Plugin pl, Player p, Command cmd, String[] args);
 	
 	/**
 	 * Determines what the command gets triggered from.

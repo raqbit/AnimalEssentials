@@ -4,14 +4,16 @@ import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import tk.justramon.animalessentials.core.Config;
+import tk.justramon.animalessentials.util.Utilities;
 
 public class Reload implements IAECommand
 {
 	@Override
-	public void exe(Plugin pl, Player p, Command cmd)
+	public void exe(Plugin pl, Player p, Command cmd, String[] args)
 	{
-		Config.handle(pl);
+		pl.reloadConfig();
+		pl.saveConfig();
+		Utilities.sendChatMessage(p, "Config successfully reloaded!");
 	}
 
 	@Override
@@ -31,7 +33,6 @@ public class Reload implements IAECommand
 	{
 		return new String[]{
 				"Reloads the config.",
-				"Required permission: " + getPermission()
 		};
 	}
 

@@ -14,7 +14,8 @@ public class AnimalEssentials extends JavaPlugin
 	{
 		instance = this; //setting the instance so we can use it in any other class without needing to pass the variable through countless methods
 		Utilities.sendConsoleMessage("AnimalEssentials successfully enabled."); //sending this message to the console
-		Config.handle(this); //setting up the config
+		getCommand("animalessentials").setExecutor(new AECommands());
+		Config.createConfig(this); //setting up the config
 	}
 	
 	@Override
