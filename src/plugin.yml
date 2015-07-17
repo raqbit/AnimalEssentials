@@ -15,8 +15,25 @@ permissions:
         children:
           aess.reload: true
           aess.help: true
+          aess.home.set: true
+          aess.home.edit: true
+          aess.home.delete: true
+          aess.home.list: true
         default: op
+    aess.home.*
+        description: Gives access to all home commands.
+        children:
+          aess.home.set: true
+          aess.home.edit: true
+          aess.home.delete: true
+          aess.home.list: true
     aess.reload:
         description: Reloads the configuration.
     aess.help:
         description: Shows the help menu and help for commands.
+    aess.home.set:
+        description: Sets the home in the current world with the current coordinates.
+    aess.home.delete:
+        description: Deletes a set home.
+    aess.home.list
+        description: Lists all available homes.

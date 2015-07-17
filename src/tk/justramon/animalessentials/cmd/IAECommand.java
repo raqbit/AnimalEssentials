@@ -1,5 +1,7 @@
 package tk.justramon.animalessentials.cmd;
 
+import java.io.IOException;
+
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -12,8 +14,9 @@ public interface IAECommand
 	 * @param p The player who issued the command
 	 * @param cmd The command issued
 	 * @param args The arguments of the command
+	 * @throws IOException 
 	 */
-	public void exe(Plugin pl, Player p, Command cmd, String[] args);
+	public void exe(Plugin pl, Player p, Command cmd, String[] args) throws IOException;
 	
 	/**
 	 * Determines what the command gets triggered from.

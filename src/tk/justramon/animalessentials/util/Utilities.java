@@ -27,6 +27,7 @@ public class Utilities
 	 */
 	public static void sendChatMessage(Player p, String msg)
 	{
+		msg = msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
 		p.sendMessage(ChatColor.GOLD + "[" + ChatColor.DARK_GREEN + pl.getDescription().getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
 	}
 }
