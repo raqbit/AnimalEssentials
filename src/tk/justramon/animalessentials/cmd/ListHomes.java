@@ -18,7 +18,7 @@ public class ListHomes implements IAECommand
 	{	
 		File f = new File(pl.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
 		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
-		List<String> homes = yaml.getStringList("dests");
+		List<String> homes = yaml.getStringList("homes");
 		String msg = "";
 
 		for(String s : homes)
