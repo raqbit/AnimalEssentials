@@ -2,12 +2,11 @@ package tk.justramon.animalessentials.cmd;
 
 import java.util.List;
 
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import net.md_5.bungee.api.ChatColor;
 import tk.justramon.animalessentials.util.Utilities;
 
 public class Help implements IAECommand
@@ -83,5 +82,6 @@ public class Help implements IAECommand
 		}
 		
 		Utilities.sendChatMessage(p, "Required permission: " + permission);
+		Utilities.sendChatMessage(p, ChatColor.RED + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	}
 }

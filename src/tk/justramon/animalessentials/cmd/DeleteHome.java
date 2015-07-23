@@ -28,17 +28,17 @@ public class DeleteHome implements IAECommand
 
 		List<String> homes = yaml.getStringList("homes");
 
-		if(!homes.contains(args[2]))
+		if(!homes.contains(args[1]))
 		{
-			Utilities.sendChatMessage(p, "/()" + args[2] + "()/ does not exist.");
-			return;        
+			Utilities.sendChatMessage(p, "/()" + args[1] + "()/ does not exist.");
+			return;
 		}
 
-		homes.remove(args[2]);
+		homes.remove(args[1]);
 		yaml.set("homes" , homes); //deleting the destination from the destination list
-		yaml.set(args[2], null); //deleting the destination from the file
+		yaml.set(args[1], null); //deleting the destination from the file
 		yaml.save(f); //saving the file after editing it
-		Utilities.sendChatMessage(p, "Home /()" + args[2] + "()/ has been deleted.");
+		Utilities.sendChatMessage(p, "Home /()" + args[1] + "()/ has been deleted.");
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class DeleteHome implements IAECommand
 	{
 		return false;
 	}
-
+	
 	@Override
 	public String[] getHelp()
 	{

@@ -20,7 +20,7 @@ permissions:
           aess.home.delete: true
           aess.home.list: true
         default: op
-    aess.home.*
+    aess.home.*:
         description: Gives access to all home commands.
         children:
           aess.home.set: true
@@ -35,5 +35,5 @@ permissions:
         description: Sets the home in the current world with the current coordinates.
     aess.home.delete:
         description: Deletes a set home.
-    aess.home.list
+    aess.home.list:
         description: Lists all available homes.

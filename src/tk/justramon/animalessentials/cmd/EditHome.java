@@ -28,18 +28,18 @@ public class EditHome implements IAECommand
 
 		List<String> homes = yaml.getStringList("homes");
 
-		if(!homes.contains(args[2]))
+		if(!homes.contains(args[1]))
 		{
-			Utilities.sendChatMessage(p, "/()" + args[2] + "()/ does not exist.");
+			Utilities.sendChatMessage(p, "/()" + args[1] + "()/ does not exist.");
 			return;        
 		}
 
-		yaml.set(args[2] + ".world", p.getWorld().getName());
-		yaml.set(args[2] + ".x", p.getLocation().getX());
-		yaml.set(args[2] + ".y", p.getLocation().getY());
-		yaml.set(args[2] + ".z", p.getLocation().getZ());
+		yaml.set(args[1] + ".world", p.getWorld().getName());
+		yaml.set(args[1] + ".x", p.getLocation().getX());
+		yaml.set(args[1] + ".y", p.getLocation().getY());
+		yaml.set(args[1] + ".z", p.getLocation().getZ());
 		yaml.save(f); //saving the file after editing it
-		Utilities.sendChatMessage(p, "Home /()" + args[2] + "()/ has been edited in world /()" + yaml.getString(args[2] + ".world") + "()/ at these coordinates: /()X:" + yaml.getInt(args[2] + ".x") + " Y:" + yaml.getInt(args[2] + ".y" + " Z:" + yaml.getInt(args[2] + ".z")));
+		Utilities.sendChatMessage(p, "Home /()" + args[1] + "()/ has been edited in world /()" + yaml.getString(args[1] + ".world") + "()/ at these coordinates: /()X:" + yaml.getInt(args[1] + ".x") + " Y:" + yaml.getInt(args[1] + ".y") + " Z:" + yaml.getInt(args[1] + ".z"));
 	}
 
 	@Override
