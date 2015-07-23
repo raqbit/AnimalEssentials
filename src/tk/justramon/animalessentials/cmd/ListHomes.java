@@ -32,7 +32,6 @@ public class ListHomes implements IAECommand
 			Utilities.sendChatMessage(p, "/()" + msg.substring(0, msg.lastIndexOf(','))); //removing the comma at the end
 		else
 			Utilities.sendChatMessage(p, "None. Use /()/ae sethome()/ to set a home.");
-
 	}
 
 	@Override
