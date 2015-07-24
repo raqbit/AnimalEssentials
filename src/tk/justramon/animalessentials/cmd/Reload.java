@@ -1,5 +1,8 @@
 package tk.justramon.animalessentials.cmd;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -40,5 +43,11 @@ public class Reload implements IAECommand
 	public String getPermission()
 	{
 		return "aess.reload";
+	}
+	
+	@Override
+	public List<Integer> allowedArgLengths()
+	{
+		return Arrays.asList(new Integer[]{1}); // /ae reload
 	}
 }

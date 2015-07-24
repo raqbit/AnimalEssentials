@@ -2,6 +2,7 @@ package tk.justramon.animalessentials.cmd;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -18,14 +19,14 @@ public class SetHome implements IAECommand
 	{
 		File folder = new File(pl.getDataFolder(), "playerStorage");
 		File f = new File(pl.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
-		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
-
+		
 		if(!folder.exists())
 			folder.mkdirs();
 
 		if(!f.exists())
 			f.createNewFile();
-
+		
+		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
 		List<String> homes = yaml.getStringList("homes");
 
 		if(homes.contains(args[1]))
@@ -68,5 +69,11 @@ public class SetHome implements IAECommand
 	public String getPermission()
 	{
 		return "aess.home.set";
+	}
+	
+	@Override
+	public List<Integer> allowedArgLengths()
+	{
+		return Arrays.asList(new Integer[]{2}); // /ae sethome test 
 	}
 }

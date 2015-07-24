@@ -8,7 +8,9 @@ import tk.justramon.animalessentials.core.AnimalEssentials;
 
 public class Utilities
 {
-	/**Gets the instance of this plugin so we don't need to pass that argument into every method*/
+	/**
+	 * Gets the instance of this plugin so we don't need to pass that argument into every method
+	 */
 	private static final AnimalEssentials pl = AnimalEssentials.instance;
 	
 	/**
@@ -17,6 +19,7 @@ public class Utilities
 	 */
 	public static void sendConsoleMessage(String msg)
 	{
+		msg = msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + ChatColor.DARK_GREEN + pl.getDescription().getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
 	}
 	

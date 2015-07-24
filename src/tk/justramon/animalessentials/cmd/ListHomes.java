@@ -2,6 +2,7 @@ package tk.justramon.animalessentials.cmd;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -15,7 +16,7 @@ public class ListHomes implements IAECommand
 {
 	@Override
 	public void exe(Plugin pl, Player p, Command cmd, String[] args) throws IOException
-	{	
+	{
 		File f = new File(pl.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
 		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
 		List<String> homes = yaml.getStringList("homes");
@@ -58,5 +59,11 @@ public class ListHomes implements IAECommand
 	public String getPermission()
 	{
 		return "aess.home.list";
+	}
+	
+	@Override
+	public List<Integer> allowedArgLengths()
+	{
+		return Arrays.asList(new Integer[]{1}); // /ae listhomes
 	}
 }

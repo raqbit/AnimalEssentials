@@ -15,6 +15,7 @@ permissions:
         children:
           aess.reload: true
           aess.help: true
+          aess.teleport: true
           aess.home.set: true
           aess.home.edit: true
           aess.home.delete: true
@@ -31,6 +32,8 @@ permissions:
         description: Reloads the configuration.
     aess.help:
         description: Shows the help menu and help for commands.
+    aess.teleport:
+        description: Teleports an animal to the specified home. Poof!
     aess.home.set:
         description: Sets the home in the current world with the current coordinates.
     aess.home.delete:

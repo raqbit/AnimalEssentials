@@ -1,5 +1,6 @@
 package tk.justramon.animalessentials.cmd;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -65,6 +66,12 @@ public class Help implements IAECommand
 		return "aess.help";
 	}
 
+	@Override
+	public List<Integer> allowedArgLengths()
+	{
+		return Arrays.asList(new Integer[]{1, 2}); // /ae help [command]
+	}
+	
 	/**
 	 * Sends command help to a player
 	 * @param p The player to send the help to
@@ -72,7 +79,7 @@ public class Help implements IAECommand
 	 * @param label The command name to display in the help menu header
 	 * @param permission The permission needed to execute this command
 	 */
-	private void displayHelp(Player p, String[] help, String label, String permission)
+	public static void displayHelp(Player p, String[] help, String label, String permission)
 	{
 		Utilities.sendChatMessage(p, ChatColor.RED + "~~~~~~~~~~" + ChatColor.GRAY + "Help Menu: " + label + ChatColor.RED + "~~~~~~~~~~");
 		

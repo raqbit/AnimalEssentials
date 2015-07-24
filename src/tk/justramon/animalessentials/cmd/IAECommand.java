@@ -1,6 +1,7 @@
 package tk.justramon.animalessentials.cmd;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -41,4 +42,10 @@ public interface IAECommand
 	 * @return The permission required to execute this command
 	 */
 	public String getPermission();
+	
+	/**
+	 * Determines the allowed length the "args" argument in the exe method can be.
+	 * @return All the allowed lengths of "args"
+	 */
+	public List<Integer> allowedArgLengths();
 }
