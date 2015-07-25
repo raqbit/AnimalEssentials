@@ -29,14 +29,16 @@ permissions:
           aess.home.delete: true
           aess.home.list: true
     aess.reload:
-        description: Reloads the configuration.
+        description: Permission to reload the configuration.
     aess.help:
-        description: Shows the help menu and help for commands.
+        description: Permission to show the help menu and help for commands.
     aess.teleport:
-        description: Teleports an animal to the specified home. Poof!
+        description: Permission to teleport an animal to the specified home. Poof!
     aess.home.set:
-        description: Sets the home in the current world with the current coordinates.
+        description: Permission to set the home in the current world with the current coordinates.
+    aess.home.edit:
+        description: Permission to edit an existing home.
     aess.home.delete:
-        description: Deletes a set home.
+        description: Permission to get rid of an existing home.
     aess.home.list:
-        description: Lists all available homes.
+        description: Permission to list all available homes.
