@@ -2,6 +2,7 @@ package tk.justramon.animalessentials.core;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import tk.justramon.animalessentials.cmd.Name;
 import tk.justramon.animalessentials.cmd.Teleport;
 import tk.justramon.animalessentials.util.Utilities;
 
@@ -18,7 +19,7 @@ public class AnimalEssentials extends JavaPlugin
 		instance = this; //setting the instance so we can use it in any other class without needing to pass the variable through countless methods
 		Utilities.sendConsoleMessage("AnimalEssentials successfully enabled."); //sending this message to the console
 		getCommand("animalessentials").setExecutor(new AECommands()); //registers the command executor to the command "animalessentials"
-		getServer().getPluginManager().registerEvents(new Teleport(), this);
+		Utilities.registerEvents(this, new Teleport(), new Name());
 		Config.createConfig(this); //setting up the config
 	}
 	

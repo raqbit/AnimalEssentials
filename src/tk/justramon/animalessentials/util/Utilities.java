@@ -8,6 +8,7 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.Listener;
 
 import tk.justramon.animalessentials.core.AnimalEssentials;
 
@@ -74,5 +75,18 @@ public class Utilities
 	public static boolean isAnimal(Entity entity)
 	{
 		return entity instanceof Animals;
+	}
+
+	/**
+	 * Registers all given events
+	 * @param pl The plugin the events get registered from
+	 * @param listener The events to register
+	 */
+	public static void registerEvents(AnimalEssentials pl, Listener... listener)
+	{
+		for(Listener l : listener)
+		{
+			pl.getServer().getPluginManager().registerEvents(l, pl);
+		}
 	}
 }

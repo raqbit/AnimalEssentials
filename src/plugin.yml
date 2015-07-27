@@ -20,6 +20,7 @@ permissions:
           aess.home.edit: true
           aess.home.delete: true
           aess.home.list: true
+          aess.name: true
         default: op
     aess.home.*:
         description: Gives access to all home commands.
@@ -42,3 +43,5 @@ permissions:
         description: Permission to get rid of an existing home.
     aess.home.list:
         description: Permission to list all available homes.
+    aess.name:
+        description: Permission to name an animal.
