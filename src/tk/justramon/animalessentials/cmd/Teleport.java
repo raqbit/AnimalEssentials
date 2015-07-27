@@ -35,7 +35,7 @@ public class Teleport implements IAECommand,Listener
 	public static Plugin plugin;
 
 	@Override
-	public void exe(Plugin pl, Player p, Command cmd, String[] args) throws IOException
+	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
 	{
 		if(waiting)
 		{
