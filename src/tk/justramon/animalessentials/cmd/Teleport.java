@@ -85,6 +85,13 @@ public class Teleport implements IAECommand,Listener
 		if(waiting && event.getPlayer().getName().equals(playerName))
 		{
 			Entity entity = event.getRightClicked();
+
+			if(!Utilities.isOwnedBy(event.getPlayer(), entity))
+			{
+				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't teleport it.");
+				return;
+			}
+
 			//particle type | show particles 65k blocks away? (false = 255 block radius) | x coord of particle | y coord | z coord | x offset (area of effect) | y offset | z offset | speed of particles (some particles move, some don't) | amount of particles (the bigger the offset the bigger this has to be) | ?
 			PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.PORTAL, false, (float)entity.getLocation().getX(), (float)entity.getLocation().getY(), (float)entity.getLocation().getZ(), 0.0F, 0.0F, 0.0F, 10.0F, 3000, null);
 
@@ -102,13 +109,12 @@ public class Teleport implements IAECommand,Listener
 				e.printStackTrace();
 			}
 
-			entity.teleport(new Location(Bukkit.getWorld(yaml.getString(home + ".world")), yaml.getDouble(home + ".x"), yaml.getDouble(home + ".y"), yaml.getDouble(home + ".z")));
-			
 			for(Player player : Bukkit.getOnlinePlayers())
 			{
 				player.playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
 			}
-			
+
+			entity.teleport(new Location(Bukkit.getWorld(yaml.getString(home + ".world")), yaml.getDouble(home + ".x"), yaml.getDouble(home + ".y"), yaml.getDouble(home + ".z")));
 			waiting = false;
 			Bukkit.getScheduler().cancelAllTasks();
 		}
