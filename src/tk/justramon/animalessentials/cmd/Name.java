@@ -142,4 +142,10 @@ public class Name implements IAECommand,Listener
 	{
 		return Arrays.asList(new Integer[]{2}); // /ae name <name>
 	}
+	
+	@Override
+	public String getSyntax()
+	{
+		return "<newName>";
+	}
 }

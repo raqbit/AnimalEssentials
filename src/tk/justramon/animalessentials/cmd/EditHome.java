@@ -74,4 +74,10 @@ public class EditHome implements IAECommand
 	{
 		return Arrays.asList(new Integer[]{2}); // /ae edithome test 
 	}
+	
+	@Override
+	public String getSyntax()
+	{
+		return "<homeName>";
+	}
 }

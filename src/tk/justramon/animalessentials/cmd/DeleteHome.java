@@ -73,4 +73,10 @@ public class DeleteHome implements IAECommand
 	{
 		return Arrays.asList(new Integer[]{2}); // /ae delhome test
 	}
+	
+	@Override
+	public String getSyntax()
+	{
+		return "<homeName>";
+	}
 }

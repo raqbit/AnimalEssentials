@@ -157,4 +157,10 @@ public class Teleport implements IAECommand,Listener
 	{
 		return Arrays.asList(new Integer[]{2}); // /ae teleport <home>0
 	}
+	
+	@Override
+	public String getSyntax()
+	{
+		return "<homeName>";
+	}
 }

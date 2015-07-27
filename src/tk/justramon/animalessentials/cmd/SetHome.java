@@ -76,4 +76,10 @@ public class SetHome implements IAECommand
 	{
 		return Arrays.asList(new Integer[]{2}); // /ae sethome test 
 	}
+	
+	@Override
+	public String getSyntax()
+	{
+		return "<homeName>";
+	}
 }

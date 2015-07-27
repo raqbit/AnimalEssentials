@@ -50,4 +50,10 @@ public class Reload implements IAECommand
 	{
 		return Arrays.asList(new Integer[]{1}); // /ae reload
 	}
+	
+	@Override
+	public String getSyntax()
+	{
+		return "";
+	}
 }

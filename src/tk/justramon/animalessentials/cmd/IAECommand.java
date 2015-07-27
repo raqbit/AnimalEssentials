@@ -48,4 +48,11 @@ public interface IAECommand
 	 * @return All the allowed lengths of "args"
 	 */
 	public List<Integer> allowedArgLengths();
+	
+	/**
+	 * Determines the syntax of the command.
+	 * NOTE: /ae and the command alias do not need to be passed with this method!
+	 * @return The syntax of the command
+	 */
+	public String getSyntax();
 }

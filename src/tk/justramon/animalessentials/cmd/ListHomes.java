@@ -66,4 +66,10 @@ public class ListHomes implements IAECommand
 	{
 		return Arrays.asList(new Integer[]{1}); // /ae listhomes
 	}
+	
+	@Override
+	public String getSyntax()
+	{
+		return "";
+	}
 }

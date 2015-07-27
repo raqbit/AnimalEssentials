@@ -23,14 +23,14 @@ public class Help implements IAECommand
 	public void exe(Plugin pl, Player p, Command cmd, String[] args)
 	{
 		if(args[0].equals(getAlias()) && args.length == 1) //used if the user only executes /ae help
-			displayHelp(p, getHelp(), "help", getPermission());
+			displayHelp(p, getHelp(), "help", getPermission(), getSyntax());
 		else
 		{
 			for(IAECommand c : cmds) //for each command in the commands list...
 			{
 				if(c.getAlias().equals(args[1])) //...we check if it's the command which got issued...
 				{
-					displayHelp(p, c.getHelp(), args[1], c.getPermission()); //...and if it is we send the help of this command...
+					displayHelp(p, c.getHelp(), args[1], c.getPermission(), c.getSyntax()); //...and if it is we send the help of this command...
 					return; //...and stop the method since we don't want the message at the bottom of it to show
 				}
 			}
@@ -72,6 +72,12 @@ public class Help implements IAECommand
 		return Arrays.asList(new Integer[]{1, 2}); // /ae help [command]
 	}
 	
+	@Override
+	public String getSyntax()
+	{
+		return "[command]";
+	}
+	
 	/**
 	 * Sends command help to a player
 	 * @param p The player to send the help to
@@ -79,7 +85,7 @@ public class Help implements IAECommand
 	 * @param label The command name to display in the help menu header
 	 * @param permission The permission needed to execute this command
 	 */
-	public static void displayHelp(Player p, String[] help, String label, String permission)
+	public static void displayHelp(Player p, String[] help, String label, String permission, String syntax)
 	{
 		Utilities.sendChatMessage(p, ChatColor.RED + "~~~~~~~~~~" + ChatColor.GRAY + "Help Menu: " + label + ChatColor.RED + "~~~~~~~~~~");
 		
@@ -88,6 +94,7 @@ public class Help implements IAECommand
 			Utilities.sendChatMessage(p, s); //...we send it to the player
 		}
 		
+		Utilities.sendChatMessage(p, "Syntax: /ae <" + label + "> " + syntax);
 		Utilities.sendChatMessage(p, "Required permission: " + permission);
 		Utilities.sendChatMessage(p, ChatColor.RED + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	}
