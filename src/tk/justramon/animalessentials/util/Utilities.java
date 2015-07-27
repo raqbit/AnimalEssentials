@@ -2,6 +2,7 @@ package tk.justramon.animalessentials.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Ocelot;
@@ -63,5 +64,15 @@ public class Utilities
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Checks if the given entity is an animal (as in: not a zombie/creeper etc)
+	 * @param entity The entity to check
+	 * @return Wether the entity is an animal or not
+	 */
+	public static boolean isAnimal(Entity entity)
+	{
+		return entity instanceof Animals;
 	}
 }
