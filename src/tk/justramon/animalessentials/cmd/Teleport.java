@@ -10,7 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,8 +18,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
 
-import net.minecraft.server.v1_8_R2.EnumParticle;
-import net.minecraft.server.v1_8_R2.PacketPlayOutWorldParticles;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import tk.justramon.animalessentials.core.AnimalEssentials;
 import tk.justramon.animalessentials.util.Utilities;
 
