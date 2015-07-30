@@ -89,4 +89,20 @@ public class Utilities
 			pl.getServer().getPluginManager().registerEvents(l, pl);
 		}
 	}
+	
+	/**
+	 * Checks if a player is online.
+	 * 
+	 * @param name - The player to search for
+	 * @return - Returns if the player is online or not
+	 */
+	public static boolean isPlayerOnline(String name)
+	{
+		for(Player p : Bukkit.getOnlinePlayers())
+		{
+			if(p.getName().equalsIgnoreCase(name))
+				return true;
+		}
+		return false;
+	}
 }

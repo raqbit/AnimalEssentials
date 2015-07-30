@@ -30,8 +30,9 @@ public class Teleport implements IAECommand,Listener
 	private static File f;
 	private static YamlConfiguration yaml;
 	private static List<String> homes;
-	private static String home;
+	private static String destination;
 	private static String playerName;
+	private static boolean tpToPlayer;
 	public static Plugin plugin;
 
 	@Override
@@ -44,7 +45,7 @@ public class Teleport implements IAECommand,Listener
 		}
 
 		plugin = pl;
-		home = args[1];
+		destination = args[1];
 		playerName = p.getName();
 		folder = new File(pl.getDataFolder(), "playerStorage");
 		f = new File(pl.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
@@ -58,11 +59,18 @@ public class Teleport implements IAECommand,Listener
 		yaml = YamlConfiguration.loadConfiguration(f);
 		homes = yaml.getStringList("homes");
 
-		if(!homes.contains(home))
+		if(!homes.contains(destination))
 		{
-			Utilities.sendChatMessage(p, "/()" + home + "()/ does not exist.");
-			return;
+			if(Utilities.isPlayerOnline(args[1]))
+				tpToPlayer = true;
+			else
+			{
+				Utilities.sendChatMessage(p, "/()" + destination + "()/ does not exist or is not online.");
+				return;
+			}
 		}
+		else
+			tpToPlayer = false;
 
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to teleport.");
 		waiting = true;
@@ -116,8 +124,13 @@ public class Teleport implements IAECommand,Listener
 						player.playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
 					}
 
-					entity.teleport(new Location(Bukkit.getWorld(yaml.getString(home + ".world")), yaml.getDouble(home + ".x"), yaml.getDouble(home + ".y"), yaml.getDouble(home + ".z")));
+					if(tpToPlayer)
+						entity.teleport(Bukkit.getPlayer(destination));
+					else
+						entity.teleport(new Location(Bukkit.getWorld(yaml.getString(destination + ".world")), yaml.getDouble(destination + ".x"), yaml.getDouble(destination + ".y"), yaml.getDouble(destination + ".z")));
+				
 					waiting = false;
+					tpToPlayer = false;
 					Bukkit.getScheduler().cancelAllTasks();
 				}
 			}, 50L); //2.5 seconds
@@ -140,7 +153,7 @@ public class Teleport implements IAECommand,Listener
 	public String[] getHelp()
 	{
 		return new String[]{
-				"Teleports an animal to the specified home. Poof!"
+				"Teleports an animal to the specified home or player. Poof!"
 		};
 	}
 
@@ -153,12 +166,12 @@ public class Teleport implements IAECommand,Listener
 	@Override
 	public List<Integer> allowedArgLengths()
 	{
-		return Arrays.asList(new Integer[]{2}); // /ae teleport <home>0
+		return Arrays.asList(new Integer[]{2}); // /ae teleport <home|player>
 	}
 	
 	@Override
 	public String getSyntax()
 	{
-		return "<homeName>";
+		return "<homeName|playerName>";
 	}
 }

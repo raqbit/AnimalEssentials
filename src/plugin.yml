@@ -34,7 +34,7 @@ permissions:
     aess.help:
         description: Permission to show the help menu and help for commands.
     aess.teleport:
-        description: Permission to teleport an animal to the specified home. Poof!
+        description: Permission to teleport an animal to the specified home or player. Poof!
     aess.home.set:
         description: Permission to set the home in the current world with the current coordinates.
     aess.home.edit:
