@@ -1,4 +1,4 @@
-package tk.justramon.animalessentials.cmd;
+package tk.justramon.animalessentials.cmd.home;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import tk.justramon.animalessentials.cmd.IAECommand;
 import tk.justramon.animalessentials.util.Utilities;
 
 public class EditHome implements IAECommand

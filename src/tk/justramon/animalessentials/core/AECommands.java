@@ -10,16 +10,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import tk.justramon.animalessentials.cmd.DeleteHome;
-import tk.justramon.animalessentials.cmd.EditHome;
 import tk.justramon.animalessentials.cmd.Find;
 import tk.justramon.animalessentials.cmd.Help;
 import tk.justramon.animalessentials.cmd.IAECommand;
-import tk.justramon.animalessentials.cmd.ListHomes;
 import tk.justramon.animalessentials.cmd.Name;
 import tk.justramon.animalessentials.cmd.Reload;
-import tk.justramon.animalessentials.cmd.SetHome;
 import tk.justramon.animalessentials.cmd.Teleport;
+import tk.justramon.animalessentials.cmd.home.DeleteHome;
+import tk.justramon.animalessentials.cmd.home.EditHome;
+import tk.justramon.animalessentials.cmd.home.ListHomes;
+import tk.justramon.animalessentials.cmd.home.SetHome;
 import tk.justramon.animalessentials.util.Utilities;
 
 public class AECommands implements CommandExecutor
