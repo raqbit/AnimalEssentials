@@ -21,6 +21,7 @@ permissions:
           aess.home.delete: true
           aess.home.list: true
           aess.name: true
+          aess.find: true
         default: op
     aess.home.*:
         description: Gives access to all home commands.
@@ -45,3 +46,5 @@ permissions:
         description: Permission to list all available homes.
     aess.name:
         description: Permission to name an animal.
+    aess.find:
+        description: Finds an animal with the given name.

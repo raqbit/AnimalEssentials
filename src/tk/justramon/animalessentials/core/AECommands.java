@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import tk.justramon.animalessentials.cmd.DeleteHome;
 import tk.justramon.animalessentials.cmd.EditHome;
+import tk.justramon.animalessentials.cmd.Find;
 import tk.justramon.animalessentials.cmd.Help;
 import tk.justramon.animalessentials.cmd.IAECommand;
 import tk.justramon.animalessentials.cmd.ListHomes;
@@ -35,6 +36,7 @@ public class AECommands implements CommandExecutor
 		cmds.add(new ListHomes());
 		cmds.add(new Teleport());
 		cmds.add(new Name());
+		cmds.add(new Find());
 		cmds.add(new Help(cmds)); //make sure that this is always last
 	}
 

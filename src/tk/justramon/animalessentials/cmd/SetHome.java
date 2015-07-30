@@ -31,7 +31,7 @@ public class SetHome implements IAECommand
 
 		if(homes.contains(args[1]))
 		{
-			Utilities.sendChatMessage(p, "/()" + args[1] + "()/ already exists.");
+			Utilities.sendChatMessage(p, "/()" + args[1] + "()/ already exists. Use /()/ae edithome " + args[1] + "()/ to change the home.");
 			return;        
 		}
 
@@ -42,7 +42,7 @@ public class SetHome implements IAECommand
 		yaml.set(args[1] + ".y", p.getLocation().getY());
 		yaml.set(args[1] + ".z", p.getLocation().getZ());
 		yaml.save(f); //saving the file after editing it
-		Utilities.sendChatMessage(p, "Home /()" + args[1] + "()/ has been set in world /()" + yaml.getString(args[1] + ".world") + "()/ at these coordinates: /()X:" + yaml.getInt(args[1] + ".x") + " Y:" + yaml.getInt(args[1] + ".y") + " Z:" + yaml.getInt(args[1] + ".z"));
+		Utilities.sendChatMessage(p, "Home /()" + args[1] + "()/ has been set in world /()" + yaml.getString(args[1] + ".world") + "()/ at these coordinates: " + Utilities.printCoords(yaml.getInt(args[1] + ".x"), yaml.getInt(args[1] + ".y"), yaml.getInt(args[1] + ".z")));
 	}
 
 	@Override

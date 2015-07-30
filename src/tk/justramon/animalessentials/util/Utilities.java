@@ -105,4 +105,16 @@ public class Utilities
 		}
 		return false;
 	}
+	
+	/**
+	 * Formats coordinates into a nice String
+	 * @param x The x coord
+	 * @param y The y coord
+	 * @param z The z coord
+	 * @return The finalized coordinates String to print out in a message
+	 */
+	public static String printCoords(int x, int y, int z)
+	{
+		return "/()X: ()/" + x + "/() Y: ()/" + y + "/() Z: ()/" + z + "";
+	}
 }
