@@ -84,7 +84,7 @@ public class Teleport implements IAECommand,Listener
 	{
 		if(waiting && event.getPlayer().getName().equals(playerName))
 		{
-			Entity entity = event.getRightClicked();
+			final Entity entity = event.getRightClicked();
 
 			if(!Utilities.isAnimal(entity))
 			{
@@ -106,23 +106,21 @@ public class Teleport implements IAECommand,Listener
 				((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Playre)
 			}
 
-			try
-			{
-				Thread.sleep(2500);
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
+			Bukkit.getScheduler().runTaskLater(plugin, new Runnable(){
+				
+				@Override
+				public void run()
+				{
+					for(Player player : Bukkit.getOnlinePlayers())
+					{
+						player.playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+					}
 
-			for(Player player : Bukkit.getOnlinePlayers())
-			{
-				player.playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
-			}
-
-			entity.teleport(new Location(Bukkit.getWorld(yaml.getString(home + ".world")), yaml.getDouble(home + ".x"), yaml.getDouble(home + ".y"), yaml.getDouble(home + ".z")));
-			waiting = false;
-			Bukkit.getScheduler().cancelAllTasks();
+					entity.teleport(new Location(Bukkit.getWorld(yaml.getString(home + ".world")), yaml.getDouble(home + ".x"), yaml.getDouble(home + ".y"), yaml.getDouble(home + ".z")));
+					waiting = false;
+					Bukkit.getScheduler().cancelAllTasks();
+				}
+			}, 50L); //2.5 seconds
 		}
 	}
 
