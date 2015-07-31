@@ -107,7 +107,7 @@ public class Name implements IAECommand,Listener
 
 			entity.setCustomName(animalName);
 			waiting = false;
-			Bukkit.getScheduler().cancelAllTasks();
+			Bukkit.getScheduler().cancelTasks(plugin);
 		}
 	}
 

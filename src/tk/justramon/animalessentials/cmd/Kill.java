@@ -76,7 +76,7 @@ public class Kill implements IAECommand,Listener
 
 			entity.remove();
 			waiting = false;
-			Bukkit.getScheduler().cancelAllTasks();
+			Bukkit.getScheduler().cancelTasks(plugin);
 		}
 	}
 	

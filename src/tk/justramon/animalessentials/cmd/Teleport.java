@@ -131,7 +131,7 @@ public class Teleport implements IAECommand,Listener
 				
 					waiting = false;
 					tpToPlayer = false;
-					Bukkit.getScheduler().cancelAllTasks();
+					Bukkit.getScheduler().cancelTasks(plugin);
 				}
 			}, 50L); //2.5 seconds
 		}

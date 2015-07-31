@@ -22,6 +22,7 @@ permissions:
           aess.home.list: true
           aess.name: true
           aess.find: true
+          aess.kill: true
         default: op
     aess.home.*:
         description: Gives access to all home commands.
@@ -47,4 +48,6 @@ permissions:
     aess.name:
         description: Permission to name the right-clicked animal.
     aess.find:
-        description: Finds an animal with the given name.
+        description: Permission to find an animal with the given name.
+    aess.kill:
+        description: Permission to kill the right-clicked animal.
