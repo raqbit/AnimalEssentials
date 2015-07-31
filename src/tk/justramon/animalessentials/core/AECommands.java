@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import tk.justramon.animalessentials.cmd.Find;
 import tk.justramon.animalessentials.cmd.Help;
 import tk.justramon.animalessentials.cmd.IAECommand;
+import tk.justramon.animalessentials.cmd.Kill;
 import tk.justramon.animalessentials.cmd.Name;
 import tk.justramon.animalessentials.cmd.Reload;
 import tk.justramon.animalessentials.cmd.Teleport;
@@ -37,6 +38,7 @@ public class AECommands implements CommandExecutor
 		cmds.add(new Teleport());
 		cmds.add(new Name());
 		cmds.add(new Find());
+		cmds.add(new Kill());
 		cmds.add(new Help(cmds)); //make sure that this is always last
 	}
 

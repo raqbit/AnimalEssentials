@@ -127,7 +127,7 @@ public class Name implements IAECommand,Listener
 	public String[] getHelp()
 	{
 		return new String[]{
-				"Names an animal."
+				"Names the right-clicked animal."
 		};
 	}
 

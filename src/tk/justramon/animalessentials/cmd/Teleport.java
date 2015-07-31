@@ -153,7 +153,7 @@ public class Teleport implements IAECommand,Listener
 	public String[] getHelp()
 	{
 		return new String[]{
-				"Teleports an animal to the specified home or player. Poof!"
+				"Teleports the right-clicked animal to the specified home or player. Poof!"
 		};
 	}
 
