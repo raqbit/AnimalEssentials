@@ -6,6 +6,7 @@ All the essentials for your animals.
 1. /ae spawn \<animal\> \<easy nbt\> (Spawns the desired animal.)
 2. /ae tame (Tames the the right-clicked animal.)
 3. Ability to click the entity name in chat, after issuing /ae find <name>, to teleport to it.
+4. Particles for /ae name | /ae tp \<player\> | /ae kill
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport] (https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
