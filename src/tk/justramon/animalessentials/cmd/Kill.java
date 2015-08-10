@@ -65,7 +65,7 @@ public class Kill implements IAECommand,Listener
 				return;
 			}
 
-			if(!Utilities.isOwnedBy(event.getPlayer(), entity))
+			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't kill it.");
 				Bukkit.getScheduler().cancelTasks(plugin);

@@ -13,7 +13,6 @@ All the essentials for your animals.
 6. /ae heal
 (7. XP-System)
 8. Animal Protect
-9. Config option to only show own animals with /ae find
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport] (https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -23,5 +22,6 @@ All the essentials for your animals.
 5. /ae tp \<home|player\> (Teleport the right-clicked animal to a home or player.)
 6. /ae find \<name\> (Find all animals by name.)
 7. /ae kill (Kills the right-clicked animal.)
+8. Config option to only show own animals with /ae find
 
 -----

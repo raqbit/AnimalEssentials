@@ -40,7 +40,15 @@ public class Find implements IAECommand
 				if(!e.getCustomName().equalsIgnoreCase(args[1])) //just continuing with the next entity if it's not having the name we're searching for
 					continue;
 				
-				foundAnimals.add(e); //adding the animal which was found to the list
+				if(pl.getConfig().getBoolean("onlyFindOwnAnimals"))
+				{
+					if(Utilities.isOwnedBy(p, e, false))
+						foundAnimals.add(e);
+					else
+						continue;
+				}
+				else
+					foundAnimals.add(e); //adding the animal which was found to the list
 			}
 		}
 		

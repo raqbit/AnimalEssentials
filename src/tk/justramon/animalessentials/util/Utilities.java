@@ -42,9 +42,10 @@ public class Utilities
 	 * Checks if the player owns the entity
 	 * @param player The player who could be the owner
 	 * @param entity The entity who could be owned by the player
+	 * @param untameableOwned Wether an untameable animal should be considered as owned by the player
 	 * @return Wether the entity is owned by the player or not
 	 */
-	public static boolean isOwnedBy(Player player, Entity entity)
+	public static boolean isOwnedBy(Player player, Entity entity, boolean untameableOwned)
 	{
 		if(entity instanceof Tameable)
 		{
@@ -57,7 +58,7 @@ public class Utilities
 			}
 		}
 
-		return true; //if it's not tamed (or not tameable), the player still needs to be able to name a pet
+		return untameableOwned;
 	}
 	
 	/**
