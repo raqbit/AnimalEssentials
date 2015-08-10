@@ -11,6 +11,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import tk.justramon.animalessentials.cmd.Find;
+import tk.justramon.animalessentials.cmd.Heal;
 import tk.justramon.animalessentials.cmd.Help;
 import tk.justramon.animalessentials.cmd.IAECommand;
 import tk.justramon.animalessentials.cmd.Kill;
@@ -39,6 +40,7 @@ public class AECommands implements CommandExecutor
 		cmds.add(new Name());
 		cmds.add(new Find());
 		cmds.add(new Kill());
+		cmds.add(new Heal());
 		cmds.add(new Help(cmds)); //make sure that this is always last
 	}
 
