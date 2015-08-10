@@ -81,14 +81,14 @@ public class Teleport implements IAECommand,Listener
 				if(waiting)
 				{
 					waiting = false;
-					Utilities.sendChatMessage(p, "You ran out of time to select an animal to teleport. Use /()/ae teleport()/ to start again.");
+					Utilities.sendChatMessage(p, "You ran out of time to select an animal to teleport. Use /()/ae tp()/ to start again.");
 				}
 			}
 		}, 10L * 20); //10 seconds * 20 (server ticks/second)
 	}
 
 	@EventHandler
-	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
+	public void onPlayerInteractEntity(final PlayerInteractEntityEvent event)
 	{
 		if(waiting && event.getPlayer().getName().equals(playerName))
 		{
@@ -97,12 +97,16 @@ public class Teleport implements IAECommand,Listener
 			if(!Utilities.isAnimal(entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "You can't teleport this mob, it's a(n) /()" + entity.getType().getName() + "()/ and not an animal.");
+				Bukkit.getScheduler().cancelTasks(plugin);
+				waiting = false;
 				return;
 			}
 			
 			if(!Utilities.isOwnedBy(event.getPlayer(), entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't teleport it.");
+				Bukkit.getScheduler().cancelTasks(plugin);
+				waiting = false;
 				return;
 			}
 
@@ -111,11 +115,10 @@ public class Teleport implements IAECommand,Listener
 
 			for(Player player : Bukkit.getOnlinePlayers())
 			{
-				((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Playre)
+				((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
 			}
 
 			Bukkit.getScheduler().runTaskLater(plugin, new Runnable(){
-				
 				@Override
 				public void run()
 				{
@@ -132,6 +135,7 @@ public class Teleport implements IAECommand,Listener
 					waiting = false;
 					tpToPlayer = false;
 					Bukkit.getScheduler().cancelTasks(plugin);
+					Utilities.sendChatMessage(event.getPlayer(), "Animal teleported.");
 				}
 			}, 50L); //2.5 seconds
 		}

@@ -4,10 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Wolf;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.Listener;
 
 import tk.justramon.animalessentials.core.AnimalEssentials;
@@ -48,23 +46,18 @@ public class Utilities
 	 */
 	public static boolean isOwnedBy(Player player, Entity entity)
 	{
-		if(entity instanceof Horse)
+		if(entity instanceof Tameable)
 		{
-			if(((Horse)entity).isTamed() && !((Horse)entity).getOwner().getName().equals(player.getName()))
-				return false;
+			if(((Tameable)entity).isTamed())
+			{
+				if(!((Tameable)entity).getOwner().getName().equals(player.getName()))
+					return false;
+				else
+					return true;
+			}
 		}
-		else if(entity instanceof Wolf)
-		{
-			if(((Wolf)entity).isTamed() && !((Wolf)entity).getOwner().getName().equals(player.getName()))
-				return false;
-		}
-		else if(entity instanceof Ocelot)
-		{
-			if(((Ocelot)entity).isTamed() && !((Ocelot)entity).getOwner().getName().equals(player.getName()))
-				return false;
-		}
-		
-		return true;
+
+		return true; //if it's not tamed (or not tameable), the player still needs to be able to name a pet
 	}
 	
 	/**

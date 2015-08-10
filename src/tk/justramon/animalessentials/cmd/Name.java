@@ -65,18 +65,24 @@ public class Name implements IAECommand,Listener
 			if(!Utilities.isAnimal(entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "You can't name this mob, it's a(n) /()" + entity.getType().getName() + "()/ and not an animal.");
+				Bukkit.getScheduler().cancelTasks(plugin);
+				waiting = false;
 				return;
 			}
 
 			if(!Utilities.isOwnedBy(event.getPlayer(), entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't name it.");
+				Bukkit.getScheduler().cancelTasks(plugin);
+				waiting = false;
 				return;
 			}
 
 			if(entity.getCustomName() != null && entity.getCustomName().equals(animalName))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "The animal is already named /()" + animalName + "()/.");
+				Bukkit.getScheduler().cancelTasks(plugin);
+				waiting = false;
 				return;
 			}
 			
@@ -108,6 +114,7 @@ public class Name implements IAECommand,Listener
 			entity.setCustomName(animalName);
 			waiting = false;
 			Bukkit.getScheduler().cancelTasks(plugin);
+			Utilities.sendChatMessage(event.getPlayer(), "Animal named.");
 		}
 	}
 

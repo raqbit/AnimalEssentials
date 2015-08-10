@@ -35,7 +35,7 @@ public class Kill implements IAECommand,Listener
 
 		plugin = pl;
 		playerName = p.getName();
-		Utilities.sendChatMessage(p, "Please rightclick the animal you want to kill. " + ChatColor.RED + "THIS IS IRREVERSIBLE!!");
+		Utilities.sendChatMessage(p, "Please rightclick the animal you want to kill. " + ChatColor.RED + " THIS IS IRREVERSIBLE!!");
 		waiting = true;
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
@@ -60,12 +60,16 @@ public class Kill implements IAECommand,Listener
 			if(!Utilities.isAnimal(entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "You can't kill this mob, it's a(n) /()" + entity.getType().getName() + "()/ and not an animal.");
+				Bukkit.getScheduler().cancelTasks(plugin);
+				waiting = false;
 				return;
 			}
 
 			if(!Utilities.isOwnedBy(event.getPlayer(), entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't kill it.");
+				Bukkit.getScheduler().cancelTasks(plugin);
+				waiting = false;
 				return;
 			}
 

@@ -94,7 +94,7 @@ public class Help implements IAECommand
 			Utilities.sendChatMessage(p, s); //...we send it to the player
 		}
 		
-		Utilities.sendChatMessage(p, "Syntax: /ae <" + label + "> " + syntax);
+		Utilities.sendChatMessage(p, "Syntax: /ae " + label + " " + syntax);
 		Utilities.sendChatMessage(p, "Required permission: " + permission);
 		Utilities.sendChatMessage(p, ChatColor.RED + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	}
