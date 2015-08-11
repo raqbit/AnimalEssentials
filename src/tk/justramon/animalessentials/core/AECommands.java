@@ -16,6 +16,7 @@ import tk.justramon.animalessentials.cmd.Help;
 import tk.justramon.animalessentials.cmd.IAECommand;
 import tk.justramon.animalessentials.cmd.Kill;
 import tk.justramon.animalessentials.cmd.Name;
+import tk.justramon.animalessentials.cmd.Owner;
 import tk.justramon.animalessentials.cmd.Reload;
 import tk.justramon.animalessentials.cmd.Teleport;
 import tk.justramon.animalessentials.cmd.home.DeleteHome;
@@ -41,6 +42,7 @@ public class AECommands implements CommandExecutor
 		cmds.add(new Find());
 		cmds.add(new Kill());
 		cmds.add(new Heal());
+		cmds.add(new Owner());
 		cmds.add(new Help(cmds)); //make sure that this is always last
 	}
 

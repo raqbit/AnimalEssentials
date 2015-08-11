@@ -97,16 +97,12 @@ public class Teleport implements IAECommand,Listener
 			if(!Utilities.isAnimal(entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "You can't teleport this mob, it's a(n) /()" + entity.getType().getName() + "()/ and not an animal.");
-				Bukkit.getScheduler().cancelTasks(plugin);
-				waiting = false;
 				return;
 			}
 			
 			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't teleport it.");
-				Bukkit.getScheduler().cancelTasks(plugin);
-				waiting = false;
 				return;
 			}
 
