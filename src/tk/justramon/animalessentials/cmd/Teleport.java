@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftAnimals;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -124,7 +125,10 @@ public class Teleport implements IAECommand,Listener
 					}
 
 					if(tpToPlayer)
+					{
 						entity.teleport(Bukkit.getPlayer(destination));
+						((CraftAnimals)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
+					}
 					else
 						entity.teleport(new Location(Bukkit.getWorld(yaml.getString(destination + ".world")), yaml.getDouble(destination + ".x"), yaml.getDouble(destination + ".y"), yaml.getDouble(destination + ".z")));
 				

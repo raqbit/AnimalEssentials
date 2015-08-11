@@ -12,9 +12,9 @@ All the essentials for your animals.
 5. Make multiple players able to issue the same command at a time (HashMap?)
 (6. XP-System)
 7. Animal Protect
-8. Invincibility when teleporting to player
-9. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
-10. Replace a(n) with the correct thing
+8. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
+9. Replace a(n) with the correct thing
+10. Define amount of kills (eg. /ae kill 6)
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport] (https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -27,6 +27,7 @@ All the essentials for your animals.
 8. Config option to only show own animals with /ae find
 9. /ae heal
 10. /ae owner (Shows the owner of the animal.)
+11. Invincibility when teleporting to player
 
 -----
 
