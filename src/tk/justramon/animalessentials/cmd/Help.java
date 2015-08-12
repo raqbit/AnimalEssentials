@@ -22,8 +22,34 @@ public class Help implements IAECommand
 	@Override
 	public void exe(Plugin pl, Player p, Command cmd, String[] args)
 	{
-		if(args[0].equals(getAlias()) && args.length == 1) //used if the user only executes /ae help
+		if((args[0].equals(getAlias()) && args.length == 1) || (args.length == 2 && args[1].equals(getAlias()))) //used if the user only executes /ae help
+		{
+			boolean blue = false;
+			int displayedCommands = 0;
+			String s = "";
+			
 			displayHelp(p, getHelp(), "help", getPermission(), getSyntax());
+			Utilities.sendChatMessage(p, "Available commands:");
+			
+			for(IAECommand c : cmds)
+			{
+				if(displayedCommands == 5)
+				{
+					Utilities.sendChatMessage(p, s);
+					displayedCommands = 0;
+					s = "";
+				}
+				
+				s += (blue ? "/()" : "") + "/ae " + c.getAlias() + (blue ? "()/" : "") + " ";
+				blue = !blue;
+				displayedCommands++;
+			}
+			
+			Utilities.sendChatMessage(p, s);
+			displayedCommands = 0;
+			s = "";
+			Utilities.sendChatMessage(p, ChatColor.RED + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		}
 		else
 		{
 			for(IAECommand c : cmds) //for each command in the commands list...
