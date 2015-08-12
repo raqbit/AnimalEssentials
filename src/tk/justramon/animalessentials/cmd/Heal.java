@@ -63,12 +63,14 @@ public class Heal implements IAECommand,Listener
 			if(!Utilities.isAnimal(entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "You can't heal this mob, it's a(n) /()" + entity.getType().getName() + "()/ and not an animal.");
+				event.setCancelled(true);
 				return;
 			}
 			
 			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't heal it.");
+				event.setCancelled(true);
 				return;
 			}
 
@@ -86,6 +88,7 @@ public class Heal implements IAECommand,Listener
 			waiting = false;
 			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal healed.");
+			event.setCancelled(true);
 		}
 	}
 

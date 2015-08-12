@@ -98,12 +98,14 @@ public class Teleport implements IAECommand,Listener
 			if(!Utilities.isAnimal(entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "You can't teleport this mob, it's a(n) /()" + entity.getType().getName() + "()/ and not an animal.");
+				event.setCancelled(true);
 				return;
 			}
 			
 			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't teleport it.");
+				event.setCancelled(true);
 				return;
 			}
 
@@ -138,6 +140,8 @@ public class Teleport implements IAECommand,Listener
 					Utilities.sendChatMessage(event.getPlayer(), "Animal teleported.");
 				}
 			}, 50L); //2.5 seconds
+			
+			event.setCancelled(true);
 		}
 	}
 

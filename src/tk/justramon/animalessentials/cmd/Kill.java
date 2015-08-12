@@ -60,12 +60,14 @@ public class Kill implements IAECommand,Listener
 			if(!Utilities.isAnimal(entity))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "You can't kill this mob, it's a(n) /()" + entity.getType().getName() + "()/ and not an animal.");
+				event.setCancelled(true);
 				return;
 			}
 
 			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't kill it.");
+				event.setCancelled(true);
 				return;
 			}
 
@@ -78,6 +80,7 @@ public class Kill implements IAECommand,Listener
 			waiting = false;
 			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal killed.");
+			event.setCancelled(true);
 		}
 	}
 	

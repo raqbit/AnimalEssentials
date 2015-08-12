@@ -59,6 +59,7 @@ public class Owner implements IAECommand,Listener
 			if(!Utilities.isAnimal(entity) || !(entity instanceof Tameable))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "You can't check the owner of this mob, it's a(n) /()" + entity.getType().getName() + "()/ and not a tameable animal.");
+				event.setCancelled(true);
 				return;
 			}
 
@@ -77,6 +78,7 @@ public class Owner implements IAECommand,Listener
 			
 			waiting = false;
 			Bukkit.getScheduler().cancelTasks(plugin);
+			event.setCancelled(true);
 		}
 	}
 

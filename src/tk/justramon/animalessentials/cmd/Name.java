@@ -73,12 +73,14 @@ public class Name implements IAECommand,Listener
 			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't name it.");
+				event.setCancelled(true);
 				return;
 			}
 
 			if(entity.getCustomName() != null && entity.getCustomName().equals(animalName))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "The animal is already named /()" + animalName + "()/.");
+				event.setCancelled(true);
 				return;
 			}
 			
@@ -111,6 +113,7 @@ public class Name implements IAECommand,Listener
 			waiting = false;
 			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal named.");
+			event.setCancelled(true);
 		}
 	}
 
