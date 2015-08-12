@@ -25,6 +25,7 @@ permissions:
           aess.kill: true
           aess.heal: true
           aess.owner: true
+          aess.tame: true
         default: op
     aess.home.*:
         description: Gives access to all home commands.
@@ -57,3 +58,5 @@ permissions:
         description: Permission to heal the right-clicked animal.
     aess.owner:
         description: Permission to show the owner of the right-clicked animal.
+    aess.tame:
+        description: Permission to tame the right-clicked animal.

@@ -72,7 +72,7 @@ public class Find implements IAECommand
 	@Override
 	public boolean isConsoleCommand()
 	{
-		return false;
+		return true;
 	}
 
 	@Override
