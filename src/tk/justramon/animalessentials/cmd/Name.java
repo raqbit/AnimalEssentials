@@ -64,7 +64,7 @@ public class Name implements IAECommand,Listener
 
 			if(!Utilities.isAnimal(entity))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't name this mob, it's a(n) /()" + entity.getType().getName() + "()/ and not an animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't name this mob, it's " + Utilities.aN(entity.getType().getName()) + " /()" + entity.getType().getName() + "()/ and not an animal.");
 				event.setCancelled(true);
 				return;
 			}

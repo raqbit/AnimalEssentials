@@ -12,8 +12,7 @@ All the essentials for your animals.
 (5. XP-System)
 6. Animal Protect
 7. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
-8. Replace a(n) with the correct thing
-9. Define amount of kills (eg. /ae kill 6)
+8. Define amount of kills (eg. /ae kill 6)
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport] (https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -28,6 +27,7 @@ All the essentials for your animals.
 10. /ae owner (Shows the owner of the animal.)
 11. Invincibility when teleporting to player
 12. /ae tame (Tames the the right-clicked animal.)
+13. Replace "a(n)" with the correct thing
 
 -----
 

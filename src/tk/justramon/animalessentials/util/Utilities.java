@@ -111,4 +111,24 @@ public class Utilities
 	{
 		return "/()X: ()/" + x + "/() Y: ()/" + y + "/() Z: ()/" + z + "";
 	}
+	
+	/**
+	 * Determines wether to use "a" or "an"
+	 * @param word The word in question
+	 * @return "a" or "an"
+	 */
+	public static String aN(String word)
+	{
+		switch(word.charAt(0))
+		{
+			case 'a': case 'A':
+			case 'e': case 'E':
+			case 'i': case 'I':
+			case 'o': case 'O':
+			case 'u': case 'U':
+				return "an";
+			default:
+				return "a";
+		}
+	}
 }
