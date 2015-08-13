@@ -5,14 +5,13 @@ All the essentials for your animals.
 
 ### To-Do
 
-1. /ae spawn (Spawns the desired animal, GUI!!!)
-2. Ability to click the entity name in chat, after issuing /ae find <name>, to teleport to it.
-3. Particles for /ae name | /ae kill
-4. Make multiple players able to issue the same command at a time (HashMap?)
-(5. XP-System)
-6. Animal Protect
-7. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
-8. Define amount of kills (eg. /ae kill 6)
+1. Ability to click the entity name in chat, after issuing /ae find <name>, to teleport to it.
+2. Particles for /ae name | /ae kill
+3. Make multiple players able to issue the same command at a time (HashMap?)
+4. (XP-System)
+5. Animal Protect
+6. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
+7. Define amount of kills (eg. /ae kill 6)
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport] (https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -28,9 +27,12 @@ All the essentials for your animals.
 11. Invincibility when teleporting to player
 12. /ae tame (Tames the the right-clicked animal.)
 13. Replace "a(n)" with the correct thing
+14. /ae spawn (With GUI.)
 
 -----
 
 ### Bugs
 1. /ae help | /ae | /ae <anything> <--- Faulty output if issued through console
 2. Multiple /ae commands can be issues at the same time
+3. Stacktrace when clicking outside of inventory
+4. When doing /ae tp [home], the particles will go to the animal's location on execution. If the animal moves during the animation, the particles will not follow the animal.
