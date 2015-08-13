@@ -1,6 +1,7 @@
 package tk.justramon.animalessentials.cmd;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,30 +21,28 @@ import tk.justramon.animalessentials.util.Utilities;
 
 public class Kill implements IAECommand,Listener
 {
-	private static boolean waiting = false;
-	private static String playerName;
+	private static List<Player> currentlyKilling = new ArrayList<Player>();
 	public static Plugin plugin;
 	
 	@Override
 	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
 	{
-		if(waiting)
+		if(currentlyKilling.contains(p))
 		{
-			Utilities.sendChatMessage(p, "A player is currently killing an animal and the magic invisible killing device can't handle that much. Please try again later.");
+			Utilities.sendChatMessage(p, "You can't kill multiple animals at a time. Please kill an animal or wait, then issue the command again.");
 			return;
 		}
-
+		
 		plugin = pl;
-		playerName = p.getName();
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to kill. " + ChatColor.RED + " THIS IS IRREVERSIBLE!!");
-		waiting = true;
+		currentlyKilling.add(p);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
 			{
-				if(waiting)
+				if(currentlyKilling.contains(p))
 				{
-					waiting = false;
+					currentlyKilling.remove(p);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to kill. Use /()/ae kill()/ to start again.");
 				}
 			}
@@ -53,7 +52,7 @@ public class Kill implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
-		if(waiting && event.getPlayer().getName().equals(playerName))
+		if(currentlyKilling.contains(event.getPlayer()))
 		{
 			Entity entity = event.getRightClicked();
 
@@ -77,7 +76,7 @@ public class Kill implements IAECommand,Listener
 			}
 
 			entity.remove();
-			waiting = false;
+			currentlyKilling.remove(event.getPlayer());
 			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal killed.");
 			event.setCancelled(true);

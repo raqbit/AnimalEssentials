@@ -7,11 +7,10 @@ All the essentials for your animals.
 
 1. Ability to click the entity name in chat, after issuing /ae find <name>, to teleport to it.
 2. Particles for /ae name | /ae kill
-3. Make multiple players able to issue the same command at a time (HashMap?)
-4. (XP-System)
-5. Animal Protect
-6. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
-7. Define amount of kills (eg. /ae kill 6)
+3. (XP-System)
+4. Animal Protect
+5. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
+6. Define amount of kills (eg. /ae kill 6)
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport] (https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -28,6 +27,7 @@ All the essentials for your animals.
 12. /ae tame (Tames the the right-clicked animal.)
 13. Replace "a(n)" with the correct thing
 14. /ae spawn (With GUI.)
+15. Make multiple players able to issue the same command at a time (List!)
 
 -----
 

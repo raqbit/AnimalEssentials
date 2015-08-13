@@ -1,6 +1,7 @@
 package tk.justramon.animalessentials.cmd;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -24,30 +25,28 @@ import tk.justramon.animalessentials.util.Utilities;
 
 public class Tame implements IAECommand,Listener
 {
-	private static boolean waiting = false;
-	private static String playerName;
+	private static List<Player> currentlyTaming = new ArrayList<Player>();
 	public static Plugin plugin;
 
 	@Override
 	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
 	{
-		if(waiting)
+		if(currentlyTaming.contains(p))
 		{
-			Utilities.sendChatMessage(p, "A player is currently taming an animal and the magic invisible taming device can't handle that much. Please try again later.");
+			Utilities.sendChatMessage(p, "You can't tame multiple animals at a time. Please tame an animal or wait, then issue the command again.");
 			return;
 		}
 
 		plugin = pl;
-		playerName = p.getName();
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to tame.");
-		waiting = true;
+		currentlyTaming.add(p);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
 			{
-				if(waiting)
+				if(currentlyTaming.contains(p))
 				{
-					waiting = false;
+					currentlyTaming.remove(p);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to tame. Use /()/ae tame()/ to start again.");
 				}
 			}
@@ -57,7 +56,7 @@ public class Tame implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
-		if(waiting && event.getPlayer().getName().equals(playerName))
+		if(currentlyTaming.contains(event.getPlayer()))
 		{
 			Entity entity = event.getRightClicked();
 
@@ -101,7 +100,7 @@ public class Tame implements IAECommand,Listener
 				((CraftOcelot)entity).setCatType(t);
 			}
 			
-			waiting = false;
+			currentlyTaming.remove(event.getPlayer());
 			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal tamed.");
 			event.setCancelled(true);

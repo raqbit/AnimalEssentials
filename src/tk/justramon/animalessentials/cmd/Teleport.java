@@ -3,6 +3,7 @@ package tk.justramon.animalessentials.cmd;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -26,39 +27,31 @@ import tk.justramon.animalessentials.util.Utilities;
 
 public class Teleport implements IAECommand,Listener
 {
-	private static boolean waiting = false;
-	private static File folder;
-	private static File f;
-	private static YamlConfiguration yaml;
-	private static List<String> homes;
-	private static String destination;
-	private static String playerName;
-	private static boolean tpToPlayer;
+	private static HashMap<Player, Teleporting> currentlyTeleporting = new HashMap<Player, Teleporting>();
 	public static Plugin plugin;
 
 	@Override
 	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
 	{
-		if(waiting)
+		if(currentlyTeleporting.containsKey(p))
 		{
-			Utilities.sendChatMessage(p, "A player is currently teleporting an animal and the magic invisible teleportation device can't handle that much. Please try again later.");
+			Utilities.sendChatMessage(p, "You can't teleport multiple animals at a time. Please teleport an animal or wait, then issue the command again.");
 			return;
 		}
 
-		plugin = pl;
-		destination = args[1];
-		playerName = p.getName();
-		folder = new File(pl.getDataFolder(), "playerStorage");
-		f = new File(pl.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
-
+		String destination = args[1];
+		File folder = new File(pl.getDataFolder(), "playerStorage");
+		File f = new File(pl.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
+		boolean tpToPlayer = false;
+		
 		if(!folder.exists())
 			folder.mkdirs();
 
 		if(!f.exists())
 			f.createNewFile();
 
-		yaml = YamlConfiguration.loadConfiguration(f);
-		homes = yaml.getStringList("homes");
+		YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
+		List<String> homes = yaml.getStringList("homes");
 
 		if(!homes.contains(destination))
 		{
@@ -73,15 +66,16 @@ public class Teleport implements IAECommand,Listener
 		else
 			tpToPlayer = false;
 
+		plugin = pl;
+		currentlyTeleporting.put(p, new Teleporting(yaml, destination, tpToPlayer));
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to teleport.");
-		waiting = true;
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
 			{
-				if(waiting)
+				if(currentlyTeleporting.containsKey(p))
 				{
-					waiting = false;
+					currentlyTeleporting.remove(p);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to teleport. Use /()/ae tp()/ to start again.");
 				}
 			}
@@ -91,7 +85,7 @@ public class Teleport implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(final PlayerInteractEntityEvent event)
 	{
-		if(waiting && event.getPlayer().getName().equals(playerName))
+		if(currentlyTeleporting.containsKey(event.getPlayer()))
 		{
 			final Entity entity = event.getRightClicked();
 
@@ -114,19 +108,23 @@ public class Teleport implements IAECommand,Listener
 
 			for(Player player : Bukkit.getOnlinePlayers())
 			{
-				((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
+				((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
 			}
 
 			Bukkit.getScheduler().runTaskLater(plugin, new Runnable(){
 				@Override
 				public void run()
 				{
+					Teleporting t = currentlyTeleporting.get(event.getPlayer());
+					YamlConfiguration yaml = t.getYamlConfiguration();
+					String destination = t.getDestination();
+					
 					for(Player player : Bukkit.getOnlinePlayers())
 					{
 						player.playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
 					}
 
-					if(tpToPlayer)
+					if(t.shouldTpToPlayer())
 					{
 						entity.teleport(Bukkit.getPlayer(destination));
 						((CraftAnimals)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
@@ -134,8 +132,7 @@ public class Teleport implements IAECommand,Listener
 					else
 						entity.teleport(new Location(Bukkit.getWorld(yaml.getString(destination + ".world")), yaml.getDouble(destination + ".x"), yaml.getDouble(destination + ".y"), yaml.getDouble(destination + ".z")));
 				
-					waiting = false;
-					tpToPlayer = false;
+					currentlyTeleporting.remove(event.getPlayer());
 					Bukkit.getScheduler().cancelTasks(plugin);
 					Utilities.sendChatMessage(event.getPlayer(), "Animal teleported.");
 				}
@@ -181,5 +178,40 @@ public class Teleport implements IAECommand,Listener
 	public String getSyntax()
 	{
 		return "<homeName|playerName>";
+	}
+	
+	public class Teleporting
+	{
+		private YamlConfiguration yaml;
+		private String destination;
+		private boolean tpToPlayer;
+		
+		/**
+		 * Saves data for an animal to be teleported.
+		 * @param y The File of the player's AnimalEssentials data as a Yaml file
+		 * @param d The destination to teleport the animal to (homename/playername)
+		 * @param ttip Whether the animal should be teleported to a player
+		 */
+		public Teleporting(YamlConfiguration y, String d, boolean ttip) //ttip, get the joke? no? ... :( <- That means bl4ck is sad :(
+		{
+			yaml = y;
+			destination = d;
+			tpToPlayer = ttip;
+		}
+		
+		public YamlConfiguration getYamlConfiguration()
+		{
+			return yaml;
+		}
+		
+		public String getDestination()
+		{
+			return destination;
+		}
+		
+		public boolean shouldTpToPlayer()
+		{
+			return tpToPlayer;
+		}
 	}
 }

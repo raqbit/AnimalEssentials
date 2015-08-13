@@ -1,6 +1,7 @@
 package tk.justramon.animalessentials.cmd;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,30 +24,28 @@ import tk.justramon.animalessentials.util.Utilities;
 
 public class Heal implements IAECommand,Listener
 {
-	private static boolean waiting = false;
-	private static String playerName;
+	private static List<Player> currentlyHealing = new ArrayList<Player>();
 	public static Plugin plugin;
-	
+
 	@Override
 	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
 	{
-		if(waiting)
+		if(currentlyHealing.contains(p))
 		{
-			Utilities.sendChatMessage(p, "A player is currently healing an animal and the magic invisible healing device can't handle that much. Please try again later.");
+			Utilities.sendChatMessage(p, "You can't heal multiple animals at a time. Please heal an animal or wait, then issue the command again.");
 			return;
 		}
-
+		
 		plugin = pl;
-		playerName = p.getName();
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to heal.");
-		waiting = true;
+		currentlyHealing.add(p);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
 			{
-				if(waiting)
+				if(currentlyHealing.contains(p))
 				{
-					waiting = false;
+					currentlyHealing.remove(p);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to heal. Use /()/ae heal()/ to start again.");
 				}
 			}
@@ -56,7 +55,7 @@ public class Heal implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(final PlayerInteractEntityEvent event)
 	{
-		if(waiting && event.getPlayer().getName().equals(playerName))
+		if(currentlyHealing.contains(event.getPlayer()))
 		{
 			final Entity entity = event.getRightClicked();
 
@@ -66,7 +65,7 @@ public class Heal implements IAECommand,Listener
 				event.setCancelled(true);
 				return;
 			}
-			
+
 			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't heal it.");
@@ -83,9 +82,9 @@ public class Heal implements IAECommand,Listener
 				player.playSound(entity.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
 
 			}
-			
+
 			((CraftAnimals)entity).setHealth(((CraftAnimals)entity).getMaxHealth());
-			waiting = false;
+			currentlyHealing.remove(event.getPlayer());
 			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal healed.");
 			event.setCancelled(true);

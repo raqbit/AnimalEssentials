@@ -1,6 +1,7 @@
 package tk.justramon.animalessentials.cmd;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,30 +20,28 @@ import tk.justramon.animalessentials.util.Utilities;
 
 public class Owner implements IAECommand,Listener
 {
-	private static boolean waiting = false;
-	private static String playerName;
+	private static List<Player> currentlyChecking = new ArrayList<Player>();
 	public static Plugin plugin;
 
 	@Override
 	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
 	{
-		if(waiting)
+		if(currentlyChecking.contains(p))
 		{
-			Utilities.sendChatMessage(p, "A player is currently checking the owner of an animal and the magic invisible ownerchecking device can't handle that much. Please try again later.");
+			Utilities.sendChatMessage(p, "You can't check the owner of multiple animals at a time. Please check the owner of one animal or wait, then issue the command again.");
 			return;
 		}
 
 		plugin = pl;
-		playerName = p.getName();
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to check the owner of.");
-		waiting = true;
+		currentlyChecking.add(p);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
 			{
-				if(waiting)
+				if(currentlyChecking.contains(p))
 				{
-					waiting = false;
+					currentlyChecking.remove(p);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to check the owner of. Use /()/ae owner()/ to start again.");
 				}
 			}
@@ -52,7 +51,7 @@ public class Owner implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(final PlayerInteractEntityEvent event)
 	{
-		if(waiting && event.getPlayer().getName().equals(playerName))
+		if(currentlyChecking.contains(event.getPlayer()))
 		{
 			final Entity entity = event.getRightClicked();
 
@@ -65,18 +64,18 @@ public class Owner implements IAECommand,Listener
 
 			if(((Tameable)entity).isTamed())
 			{
-			if(((Tameable)entity).getOwner().getName().equals(playerName))
-				Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getName() + "()/ is owned by /()you()/.");
-			else
-				Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getName() + "()/ is owned by /()" + ((Tameable)entity).getOwner().getName() + "()/.");
+				if(((Tameable)entity).getOwner().getName().equals(event.getPlayer().getName()))
+					Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getName() + "()/ is owned by /()you()/.");
+				else
+					Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getName() + "()/ is owned by /()" + ((Tameable)entity).getOwner().getName() + "()/.");
 			}
 			else
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getName() + "()/ is not tamed.");
 				return;
 			}
-			
-			waiting = false;
+
+			currentlyChecking.remove(event.getPlayer());
 			Bukkit.getScheduler().cancelTasks(plugin);
 			event.setCancelled(true);
 		}

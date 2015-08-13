@@ -2,6 +2,7 @@ package tk.justramon.animalessentials.cmd;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -23,32 +24,28 @@ import tk.justramon.animalessentials.util.Utilities;
 
 public class Name implements IAECommand,Listener
 {
-	private static boolean waiting = false;
-	private static String playerName;
+	public static HashMap<Player, String> currentlyNaming = new HashMap<Player, String>();
 	public static Plugin plugin;
-	private static String animalName;
 
 	@Override
 	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
 	{
-		if(waiting)
+		if(currentlyNaming.containsKey(p))
 		{
-			Utilities.sendChatMessage(p, "A player is currently naming an animal and the magic invisible naming device can't handle that much. Please try again later.");
+			Utilities.sendChatMessage(p, "You can't name multiple animals at a time. Please name an animal or wait, then issue the command again.");
 			return;
 		}
 
 		plugin = pl;
-		playerName = p.getName();
-		animalName = args[1];
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to name.");
-		waiting = true;
+		currentlyNaming.put(p, args[1]);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
 			{
-				if(waiting)
+				if(currentlyNaming.containsKey(p))
 				{
-					waiting = false;
+					currentlyNaming.remove(p);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to name. Use /()/ae name()/ to start again.");
 				}
 			}
@@ -58,7 +55,7 @@ public class Name implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
-		if(waiting && event.getPlayer().getName().equals(playerName))
+		if(currentlyNaming.containsKey(event.getPlayer()))
 		{
 			Entity entity = event.getRightClicked();
 
@@ -76,9 +73,9 @@ public class Name implements IAECommand,Listener
 				return;
 			}
 
-			if(entity.getCustomName() != null && entity.getCustomName().equals(animalName))
+			if(entity.getCustomName() != null && entity.getCustomName().equals(currentlyNaming.get(event.getPlayer())))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "The animal is already named /()" + animalName + "()/.");
+				Utilities.sendChatMessage(event.getPlayer(), "The animal is already named /()" + currentlyNaming.get(event.getPlayer()) + "()/.");
 				event.setCancelled(true);
 				return;
 			}
@@ -108,8 +105,8 @@ public class Name implements IAECommand,Listener
 				player.playSound(entity.getLocation(), Sound.CHICKEN_EGG_POP, 1.0F, 1.0F);
 			}
 
-			entity.setCustomName(animalName);
-			waiting = false;
+			entity.setCustomName(currentlyNaming.get(event.getPlayer()));
+			currentlyNaming.remove(event.getPlayer());
 			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal named.");
 			event.setCancelled(true);
