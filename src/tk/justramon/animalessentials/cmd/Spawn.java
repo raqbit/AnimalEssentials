@@ -12,6 +12,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftAnimals;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHorse;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftOcelot;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPig;
@@ -1093,7 +1094,8 @@ public class Spawn implements IAECommand,Listener
 			((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
 			player.playSound(entity.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2.0F, 1.0F);
 		}
-		
+
+		((CraftAnimals)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
 		Utilities.sendChatMessage(p, "Animal spawned.");
 	}
 	
