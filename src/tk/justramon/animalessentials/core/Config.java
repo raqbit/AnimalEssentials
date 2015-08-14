@@ -14,6 +14,7 @@ public class Config
 		pl.reloadConfig();
 		pl.getConfig().addDefault("shouldNamingUseNametag", false);
 		pl.getConfig().addDefault("onlyFindOwnAnimals", false);
+		pl.getConfig().addDefault("forceUpdate", true);
 //		pl.getConfig().addDefault("xp.useForTp", true);
 //		pl.getConfig().addDefault("xp.amount", 20);
 		pl.getConfig().options().copyDefaults(true);
