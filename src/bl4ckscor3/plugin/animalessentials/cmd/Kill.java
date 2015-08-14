@@ -61,7 +61,7 @@ public class Kill implements IAECommand,Listener
 
 			if(!Utilities.isAnimal(entity))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't kill this mob, it's " + Utilities.aN(entity.getType().getName(), false) + " /()" + (entity.getType().getName() == "" ? "Player" : entity.getType().getName()) + "()/ and not an animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't kill this mob, it's " + Utilities.aN(entity.getType().getName(), false) + " /()" + (entity.getType().getName() == null? "Player" : entity.getType().getName()) + "()/ and not an animal.");
 				event.setCancelled(true);
 				return;
 			}
