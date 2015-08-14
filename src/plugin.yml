@@ -1,5 +1,5 @@
 name: AnimalEssentials
-main: tk.justramon.animalessentials.core.AnimalEssentials
+main: bl4ckscor3.plugin.animalessentials.core.AnimalEssentials
 version: 0.1.0
 author: [bl4ckscor3,JustRamon]
 description: Several animal essentials such as renaming/teleporting and many others!
