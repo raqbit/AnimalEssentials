@@ -11,11 +11,9 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 ### To-Do
 
 1. Define amount of kills (eg. /ae kill 6)
-2. Update Checker
-3. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
-4. Add WG support to prevent people from spawning animals in areas that are not their's.
-5. Animal Protect
-6. (XP-System)
+2. Add WG support to prevent people from spawning animals in areas that are not their's.
+3. Animal Protect
+4. (XP-System)
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -35,6 +33,7 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 15. Make multiple players able to issue the same command at a time (List!)
 16. Particles for /ae kill | /ae spawn | /ae name
 17. Ability to click the coordinates in chat, after issuing /ae find <name>, to teleport to the animal.
+18. Update Checker
 
 -----
 
@@ -45,6 +44,7 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 4. When doing particle commands, the particles will go to the animal's location on execution. If the animal moves during the animation, the particles will not follow the animal.
 5. /ae tp does not work correctly with multiple players.
 6. A player is a null mob instead of a player.
+7. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
 
 ### Fixed
 

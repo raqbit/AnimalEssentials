@@ -75,7 +75,7 @@ public class AnimalEssentials extends JavaPlugin
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Utilities.sendConsoleMessage(ChatColor.RED + "Could not find update file. Are you connected to the internet?");
 		}
 
 		Utilities.sendConsoleMessage("AnimalEssentials successfully enabled."); //sending this message to the console
