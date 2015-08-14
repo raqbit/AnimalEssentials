@@ -10,12 +10,12 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 
 ### To-Do
 
-1. (XP-System)
-2. Animal Protect
+1. Define amount of kills (eg. /ae kill 6)
+2. Update Checker
 3. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
-4. Define amount of kills (eg. /ae kill 6)
-5. Add WG support to prevent people from spawning animals in areas that are not their's.
-6. Update Checker
+4. Add WG support to prevent people from spawning animals in areas that are not their's.
+5. Animal Protect
+6. (XP-System)
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
