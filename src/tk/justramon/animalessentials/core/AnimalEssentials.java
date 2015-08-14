@@ -43,7 +43,7 @@ public class AnimalEssentials extends JavaPlugin
 	{
 		try
 		{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/rl6f8cif7yf92bw/AnimalEssentials.txt?dl=1").openStream()));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/JustRamon/AnimalEssentials/d368a233fb747a97ab101155ce6291e60017df2f/version.txt").openStream()));
 			String version = reader.readLine();
 			int major = Integer.parseInt(version.split("\\.")[0]);
 			int minor = Integer.parseInt(version.split("\\.")[1]);
