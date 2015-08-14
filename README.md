@@ -46,9 +46,9 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 4. When doing particle commands, the particles will go to the animal's location on execution. If the animal moves during the animation, the particles will not follow the animal.
 5. /ae tp does not work correctly with multiple players.
 6. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
-7. Space names cannot be found or named
 
 ### Fixed
 1. A player is a null mob instead of a player.
+2. Space names cannot be found or named
 
 ---

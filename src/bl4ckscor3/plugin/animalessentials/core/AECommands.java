@@ -78,10 +78,20 @@ public class AECommands implements CommandExecutor
 						{
 							if(p.hasPermission(c.getPermission())) //...so we check if they have the permission needed to execute the command...
 							{
-								if(c.allowedArgLengths().contains(args.length))
-									c.exe(pl, p, cmd, args); //...and if so, we execute it...
+								if(!(c instanceof Find || c instanceof Name)) //we need this because those two can have technically infinite arguments
+								{
+									if(c.allowedArgLengths().contains(args.length))
+										c.exe(pl, p, cmd, args); //...and if so, we execute it...
+									else
+										Help.displayHelp(p, c.getHelp(), c.getAlias(), c.getPermission(), c.getSyntax());
+								}
 								else
-									Help.displayHelp(p, c.getHelp(), c.getAlias(), c.getPermission(), c.getSyntax());
+								{
+									if(c.allowedArgLengths().get(0) <= args.length) //...we check if the argument lengths are correct (including spaces)
+										c.exe(pl, p, cmd, args);
+									else
+										Help.displayHelp(p, c.getHelp(), c.getAlias(), c.getPermission(), c.getSyntax());
+								}
 							}
 							else
 								Utilities.sendChatMessage(p, "You do not have the required permission to execute this command."); //...and if not we send this message to the player...

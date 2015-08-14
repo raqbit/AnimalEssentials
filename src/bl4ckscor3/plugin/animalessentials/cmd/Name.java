@@ -42,7 +42,7 @@ public class Name implements IAECommand,Listener
 
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to name.");
-		currentlyNaming.put(p, args[1]);
+		currentlyNaming.put(p, putNameTogether(args));
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
@@ -77,9 +77,9 @@ public class Name implements IAECommand,Listener
 				return;
 			}
 
-			if(entity.getCustomName() != null && entity.getCustomName().equals(currentlyNaming.get(event.getPlayer())))
+			if(entity.getCustomName() != null && entity.getCustomName().equalsIgnoreCase(currentlyNaming.get(event.getPlayer())))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "The animal is already named /()" + currentlyNaming.get(event.getPlayer()) + "()/.");
+				Utilities.sendChatMessage(event.getPlayer(), "The animal is already named /()" + entity.getCustomName() + "()/.");
 				event.setCancelled(true);
 				return;
 			}
@@ -121,6 +121,18 @@ public class Name implements IAECommand,Listener
 		}
 	}
 
+	private String putNameTogether(String[] args)
+	{
+		String s = "";
+		
+		for(int i = 1; i < args.length; i++)
+		{
+			s += args[i] + " ";
+		}
+		
+		return s.trim();
+	}
+	
 	@Override
 	public String getAlias()
 	{

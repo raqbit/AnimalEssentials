@@ -23,6 +23,7 @@ public class Find implements IAECommand
 	{
 		HashMap<World,List<Entity>> entityWorlds = new HashMap<World,List<Entity>>();
 		List<Entity> foundAnimals = new ArrayList<Entity>();
+		String name = putNameTogether(args);
 		
 		for(World w : pl.getServer().getWorlds()) //looping through all the worlds on the server
 		{
@@ -39,7 +40,7 @@ public class Find implements IAECommand
 				if(e.getCustomName() == null) //just continuing with the next entity if it doesn't have a custom name
 					continue;
 				
-				if(!e.getCustomName().equalsIgnoreCase(args[1])) //just continuing with the next entity if it's not having the name we're searching for
+				if(!e.getCustomName().equalsIgnoreCase(name)) //just continuing with the next entity if it's not having the name we're searching for
 					continue;
 				
 				if(pl.getConfig().getBoolean("onlyFindOwnAnimals"))
@@ -55,7 +56,7 @@ public class Find implements IAECommand
 		}
 		
 		if(foundAnimals.isEmpty())
-			Utilities.sendChatMessage(p, "No animal was found with the name /()" + args[1] + "()/.");
+			Utilities.sendChatMessage(p, "No animal was found with the name /()" + name + "()/.");
 		else
 		{
 			for(Entity e : foundAnimals)
@@ -78,6 +79,18 @@ public class Find implements IAECommand
 		}
 	}
 
+	private String putNameTogether(String[] args)
+	{
+		String s = "";
+		
+		for(int i = 1; i < args.length; i++)
+		{
+			s += args[i] + " ";
+		}
+		
+		return s.trim();
+	}
+	
 	@Override
 	public String getAlias()
 	{
