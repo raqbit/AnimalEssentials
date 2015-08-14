@@ -939,17 +939,17 @@ public class Spawn implements IAECommand,Listener
 		}
 		else if(slot == 7) //spawning
 		{
-			LivingEntity c = (LivingEntity)p.getWorld().spawnEntity(p.getLocation(), type);
+			LivingEntity e = (LivingEntity)p.getWorld().spawnEntity(p.getLocation(), type);
 
 			if(g.hasCustomName())
-				c.setCustomName(g.getName());
+				e.setCustomName(g.getName());
 
 			if(g.isBaby())
-				((Ageable)c).setBaby();
+				((Ageable)e).setBaby();
 
 			removeFromLists(p);
 			p.closeInventory();
-			Utilities.sendChatMessage(p, "Animal spawned.");
+			sendParticlesAndMsg(p, e);
 		}
 		else if(slot == 8) //back
 			openMain(p);
