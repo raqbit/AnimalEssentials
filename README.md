@@ -6,7 +6,7 @@ All the essentials for your animals.
 ### To-Do
 
 1. Ability to click the entity name in chat, after issuing /ae find <name>, to teleport to it.
-2. Particles for /ae name | /ae spawn
+2. Particles for /ae name
 3. (XP-System)
 4. Animal Protect
 5. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
@@ -29,7 +29,7 @@ All the essentials for your animals.
 13. Replace "a(n)" with the correct thing
 14. /ae spawn (With GUI.)
 15. Make multiple players able to issue the same command at a time (List!)
-16. Particles for /ae kill
+16. Particles for /ae kill | /ae spawn
 
 -----
 

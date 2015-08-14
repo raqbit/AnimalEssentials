@@ -6,17 +6,21 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHorse;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftOcelot;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPig;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftRabbit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSheep;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftWolf;
 import org.bukkit.entity.Ageable;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
@@ -32,6 +36,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import tk.justramon.animalessentials.spawning.Spawning;
 import tk.justramon.animalessentials.spawning.Spawning.EnumSpawningType;
 import tk.justramon.animalessentials.spawning.SpawningHorse;
@@ -215,7 +221,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
-				Utilities.sendChatMessage(p, "Animal spawned.");
+				sendParticlesAndMsg(p, h);
 			}
 			else if(slot == 13) //back
 				openMain(p);
@@ -273,7 +279,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
-				Utilities.sendChatMessage(p, "Animal spawned.");
+				sendParticlesAndMsg(p, o);
 			}
 			else if(slot == 8) //back
 				openMain(p);
@@ -317,7 +323,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
-				Utilities.sendChatMessage(p, "Animal spawned.");
+				sendParticlesAndMsg(p, pig);
 			}
 			else if(slot == 8) //back
 				openMain(p);
@@ -356,7 +362,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
-				Utilities.sendChatMessage(p, "Animal spawned.");
+				sendParticlesAndMsg(p, r);
 			}
 			else if(slot == 8) //back
 				openMain(p);
@@ -395,7 +401,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
-				Utilities.sendChatMessage(p, "Animal spawned.");
+				sendParticlesAndMsg(p, sheep);
 			}
 			else if(slot == 8) //back
 			{
@@ -454,7 +460,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
-				Utilities.sendChatMessage(p, "Animal spawned.");
+				sendParticlesAndMsg(p, w);
 			}
 			else if(slot == 8) //back
 				openMain(p);
@@ -1070,6 +1076,25 @@ public class Spawn implements IAECommand,Listener
 			currentlyNaming.remove(p);
 	}
 
+	/**
+	 * Spawns particles, plays a sound and sends a message after the animal has spawned
+	 * @param p The player who spawned the animal
+	 * @param entity The animal which got spawned
+	 */
+	private void sendParticlesAndMsg(Player p, Entity entity)
+	{
+		//particle type | show particles 65k blocks away? (false = 255 block radius) | x coord of particle | y coord | z coord | x offset (area of effect) | y offset | z offset | speed of particles (some particles move, some don't) | amount of particles (the bigger the offset the bigger this has to be) | ?
+		PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, false, (float)entity.getLocation().getX(), (float)entity.getLocation().getY(), (float)entity.getLocation().getZ(), 0.5F, 1.0F, 0.5F, 10.0F, 1000, null);
+
+		for(Player player : Bukkit.getOnlinePlayers())
+		{
+			((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
+			player.playSound(entity.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2.0F, 1.0F);
+		}
+		
+		Utilities.sendChatMessage(p, "Animal spawned.");
+	}
+	
 	@Override
 	public String getAlias()
 	{
