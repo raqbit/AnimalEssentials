@@ -10,6 +10,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import tk.justramon.animalessentials.core.AnimalEssentials;
 import tk.justramon.animalessentials.util.Utilities;
 
@@ -99,9 +103,13 @@ public class Name implements IAECommand,Listener
 					}
 				}
 			}
+			
+			//particle type | show particles 65k blocks away? (false = 255 block radius) | x coord of particle | y coord | z coord | x offset (area of effect) | y offset | z offset | speed of particles (some particles move, some don't) | amount of particles (the bigger the offset the bigger this has to be) | ?
+			PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.CLOUD, false, (float)entity.getLocation().getX(), (float)entity.getLocation().getY() + ((CraftEntity)entity).getHandle().getHeadHeight() + 0.5F, (float)entity.getLocation().getZ(), 0.0F, 0.0F, 0.0F, 0.05F, 25, null);
 
 			for(Player player : Bukkit.getOnlinePlayers())
 			{
+				((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
 				player.playSound(entity.getLocation(), Sound.CHICKEN_EGG_POP, 1.0F, 1.0F);
 			}
 

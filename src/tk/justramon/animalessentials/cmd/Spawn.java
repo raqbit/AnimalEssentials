@@ -689,6 +689,8 @@ public class Spawn implements IAECommand,Listener
 			inv.setItem(2, getItemWithName(Material.CLAY, (short)0, (s.colorToInt() == -1 ? "Collar Color" : colorNames[s.colorToInt()]), null));
 			openWolf(p);
 		}
+		else
+			return;
 	}
 
 	private void openMain(Player p)

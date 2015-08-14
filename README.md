@@ -6,12 +6,11 @@ All the essentials for your animals.
 ### To-Do
 
 1. Ability to click the entity name in chat, after issuing /ae find <name>, to teleport to it.
-2. Particles for /ae name
-3. (XP-System)
-4. Animal Protect
-5. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
-6. Define amount of kills (eg. /ae kill 6)
-7. Add WG support to prevent people from spawning animals in areas that are not their's.
+2. (XP-System)
+3. Animal Protect
+4. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
+5. Define amount of kills (eg. /ae kill 6)
+6. Add WG support to prevent people from spawning animals in areas that are not their's.
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport] (https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -29,13 +28,14 @@ All the essentials for your animals.
 13. Replace "a(n)" with the correct thing
 14. /ae spawn (With GUI.)
 15. Make multiple players able to issue the same command at a time (List!)
-16. Particles for /ae kill | /ae spawn
+16. Particles for /ae kill | /ae spawn | /ae name
 
 -----
 
 ### Bugs
-1. /ae help | /ae | /ae <anything> <--- Faulty output if issued through console
+1. /ae help | /ae | /ae \<anything\> <--- Faulty output if issued through console
 2. Multiple /ae commands can be issues at the same time
 3. Stacktrace when clicking outside of inventory
-4. When doing /ae tp [home], the particles will go to the animal's location on execution. If the animal moves during the animation, the particles will not follow the animal.
+4. When doing particle commands, the particles will go to the animal's location on execution. If the animal moves during the animation, the particles will not follow the animal.
 5. /ae tp does not work correctly with multiple players.
+6. A player is a null mob instead of a player.
