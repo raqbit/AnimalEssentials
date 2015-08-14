@@ -215,6 +215,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
+				Utilities.sendChatMessage(p, "Animal spawned.");
 			}
 			else if(slot == 13) //back
 				openMain(p);
@@ -272,6 +273,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
+				Utilities.sendChatMessage(p, "Animal spawned.");
 			}
 			else if(slot == 8) //back
 				openMain(p);
@@ -315,6 +317,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
+				Utilities.sendChatMessage(p, "Animal spawned.");
 			}
 			else if(slot == 8) //back
 				openMain(p);
@@ -353,6 +356,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
+				Utilities.sendChatMessage(p, "Animal spawned.");
 			}
 			else if(slot == 8) //back
 				openMain(p);
@@ -391,9 +395,13 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
+				Utilities.sendChatMessage(p, "Animal spawned.");
 			}
 			else if(slot == 8) //back
+			{
 				openMain(p);
+				return;
+			}
 		}
 		else if(inv.getName().equals("Spawn Wolf"))
 		{
@@ -446,6 +454,7 @@ public class Spawn implements IAECommand,Listener
 
 				removeFromLists(p);
 				p.closeInventory();
+				Utilities.sendChatMessage(p, "Animal spawned.");
 			}
 			else if(slot == 8) //back
 				openMain(p);
@@ -932,6 +941,7 @@ public class Spawn implements IAECommand,Listener
 
 			removeFromLists(p);
 			p.closeInventory();
+			Utilities.sendChatMessage(p, "Animal spawned.");
 		}
 		else if(slot == 8) //back
 			openMain(p);
