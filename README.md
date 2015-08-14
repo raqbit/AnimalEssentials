@@ -13,7 +13,9 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 1. Define amount of kills (eg. /ae kill 6)
 2. Add WG support to prevent people from spawning animals in areas that are not their's.
 3. Animal Protect
-4. (XP-System)
+4. Money System
+5. /ae clone (Clones the right-clicked animal)
+6. /aetp x y z (Teleport command used to have find teleport permissions)
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -45,6 +47,7 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 5. /ae tp does not work correctly with multiple players.
 6. A player is a null mob instead of a player.
 7. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
+8. Space names cannot be found or named
 
 ### Fixed
 
