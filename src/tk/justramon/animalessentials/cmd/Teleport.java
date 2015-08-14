@@ -23,6 +23,7 @@ import org.bukkit.plugin.Plugin;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import tk.justramon.animalessentials.core.AnimalEssentials;
+import tk.justramon.animalessentials.teleporting.Teleporting;
 import tk.justramon.animalessentials.util.Utilities;
 
 public class Teleport implements IAECommand,Listener
@@ -178,40 +179,5 @@ public class Teleport implements IAECommand,Listener
 	public String getSyntax()
 	{
 		return "<homeName|playerName>";
-	}
-	
-	public class Teleporting
-	{
-		private YamlConfiguration yaml;
-		private String destination;
-		private boolean tpToPlayer;
-		
-		/**
-		 * Saves data for an animal to be teleported.
-		 * @param y The File of the player's AnimalEssentials data as a Yaml file
-		 * @param d The destination to teleport the animal to (homename/playername)
-		 * @param ttip Whether the animal should be teleported to a player
-		 */
-		public Teleporting(YamlConfiguration y, String d, boolean ttip) //ttip, get the joke? no? ... :( <- That means bl4ck is sad :(
-		{
-			yaml = y;
-			destination = d;
-			tpToPlayer = ttip;
-		}
-		
-		public YamlConfiguration getYamlConfiguration()
-		{
-			return yaml;
-		}
-		
-		public String getDestination()
-		{
-			return destination;
-		}
-		
-		public boolean shouldTpToPlayer()
-		{
-			return tpToPlayer;
-		}
 	}
 }

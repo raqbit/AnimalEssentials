@@ -16,7 +16,7 @@ public class Utilities
 	 * Gets the instance of this plugin so we don't need to pass that argument into every method
 	 */
 	private static final AnimalEssentials pl = AnimalEssentials.instance;
-	
+
 	/**
 	 * Sends a message to the console
 	 * @param msg The message to send
@@ -26,7 +26,7 @@ public class Utilities
 		msg = msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + ChatColor.DARK_GREEN + pl.getDescription().getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
 	}
-	
+
 	/**
 	 * Sends a message to a player
 	 * @param p The player to send the message to
@@ -60,7 +60,7 @@ public class Utilities
 
 		return untameableOwned;
 	}
-	
+
 	/**
 	 * Checks if the given entity is an animal (as in: not a zombie/creeper etc)
 	 * @param entity The entity to check
@@ -83,7 +83,7 @@ public class Utilities
 			pl.getServer().getPluginManager().registerEvents(l, pl);
 		}
 	}
-	
+
 	/**
 	 * Checks if a player is online.
 	 * 
@@ -99,7 +99,7 @@ public class Utilities
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Formats coordinates into a nice String
 	 * @param x The x coord
@@ -111,7 +111,7 @@ public class Utilities
 	{
 		return "/()X: ()/" + x + "/() Y: ()/" + y + "/() Z: ()/" + z + "";
 	}
-	
+
 	/**
 	 * Determines wether to use "a" or "an"
 	 * @param word The word in question
@@ -119,16 +119,23 @@ public class Utilities
 	 */
 	public static String aN(String word)
 	{
-		switch(word.charAt(0))
+		try
 		{
-			case 'a': case 'A':
-			case 'e': case 'E':
-			case 'i': case 'I':
-			case 'o': case 'O':
-			case 'u': case 'U':
-				return "an";
-			default:
-				return "a";
+			switch(word.charAt(0))
+			{
+				case 'a': case 'A':
+				case 'e': case 'E':
+				case 'i': case 'I':
+				case 'o': case 'O':
+				case 'u': case 'U':
+					return "an";
+				default:
+					return "a";
+			}
+		}
+		catch(NullPointerException e)
+		{
+			return "a";
 		}
 	}
 }
