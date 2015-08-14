@@ -6,12 +6,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import mkremins.fanciful.FancyMessage;
 import tk.justramon.animalessentials.util.Utilities;
 
 public class Find implements IAECommand
@@ -58,7 +60,20 @@ public class Find implements IAECommand
 		{
 			for(Entity e : foundAnimals)
 			{
-				Utilities.sendChatMessage(p, "A /()" + e.getType().getName() + "()/ with the name /()" + args[1] + "()/ was spotted in world /()" + e.getWorld().getName() + "()/ at the following coordinates: " + Utilities.printCoords((int)e.getLocation().getX(), (int)e.getLocation().getY(), (int)e.getLocation().getZ()));
+				int x = (int)e.getLocation().getX();
+				int y = (int)e.getLocation().getY();
+				int z = (int)e.getLocation().getZ();
+				FancyMessage msg = new FancyMessage(Utilities.getPrefix())
+						.then(Utilities.aN(e.getType().getName(), true) + " ")
+						.then(e.getType().getName()).color(ChatColor.BLUE)
+						.then(" with the name ")
+						.then(e.getCustomName()).color(ChatColor.BLUE)
+						.then(" was spotted in world ")
+						.then(e.getWorld().getName()).color(ChatColor.BLUE)
+						.then(" at the following coordinates: ")
+						.then(ChatColor.BLUE + "X: " + ChatColor.RESET + x + ChatColor.BLUE + " Y: " + ChatColor.RESET + y + ChatColor.BLUE + " Z: " + ChatColor.RESET + z).tooltip("Teleport to the animal.").command("/tp " + p.getName() + " " + x + " " + y + " " + z);
+				
+				msg.send(p);
 			}
 		}
 	}

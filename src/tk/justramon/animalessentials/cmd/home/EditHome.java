@@ -41,7 +41,7 @@ public class EditHome implements IAECommand
 		yaml.set(args[1] + ".y", p.getLocation().getY());
 		yaml.set(args[1] + ".z", p.getLocation().getZ());
 		yaml.save(f); //saving the file after editing it
-		Utilities.sendChatMessage(p, "Home /()" + args[1] + "()/ has been edited in world /()" + yaml.getString(args[1] + ".world") + "()/ at these coordinates: " + Utilities.printCoords(yaml.getInt(args[1] + ".x"), yaml.getInt(args[1] + ".y"), yaml.getInt(args[1] + ".z")));
+		Utilities.sendChatMessage(p, "Home /()" + args[1] + "()/ has been edited in world /()" + yaml.getString(args[1] + ".world") + "()/ at these coordinates: " + Utilities.getFormattedCoordinates(yaml.getInt(args[1] + ".x"), yaml.getInt(args[1] + ".y"), yaml.getInt(args[1] + ".z")));
 	}
 
 	@Override

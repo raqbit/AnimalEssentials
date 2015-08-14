@@ -3,17 +3,22 @@ All the essentials for your animals.
 
 ----
 
+SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssentials/blob/master/MIT-LICENSE.md):
+- ["fanciful" by mkremins](https://github.com/mkremins/fanciful)
+
+----
+
 ### To-Do
 
-1. Ability to click the entity name in chat, after issuing /ae find <name>, to teleport to it.
-2. (XP-System)
-3. Animal Protect
-4. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
-5. Define amount of kills (eg. /ae kill 6)
-6. Add WG support to prevent people from spawning animals in areas that are not their's.
+1. (XP-System)
+2. Animal Protect
+3. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
+4. Define amount of kills (eg. /ae kill 6)
+5. Add WG support to prevent people from spawning animals in areas that are not their's.
+6. Update Checker
 
 ### Done
-1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport] (https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
+1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
 2. /ae reload (Reload the configuration file.)
 3. /ae help (Show the help menu.)
 4. /ae name \<name\> (Name the right-clicked animal.)
@@ -29,6 +34,7 @@ All the essentials for your animals.
 14. /ae spawn (With GUI.)
 15. Make multiple players able to issue the same command at a time (List!)
 16. Particles for /ae kill | /ae spawn | /ae name
+17. Ability to click the coordinates in chat, after issuing /ae find <name>, to teleport to the animal.
 
 -----
 

@@ -24,7 +24,7 @@ public class Utilities
 	public static void sendConsoleMessage(String msg)
 	{
 		msg = msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
-		Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + ChatColor.DARK_GREEN + pl.getDescription().getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
+		Bukkit.getConsoleSender().sendMessage(getPrefix() + msg);
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class Utilities
 	public static void sendChatMessage(Player p, String msg)
 	{
 		msg = msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
-		p.sendMessage(ChatColor.GOLD + "[" + ChatColor.DARK_GREEN + pl.getDescription().getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
+		p.sendMessage(getPrefix() + msg);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Utilities
 	 * @param z The z coord
 	 * @return The finalized coordinates String to print out in a message
 	 */
-	public static String printCoords(int x, int y, int z)
+	public static String getFormattedCoordinates(int x, int y, int z)
 	{
 		return "/()X: ()/" + x + "/() Y: ()/" + y + "/() Z: ()/" + z + "";
 	}
@@ -115,9 +115,10 @@ public class Utilities
 	/**
 	 * Determines wether to use "a" or "an"
 	 * @param word The word in question
+	 * @param beginning Wether "a" or "an" is at the beginning of the sentence
 	 * @return "a" or "an"
 	 */
-	public static String aN(String word)
+	public static String aN(String word, boolean beginning)
 	{
 		try
 		{
@@ -128,14 +129,22 @@ public class Utilities
 				case 'i': case 'I':
 				case 'o': case 'O':
 				case 'u': case 'U':
-					return "an";
+					return beginning ? "An" : "an";
 				default:
-					return "a";
+					return beginning ? "A" : "a";
 			}
 		}
 		catch(NullPointerException e)
 		{
-			return "a";
+			return beginning ? "A" : "a";
 		}
+	}
+	
+	/**
+	 * Returns the default message prefix of the plugin
+	 */
+	public static String getPrefix()
+	{
+		return ChatColor.GOLD + "[" + ChatColor.DARK_GREEN + pl.getDescription().getName() + ChatColor.GOLD + "] " + ChatColor.RESET;
 	}
 }
