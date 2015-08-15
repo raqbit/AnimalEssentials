@@ -38,6 +38,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import bl4ckscor3.plugin.animalessentials.spawning.Spawning;
+import bl4ckscor3.plugin.animalessentials.spawning.Spawning.EnumSpawningType;
 import bl4ckscor3.plugin.animalessentials.spawning.SpawningHorse;
 import bl4ckscor3.plugin.animalessentials.spawning.SpawningOcelot;
 import bl4ckscor3.plugin.animalessentials.spawning.SpawningPig;
@@ -45,7 +46,6 @@ import bl4ckscor3.plugin.animalessentials.spawning.SpawningRabbit;
 import bl4ckscor3.plugin.animalessentials.spawning.SpawningSheep;
 import bl4ckscor3.plugin.animalessentials.spawning.SpawningTameable;
 import bl4ckscor3.plugin.animalessentials.spawning.SpawningWolf;
-import bl4ckscor3.plugin.animalessentials.spawning.Spawning.EnumSpawningType;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
@@ -82,6 +82,9 @@ public class Spawn implements IAECommand,Listener
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event)
 	{
+		if(event.getCurrentItem() == null) //check to prevent stupid stacktraces when clicking outside of inventory
+			return;
+		
 		Player p = (Player)event.getWhoClicked();
 		Inventory inv = event.getClickedInventory();
 		int slot = event.getSlot();
