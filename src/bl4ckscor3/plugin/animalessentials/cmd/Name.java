@@ -77,7 +77,7 @@ public class Name implements IAECommand,Listener
 				return;
 			}
 
-			if(entity.getCustomName() != null && entity.getCustomName().equalsIgnoreCase(currentlyNaming.get(event.getPlayer())))
+			if(entity.getCustomName() != null && entity.getCustomName().equals(currentlyNaming.get(event.getPlayer()))) //we need equals so players can change the casing of the animal
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "The animal is already named /()" + entity.getCustomName() + "()/.");
 				event.setCancelled(true);

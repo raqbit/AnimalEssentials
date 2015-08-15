@@ -10,11 +10,12 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 
 ### To-Do
 
-1. Define amount of kills (eg. /ae kill 6)
-2. Add WG support to prevent people from spawning animals in areas that are not their's.
-3. Animal Protect
-4. Money System
-5. (/ae clone (Clones the right-clicked animal))
+1. Particles for /ae tame
+2. Define amount of kills (eg. /ae kill 6)
+3. Add WG support to prevent people from spawning animals in areas that are not their's.
+4. Animal Protect
+5. Money System
+6. (/ae clone (Clones the right-clicked animal))
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
