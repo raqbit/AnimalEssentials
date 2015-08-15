@@ -8,6 +8,9 @@ commands:
         description: Main command.
         usage: /<command>
         aliases: [ae, animaless, aess]
+    aetp:
+        description: Just a teleport command used for /ae find.
+        usage: /<command>
         
 permissions:
     aess.*:

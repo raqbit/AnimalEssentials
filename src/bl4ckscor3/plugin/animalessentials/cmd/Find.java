@@ -43,7 +43,7 @@ public class Find implements IAECommand
 				if(!e.getCustomName().equalsIgnoreCase(name)) //just continuing with the next entity if it's not having the name we're searching for
 					continue;
 				
-				if(pl.getConfig().getBoolean("onlyFindOwnAnimals"))
+				if(pl.getConfig().getBoolean("find.onlyOwnAnimals"))
 				{
 					if(Utilities.isOwnedBy(p, e, false))
 						foundAnimals.add(e);
@@ -64,15 +64,20 @@ public class Find implements IAECommand
 				int x = (int)e.getLocation().getX();
 				int y = (int)e.getLocation().getY();
 				int z = (int)e.getLocation().getZ();
+				String worldName = e.getWorld().getName();
+				
 				FancyMessage msg = new FancyMessage(Utilities.getPrefix())
 						.then(Utilities.aN(e.getType().getName(), true) + " ")
 						.then(e.getType().getName()).color(ChatColor.BLUE)
 						.then(" with the name ")
 						.then(e.getCustomName()).color(ChatColor.BLUE)
 						.then(" was spotted in world ")
-						.then(e.getWorld().getName()).color(ChatColor.BLUE)
+						.then(worldName).color(ChatColor.BLUE)
 						.then(" at the following coordinates: ")
-						.then(ChatColor.BLUE + "X: " + ChatColor.RESET + x + ChatColor.BLUE + " Y: " + ChatColor.RESET + y + ChatColor.BLUE + " Z: " + ChatColor.RESET + z).tooltip("Teleport to the animal.").command("/tp " + p.getName() + " " + x + " " + y + " " + z);
+						.then(ChatColor.BLUE + "X: " + ChatColor.RESET + x + ChatColor.BLUE + " Y: " + ChatColor.RESET + y + ChatColor.BLUE + " Z: " + ChatColor.RESET + z);
+				
+				if(pl.getConfig().getBoolean("find.allowUsersToTp"))
+					msg.tooltip("Teleport to the animal.").command("/aetp " + worldName + " " + x + " " + y + " " + z + " " + pl.getConfig().getString("find.keyword"));
 				
 				msg.send(p);
 			}
@@ -108,6 +113,7 @@ public class Find implements IAECommand
 	{
 		return new String[]{
 				"Finds an animal with the given name.",
+				"You can only find a named animal, unnamed animals won't work!"
 		};
 	}
 

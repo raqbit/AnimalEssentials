@@ -3,7 +3,10 @@ package bl4ckscor3.plugin.animalessentials.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -57,9 +60,25 @@ public class AECommands implements CommandExecutor
 		{
 			Player p = null;
 
+			if(sender instanceof BlockCommandSender)
+			{
+				Utilities.sendConsoleMessage("Commandblocks are not supported by this plugin.");
+				return true;
+			}
+			
 			if(sender instanceof Player)
 				p  = (Player)sender;
 
+			if(cmd.getName().equals("aetp"))
+			{
+				if(args.length <= 4 || !args[4].equals(pl.getConfig().get("find.keyword"))) //if no fifth argument exists or the fifth argument is not comesFromLink then we don't let the player execute the command
+					Utilities.sendChatMessage(p, "You are not allowed to use this command.");
+				else
+					Bukkit.getPlayer(p.getName()).teleport(new Location(Bukkit.getWorld(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3])));
+				
+				return true;
+			}
+			
 			if(args.length != 0)
 			{
 				for(IAECommand c : cmds) //for each command in the commands list...

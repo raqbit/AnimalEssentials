@@ -28,10 +28,11 @@ public class AnimalEssentials extends JavaPlugin
 	{
 		instance = this; //setting the instance so we can use it in any other class without needing to pass the variable through countless methods
 		getCommand("animalessentials").setExecutor(new AECommands()); //registers the command executor to the command "animalessentials"
+		getCommand("aetp").setExecutor(new AECommands()); //registers the command executor to the command "aetp"
 		Utilities.registerEvents(this, new Teleport(), new Name(), new Kill(), new Heal(), new Owner(), new Tame(), new Spawn());
 		Config.createConfig(this); //setting up the config
 		
-		if(getConfig().getBoolean("checkForUpdate"))
+		if(getConfig().getBoolean("update.check"))
 			checkForUpdate();
 		else
 			Utilities.sendConsoleMessage("AnimalEssentials successfully enabled."); //sending this message to the console
@@ -59,7 +60,7 @@ public class AnimalEssentials extends JavaPlugin
 			
 			if(bugfix > curBugfix || minor > curMinor || major > curMajor)
 			{
-				if(getConfig().getBoolean("forceUpdate"))
+				if(getConfig().getBoolean("update.force"))
 				{
 					Utilities.sendConsoleMessage(ChatColor.RED + "There is a new version (" + major + "." + minor + "." + bugfix + ") available here: "); //TODO: Insert thread link!
 					Utilities.sendConsoleMessage(ChatColor.RED + "It is highly suggested to update to this version!");

@@ -14,8 +14,7 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 2. Add WG support to prevent people from spawning animals in areas that are not their's.
 3. Animal Protect
 4. Money System
-5. /ae clone (Clones the right-clicked animal)
-6. /aetp x y z (Teleport command used to have find teleport permissions)
+5. (/ae clone (Clones the right-clicked animal))
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -36,6 +35,7 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 16. Particles for /ae kill | /ae spawn | /ae name
 17. Ability to click the coordinates in chat, after issuing /ae find <name>, to teleport to the animal.
 18. Update Checker
+19. /aetp \<player\> \<world\> \<x\> \<y\> \<z\> \<keyword\> (Teleport command used to have find teleport permissions)
 
 -----
 
@@ -47,9 +47,11 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 5. When doing particle commands, the particles will go to the animal's location on execution. If the animal moves during the animation, the particles will not follow the animal.
 6. /ae tp does not work correctly with multiple players.
 7. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
+8. /ae name is not case-sensitive
 
 ### Fixed
 1. A player is a null mob instead of a player.
 2. Space names cannot be found or named
+3. Teleporting to animals (ae find) in a different world teleports the player into the world he is currently in and not the one of the animal.
 
 ---
