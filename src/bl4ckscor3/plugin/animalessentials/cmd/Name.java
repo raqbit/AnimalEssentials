@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -43,6 +44,7 @@ public class Name implements IAECommand,Listener
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to name.");
 		currentlyNaming.put(p, putNameTogether(args));
+		AECommands.setIssuingCmd(p, true);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
@@ -50,6 +52,7 @@ public class Name implements IAECommand,Listener
 				if(currentlyNaming.containsKey(p))
 				{
 					currentlyNaming.remove(p);
+					AECommands.setIssuingCmd(p, false);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to name. Use /()/ae name()/ to start again.");
 				}
 			}
@@ -115,6 +118,7 @@ public class Name implements IAECommand,Listener
 
 			entity.setCustomName(currentlyNaming.get(event.getPlayer()));
 			currentlyNaming.remove(event.getPlayer());
+			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal named.");
 			event.setCancelled(true);

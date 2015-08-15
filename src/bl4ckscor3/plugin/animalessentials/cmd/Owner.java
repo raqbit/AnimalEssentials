@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
@@ -35,6 +36,7 @@ public class Owner implements IAECommand,Listener
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to check the owner of.");
 		currentlyChecking.add(p);
+		AECommands.setIssuingCmd(p, true);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
@@ -42,6 +44,7 @@ public class Owner implements IAECommand,Listener
 				if(currentlyChecking.contains(p))
 				{
 					currentlyChecking.remove(p);
+					AECommands.setIssuingCmd(p, false);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to check the owner of. Use /()/ae owner()/ to start again.");
 				}
 			}
@@ -76,6 +79,7 @@ public class Owner implements IAECommand,Listener
 			}
 
 			currentlyChecking.remove(event.getPlayer());
+			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Bukkit.getScheduler().cancelTasks(plugin);
 			event.setCancelled(true);
 		}

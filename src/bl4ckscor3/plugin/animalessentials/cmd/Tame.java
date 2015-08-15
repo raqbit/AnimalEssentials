@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
@@ -40,6 +41,7 @@ public class Tame implements IAECommand,Listener
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to tame.");
 		currentlyTaming.add(p);
+		AECommands.setIssuingCmd(p, true);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
@@ -47,6 +49,7 @@ public class Tame implements IAECommand,Listener
 				if(currentlyTaming.contains(p))
 				{
 					currentlyTaming.remove(p);
+					AECommands.setIssuingCmd(p, false);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to tame. Use /()/ae tame()/ to start again.");
 				}
 			}
@@ -102,6 +105,7 @@ public class Tame implements IAECommand,Listener
 			
 			currentlyTaming.remove(event.getPlayer());
 			Bukkit.getScheduler().cancelTasks(plugin);
+			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal tamed.");
 			event.setCancelled(true);
 		}

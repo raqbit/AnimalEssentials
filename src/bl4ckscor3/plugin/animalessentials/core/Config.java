@@ -12,7 +12,8 @@ public class Config
 	public static void createConfig(Plugin pl)
 	{
 		pl.reloadConfig();
-		pl.getConfig().addDefault("shouldNamingUseNametag", false);
+		pl.getConfig().addDefault("shouldNamingUseNametag", true);
+		pl.getConfig().addDefault("allowMultipleCommands", false);
 		pl.getConfig().addDefault("update.force", true);
 		pl.getConfig().addDefault("update.check", true);
 		pl.getConfig().addDefault("find.onlyOwnAnimals", false);

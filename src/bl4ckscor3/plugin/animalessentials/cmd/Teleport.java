@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.teleporting.Teleporting;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
@@ -69,6 +70,7 @@ public class Teleport implements IAECommand,Listener
 
 		plugin = pl;
 		currentlyTeleporting.put(p, new Teleporting(yaml, destination, tpToPlayer));
+		AECommands.setIssuingCmd(p, true);
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to teleport.");
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
@@ -77,6 +79,7 @@ public class Teleport implements IAECommand,Listener
 				if(currentlyTeleporting.containsKey(p))
 				{
 					currentlyTeleporting.remove(p);
+					AECommands.setIssuingCmd(p, false);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to teleport. Use /()/ae tp()/ to start again.");
 				}
 			}
@@ -134,6 +137,7 @@ public class Teleport implements IAECommand,Listener
 						entity.teleport(new Location(Bukkit.getWorld(yaml.getString(destination + ".world")), yaml.getDouble(destination + ".x"), yaml.getDouble(destination + ".y"), yaml.getDouble(destination + ".z")));
 				
 					currentlyTeleporting.remove(event.getPlayer());
+					AECommands.setIssuingCmd(event.getPlayer(), false);
 					Bukkit.getScheduler().cancelTasks(plugin);
 					Utilities.sendChatMessage(event.getPlayer(), "Animal teleported.");
 				}

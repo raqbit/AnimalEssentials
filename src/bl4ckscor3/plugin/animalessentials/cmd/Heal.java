@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -39,6 +40,7 @@ public class Heal implements IAECommand,Listener
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to heal.");
 		currentlyHealing.add(p);
+		AECommands.setIssuingCmd(p, true);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
@@ -46,6 +48,7 @@ public class Heal implements IAECommand,Listener
 				if(currentlyHealing.contains(p))
 				{
 					currentlyHealing.remove(p);
+					AECommands.setIssuingCmd(p, false);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to heal. Use /()/ae heal()/ to start again.");
 				}
 			}
@@ -93,6 +96,7 @@ public class Heal implements IAECommand,Listener
 			((CraftAnimals)entity).setHealth(((CraftAnimals)entity).getMaxHealth());
 			currentlyHealing.remove(event.getPlayer());
 			Bukkit.getScheduler().cancelTasks(plugin);
+			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal healed.");
 			event.setCancelled(true);
 		}

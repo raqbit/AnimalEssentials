@@ -41,10 +41,8 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 -----
 
 ### Bugs
-1. Multiple /ae commands can be issued at the same time
-2. When doing particle commands, the particles will go to the animal's location on execution. If the animal moves during the animation, the particles will not follow the animal.
-3. /ae tp does not work correctly with multiple players.
-4. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
+1. /ae tp does not work correctly with multiple players.
+2. Fix cancelling of all tasks of the plugin (aka only cancel the task of the current command)
 
 ### Fixed
 1. A player is a null mob instead of a player.
@@ -52,5 +50,6 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 3. Teleporting to animals (ae find) in a different world teleports the player into the world he is currently in and not the one of the animal.
 4. /ae name is not case-sensitive
 5. Stacktrace when clicking outside of inventory
+6. Multiple /ae commands can be issued at the same time
 
 ---

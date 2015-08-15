@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import net.md_5.bungee.api.ChatColor;
@@ -39,6 +40,7 @@ public class Kill implements IAECommand,Listener
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to kill. " + ChatColor.RED + " THIS IS IRREVERSIBLE!!");
 		currentlyKilling.add(p);
+		AECommands.setIssuingCmd(p, true);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
@@ -46,6 +48,7 @@ public class Kill implements IAECommand,Listener
 				if(currentlyKilling.contains(p))
 				{
 					currentlyKilling.remove(p);
+					AECommands.setIssuingCmd(p, false);
 					Utilities.sendChatMessage(p, "You ran out of time to select an animal to kill. Use /()/ae kill()/ to start again.");
 				}
 			}
@@ -84,6 +87,7 @@ public class Kill implements IAECommand,Listener
 
 			entity.remove();
 			currentlyKilling.remove(event.getPlayer());
+			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal killed.");
 			event.setCancelled(true);

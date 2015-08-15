@@ -34,7 +34,8 @@ public class AECommands implements CommandExecutor
 {
 	private final List<IAECommand> cmds = new ArrayList<IAECommand>();
 	private final AnimalEssentials pl = AnimalEssentials.instance;
-
+	private static final List<Player> currentlyIssuing = new ArrayList<Player>();
+	
 	public AECommands()
 	{
 		cmds.add(new Reload()); //adding this command to the list so we can access it below and in help
@@ -75,6 +76,16 @@ public class AECommands implements CommandExecutor
 					Utilities.sendChatMessage(p, "You are not allowed to use this command.");
 				else
 					Bukkit.getPlayer(p.getName()).teleport(new Location(Bukkit.getWorld(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3])));
+				
+				return true;
+			}
+			
+			if(!pl.getConfig().getBoolean("allowMultipleCommands") && isIssuingCmd(p))
+			{
+				Utilities.sendChatMessage(p, "You cannot execute a second AnimalEssentials command while you still need to rightclick an animal. This is a safety precaution so you can't name and kill your animal at the same time, for instance.");
+				
+				if(p.isOp())
+					Utilities.sendChatMessage(p, "This function can be turned off in the config file.");
 				
 				return true;
 			}
@@ -134,5 +145,34 @@ public class AECommands implements CommandExecutor
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Checks if a player is currently issuing a command
+	 * @param p The player to check
+	 * @return If they are issuing a command
+	 */
+	private static boolean isIssuingCmd(Player p)
+	{
+		return currentlyIssuing.contains(p);
+	}
+	
+	/**
+	 * Sets a player currently issuing a command or not
+	 * @param p The player
+	 * @param issuing Whether the player is issuing a command or not
+	 */
+	public static void setIssuingCmd(Player p, boolean issuing)
+	{
+		if(!issuing)
+		{
+			if(currentlyIssuing.contains(p))
+				currentlyIssuing.remove(p);
+		}
+		else
+		{
+			if(!currentlyIssuing.contains(p))
+				currentlyIssuing.add(p);
+		}
 	}
 }
