@@ -10,12 +10,11 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 
 ### To-Do
 
-1. Particles for /ae tame
-2. Define amount of kills (eg. /ae kill 6)
-3. Add WG support to prevent people from spawning animals in areas that are not their's.
-4. Animal Protect
-5. Money System
-6. (/ae clone (Clones the right-clicked animal))
+1. Define amount of kills (eg. /ae kill 6)
+2. Add WG support to prevent people from spawning animals in areas that are not their's.
+3. Animal Protect
+4. Money System
+5. (/ae clone (Clones the right-clicked animal))
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -33,7 +32,7 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 13. Replace "a(n)" with the correct thing
 14. /ae spawn (With GUI.)
 15. Make multiple players able to issue the same command at a time (List!)
-16. Particles for /ae kill | /ae spawn | /ae name
+16. Particles for /ae kill | /ae spawn | /ae name | /ae tame
 17. Ability to click the coordinates in chat, after issuing /ae find <name>, to teleport to the animal.
 18. Update Checker
 19. /aetp \<player\> \<world\> \<x\> \<y\> \<z\> \<keyword\> (Teleport command used to have find teleport permissions)

@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftAnimals;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftOcelot;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Ocelot.Type;
@@ -23,6 +25,8 @@ import org.bukkit.plugin.Plugin;
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class Tame implements IAECommand,Listener
 {
@@ -101,6 +105,16 @@ public class Tame implements IAECommand,Listener
 				}
 				
 				((CraftOcelot)entity).setCatType(t);
+			}
+			
+			//particle type | show particles 65k blocks away? (false = 255 block radius) | x coord of particle | y coord | z coord | x offset (area of effect) | y offset | z offset | speed of particles (some particles move, some don't) | amount of particles (the bigger the offset the bigger this has to be) | ?
+			PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.CRIT_MAGIC, false, (float)entity.getLocation().getX(), (float)entity.getLocation().getY() + 1, (float)entity.getLocation().getZ(), 1.0F, 1.0F, 1.0F, 0.0F, 50, null);
+
+			for(Player player : Bukkit.getOnlinePlayers())
+			{
+				((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
+				player.playSound(entity.getLocation(), Sound.CLICK, 1.0F, 1.0F);
+
 			}
 			
 			currentlyTaming.remove(event.getPlayer());
