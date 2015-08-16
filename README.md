@@ -15,6 +15,7 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 3. Animal Protect
 4. Money System
 5. (/ae clone (Clones the right-clicked animal))
+6 /ae language \<list|language\> (Shows a list of available languages/lists available languages)
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)

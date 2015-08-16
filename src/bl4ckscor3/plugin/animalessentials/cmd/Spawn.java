@@ -198,6 +198,8 @@ public class Spawn implements IAECommand,Listener
 
 				if(s.isBaby())
 					((Ageable)h).setBaby();
+				else
+					((Ageable)h).setAdult();
 
 				if(s.isTamed())
 				{
@@ -268,6 +270,8 @@ public class Spawn implements IAECommand,Listener
 
 				if(s.isBaby())
 					((Ageable)o).setBaby();
+				else
+					((Ageable)o).setAdult();
 
 				if(s.hasType())
 					o.setCatType(s.getOcelotType());
@@ -319,6 +323,8 @@ public class Spawn implements IAECommand,Listener
 
 				if(s.isBaby())
 					((Ageable)pig).setBaby();
+				else
+					((Ageable)pig).setAdult();;
 
 				if(s.hasSaddle())
 					pig.setSaddle(true);
@@ -360,6 +366,8 @@ public class Spawn implements IAECommand,Listener
 
 				if(s.isBaby())
 					((Ageable)r).setBaby();
+				else
+					((Ageable)r).setAdult();
 
 				if(s.hasType())
 					r.setRabbitType(s.getRabbitType());
@@ -399,7 +407,8 @@ public class Spawn implements IAECommand,Listener
 
 				if(s.isBaby())
 					((Ageable)sheep).setBaby();
-
+				else
+					((Ageable)sheep).setAdult();
 				if(s.hasColor())
 					sheep.setColor(s.getColor());
 
@@ -448,6 +457,8 @@ public class Spawn implements IAECommand,Listener
 
 				if(s.isBaby())
 					((Ageable)w).setBaby();
+				else
+					((Ageable)w).setAdult();
 
 				if(s.isTamed())
 				{
