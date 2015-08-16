@@ -798,7 +798,7 @@ public class Spawn implements IAECommand,Listener
 		inv.setItem(0, getItemWithName(Material.GLASS, (short)0, "None", null));
 		inv.setItem(1, getItemWithName(Material.INK_SACK, (short)15, "White", null));
 		inv.setItem(2, getItemWithName(Material.WOOL, (short)0, "Whitefields", null));
-		inv.setItem(3, getItemWithName(Material.PUMPKIN_SEEDS, (short)0, "Whtie Dots", null));
+		inv.setItem(3, getItemWithName(Material.PUMPKIN_SEEDS, (short)0, "White Dots", null));
 		inv.setItem(4, getItemWithName(Material.MELON_SEEDS, (short)0, "Black Dots", null));
 		addBackButton(inv, 8);
 		p.openInventory(inv);

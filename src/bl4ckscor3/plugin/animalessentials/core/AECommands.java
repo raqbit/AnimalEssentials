@@ -32,8 +32,8 @@ import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class AECommands implements CommandExecutor
 {
-	private final List<IAECommand> cmds = new ArrayList<IAECommand>();
-	private final AnimalEssentials pl = AnimalEssentials.instance;
+	private static final List<IAECommand> cmds = new ArrayList<IAECommand>();
+	private static final AnimalEssentials pl = AnimalEssentials.instance;
 	private static final List<Player> currentlyIssuing = new ArrayList<Player>();
 	
 	public AECommands()
