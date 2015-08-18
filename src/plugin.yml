@@ -66,3 +66,5 @@ permissions:
         description: Permission to tame the right-clicked animal.
     aess.spawn:
         description: Permission to spawn an animal using the GUI.
+    aess.aetp:
+        description: Permission to teleport to animals using /ae find.

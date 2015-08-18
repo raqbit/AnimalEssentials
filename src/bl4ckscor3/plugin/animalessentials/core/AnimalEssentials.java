@@ -30,7 +30,8 @@ public class AnimalEssentials extends JavaPlugin
 		getCommand("animalessentials").setExecutor(new AECommands()); //registers the command executor to the command "animalessentials"
 		getCommand("aetp").setExecutor(new AECommands()); //registers the command executor to the command "aetp"
 		Utilities.registerEvents(this, new Teleport(), new Name(), new Kill(), new Heal(), new Owner(), new Tame(), new Spawn());
-		Config.createConfig(this); //setting up the config
+		getConfig().options().copyDefaults(true);
+		saveDefaultConfig();
 		
 		if(getConfig().getBoolean("update.check"))
 			checkForUpdate();

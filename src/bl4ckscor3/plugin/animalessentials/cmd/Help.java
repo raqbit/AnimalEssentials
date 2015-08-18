@@ -35,7 +35,7 @@ public class Help implements IAECommand
 			{
 				if(displayedCommands == 5)
 				{
-					Utilities.sendChatMessage(p, s);
+					Utilities.sendChatMessage(p, s.trim());
 					displayedCommands = 0;
 					s = "";
 				}
@@ -46,8 +46,6 @@ public class Help implements IAECommand
 			}
 			
 			Utilities.sendChatMessage(p, s);
-			displayedCommands = 0;
-			s = "";
 			Utilities.sendChatMessage(p, ChatColor.RED + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		}
 		else
