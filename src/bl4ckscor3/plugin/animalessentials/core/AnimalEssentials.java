@@ -30,8 +30,7 @@ public class AnimalEssentials extends JavaPlugin
 		getCommand("animalessentials").setExecutor(new AECommands()); //registers the command executor to the command "animalessentials"
 		getCommand("aetp").setExecutor(new AECommands()); //registers the command executor to the command "aetp"
 		Utilities.registerEvents(this, new Teleport(), new Name(), new Kill(), new Heal(), new Owner(), new Tame(), new Spawn());
-		getConfig().options().copyDefaults(true);
-		saveDefaultConfig();
+		Config.createConfig(this); //setting up the config
 		
 		if(getConfig().getBoolean("update.check"))
 			checkForUpdate();
@@ -46,6 +45,9 @@ public class AnimalEssentials extends JavaPlugin
 		Utilities.sendConsoleMessage("AnimalEssentials successfully disabled."); //sending this message to the console
 	}
 	
+	/**
+	 * Checks for a plugin update, if enabled in config
+	 */
 	public void checkForUpdate()
 	{
 		try

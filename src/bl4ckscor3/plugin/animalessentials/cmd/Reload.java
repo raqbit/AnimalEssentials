@@ -15,7 +15,7 @@ public class Reload implements IAECommand
 	public void exe(Plugin pl, Player p, Command cmd, String[] args)
 	{
 		pl.reloadConfig();
-		pl.saveDefaultConfig();
+		pl.saveConfig();
 		
 		if(p == null)
 			Utilities.sendConsoleMessage("Config successfully reloaded!");
