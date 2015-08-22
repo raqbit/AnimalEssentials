@@ -36,7 +36,6 @@ public class AnimalEssentials extends JavaPlugin
 			checkForUpdate();
 		else
 			Utilities.sendConsoleMessage("AnimalEssentials successfully enabled."); //sending this message to the console
-			
 	}
 	
 	@Override

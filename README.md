@@ -41,6 +41,7 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 -----
 
 ### Bugs
+1. Commands which are both for client and console don't output messages to console
 
 ### Fixed
 1. A player is a null mob instead of a player.
