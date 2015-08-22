@@ -19,10 +19,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
-import bl4ckscor3.plugin.animalessentials.teleporting.Teleporting;
+import bl4ckscor3.plugin.animalessentials.save.Teleporting;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
@@ -31,7 +33,7 @@ public class Teleport implements IAECommand,Listener
 {
 	private static HashMap<Player, Teleporting> currentlyTeleporting = new HashMap<Player, Teleporting>();
 	public static Plugin plugin;
-
+	
 	@Override
 	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
 	{
@@ -115,38 +117,62 @@ public class Teleport implements IAECommand,Listener
 				((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
 			}
 
-			Bukkit.getScheduler().runTaskLater(plugin, new Runnable(){
-				@Override
-				public void run()
-				{
-					Teleporting t = currentlyTeleporting.get(event.getPlayer());
-					YamlConfiguration yaml = t.getYamlConfiguration();
-					String destination = t.getDestination();
-					
-					for(Player player : Bukkit.getOnlinePlayers())
-					{
-						player.playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
-					}
-
-					if(t.shouldTpToPlayer())
-					{
-						entity.teleport(Bukkit.getPlayer(destination));
-						((CraftAnimals)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
-					}
-					else
-						entity.teleport(new Location(Bukkit.getWorld(yaml.getString(destination + ".world")), yaml.getDouble(destination + ".x"), yaml.getDouble(destination + ".y"), yaml.getDouble(destination + ".z")));
-				
-					currentlyTeleporting.remove(event.getPlayer());
-					AECommands.setIssuingCmd(event.getPlayer(), false);
-					Bukkit.getScheduler().cancelTasks(plugin);
-					Utilities.sendChatMessage(event.getPlayer(), "Animal teleported.");
-				}
-			}, 50L); //2.5 seconds
-			
+			TeleportRunnable task = new TeleportRunnable(event, entity);
+			task.runTaskLater(plugin, 50L);
 			event.setCancelled(true);
 		}
 	}
 
+	public class TeleportRunnable extends BukkitRunnable implements BukkitTask
+	{
+		private PlayerInteractEntityEvent event;
+		private Entity entity;
+		
+		public TeleportRunnable(PlayerInteractEntityEvent e, Entity en)
+		{
+			event = e;
+			entity = en;
+		}
+		
+		@Override
+		public void run()
+		{
+			Teleporting t = currentlyTeleporting.get(event.getPlayer());
+			YamlConfiguration yaml = t.getYamlConfiguration();
+			String destination = t.getDestination();
+			
+			for(Player player : Bukkit.getOnlinePlayers())
+			{
+				player.playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+			}
+
+			if(t.shouldTpToPlayer())
+			{
+				entity.teleport(Bukkit.getPlayer(destination));
+				((CraftAnimals)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
+			}
+			else
+				entity.teleport(new Location(Bukkit.getWorld(yaml.getString(destination + ".world")), yaml.getDouble(destination + ".x"), yaml.getDouble(destination + ".y"), yaml.getDouble(destination + ".z")));
+		
+			currentlyTeleporting.remove(event.getPlayer());
+			AECommands.setIssuingCmd(event.getPlayer(), false);
+			Bukkit.getScheduler().cancelTask(getTaskId());
+			Utilities.sendChatMessage(event.getPlayer(), "Animal teleported.");
+		}
+
+		@Override
+		public Plugin getOwner()
+		{
+			return plugin;
+		}
+
+		@Override
+		public boolean isSync()
+		{
+			return false;
+		}	
+	}
+	
 	@Override
 	public String getAlias()
 	{

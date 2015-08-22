@@ -90,12 +90,10 @@ public class Heal implements IAECommand,Listener
 			{
 				((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
 				player.playSound(entity.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
-
 			}
 
 			((CraftAnimals)entity).setHealth(((CraftAnimals)entity).getMaxHealth());
 			currentlyHealing.remove(event.getPlayer());
-			Bukkit.getScheduler().cancelTasks(plugin);
 			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal healed.");
 			event.setCancelled(true);

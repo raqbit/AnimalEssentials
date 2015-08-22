@@ -1,8 +1,8 @@
 package bl4ckscor3.plugin.animalessentials.cmd;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -18,6 +18,7 @@ import org.bukkit.plugin.Plugin;
 
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
+import bl4ckscor3.plugin.animalessentials.save.Killing;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -25,27 +26,27 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class Kill implements IAECommand,Listener
 {
-	private static List<Player> currentlyKilling = new ArrayList<Player>();
+	private static HashMap<Player,Killing> currentlyKilling = new HashMap<Player,Killing>();
 	public static Plugin plugin;
-	
+
 	@Override
 	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
 	{
-		if(currentlyKilling.contains(p))
+		if(currentlyKilling.containsKey(p))
 		{
 			Utilities.sendChatMessage(p, "You can't kill multiple animals at a time. Please kill an animal or wait, then issue the command again.");
 			return;
 		}
-		
+
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to kill. " + ChatColor.RED + " THIS IS IRREVERSIBLE!!");
-		currentlyKilling.add(p);
+		currentlyKilling.put(p, new Killing(args.length == 1 ? 1 : Integer.parseInt(args[1])));
 		AECommands.setIssuingCmd(p, true);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
 			public void run()
 			{
-				if(currentlyKilling.contains(p))
+				if(currentlyKilling.containsKey(p))
 				{
 					currentlyKilling.remove(p);
 					AECommands.setIssuingCmd(p, false);
@@ -58,7 +59,7 @@ public class Kill implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
-		if(currentlyKilling.contains(event.getPlayer()))
+		if(currentlyKilling.containsKey(event.getPlayer()))
 		{
 			Entity entity = event.getRightClicked();
 
@@ -86,14 +87,20 @@ public class Kill implements IAECommand,Listener
 			}
 
 			entity.remove();
-			currentlyKilling.remove(event.getPlayer());
-			AECommands.setIssuingCmd(event.getPlayer(), false);
-			Bukkit.getScheduler().cancelTasks(plugin);
+
+			if(currentlyKilling.get(event.getPlayer()).getAmount() == 1)
+			{
+				currentlyKilling.remove(event.getPlayer());
+				AECommands.setIssuingCmd(event.getPlayer(), false);
+			}
+			else
+				currentlyKilling.get(event.getPlayer()).decreaseAmount();
+
 			Utilities.sendChatMessage(event.getPlayer(), "Animal killed.");
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@Override
 	public String getAlias()
 	{
@@ -110,7 +117,8 @@ public class Kill implements IAECommand,Listener
 	public String[] getHelp()
 	{
 		return new String[]{
-				"Kills the right-clicked animal."
+				"Kills the right-clicked animal.",
+				"By specifying a number at the end of the command, you can kill multiple animals."
 		};
 	}
 
@@ -123,12 +131,12 @@ public class Kill implements IAECommand,Listener
 	@Override
 	public List<Integer> allowedArgLengths()
 	{
-		return Arrays.asList(new Integer[]{1}); // /ae kill
+		return Arrays.asList(new Integer[]{1,2}); // /ae kill [number]
 	}
 
 	@Override
 	public String getSyntax()
 	{
-		return "";
+		return "[number]";
 	}
 }

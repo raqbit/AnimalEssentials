@@ -118,7 +118,6 @@ public class Tame implements IAECommand,Listener
 			}
 			
 			currentlyTaming.remove(event.getPlayer());
-			Bukkit.getScheduler().cancelTasks(plugin);
 			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal tamed.");
 			event.setCancelled(true);

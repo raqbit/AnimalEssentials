@@ -1,4 +1,4 @@
-package bl4ckscor3.plugin.animalessentials.spawning;
+package bl4ckscor3.plugin.animalessentials.save;
 
 import org.bukkit.entity.Ocelot.Type;
 

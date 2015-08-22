@@ -1,4 +1,4 @@
-package bl4ckscor3.plugin.animalessentials.teleporting;
+package bl4ckscor3.plugin.animalessentials.save;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 

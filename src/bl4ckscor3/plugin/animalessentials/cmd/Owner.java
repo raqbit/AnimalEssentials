@@ -80,7 +80,6 @@ public class Owner implements IAECommand,Listener
 
 			currentlyChecking.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);
-			Bukkit.getScheduler().cancelTasks(plugin);
 			event.setCancelled(true);
 		}
 	}

@@ -119,7 +119,6 @@ public class Name implements IAECommand,Listener
 			entity.setCustomName(currentlyNaming.get(event.getPlayer()));
 			currentlyNaming.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);
-			Bukkit.getScheduler().cancelTasks(plugin);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal named.");
 			event.setCancelled(true);
 		}
