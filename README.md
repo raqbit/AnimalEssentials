@@ -17,6 +17,7 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 5. /ae language \<list|language\> (Shows a list of available languages/lists available languages)
 6. A permission to bypass the restriction to only tp/kill/name own animals.
 7. Make plugin version independant.
+8. https://www.reddit.com/r/admincraft/comments/3jfvbj/pet\_protection\_plugin\_to\_rule\_them\_all\_i\_hope\_so/
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
