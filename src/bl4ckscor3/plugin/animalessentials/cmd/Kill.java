@@ -40,7 +40,7 @@ public class Kill implements IAECommand,Listener
 
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to kill. " + ChatColor.RED + " THIS IS IRREVERSIBLE!!");
-		Utilities.sendChatMessage(p, "Kills available: " + Integer.parseInt(args[1]));
+		Utilities.sendChatMessage(p, "Kills available: " + (args.length == 1 ? 1 : Integer.parseInt(args[1])));
 		currentlyKilling.put(p, new Killing(args.length == 1 ? 1 : Integer.parseInt(args[1])));
 		AECommands.setIssuingCmd(p, true);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
@@ -88,17 +88,20 @@ public class Kill implements IAECommand,Listener
 			}
 
 			entity.remove();
-
+			Utilities.sendChatMessage(event.getPlayer(), "Animal killed.");
+			
 			if(currentlyKilling.get(event.getPlayer()).getAmount() == 1)
 			{
+				Utilities.sendChatMessage(event.getPlayer(), "Kills left: 0");
 				currentlyKilling.remove(event.getPlayer());
 				AECommands.setIssuingCmd(event.getPlayer(), false);
 			}
 			else
+			{
 				currentlyKilling.get(event.getPlayer()).decreaseAmount();
+				Utilities.sendChatMessage(event.getPlayer(), "Kills left: " + currentlyKilling.get(event.getPlayer()).getAmount());
+			}
 
-			Utilities.sendChatMessage(event.getPlayer(), "Animal killed.");
-			Utilities.sendChatMessage(event.getPlayer(), "Kills left: " + currentlyKilling.get(event.getPlayer()).getAmount());
 			event.setCancelled(true);
 		}
 	}
