@@ -45,6 +45,8 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 
 ### Bugs
 1. Commands which are both for client and console don't output messages to console
+2. Setting the amount of /ae kill to 0 enables unlimited killing
+3. Reissuing a command within the timeframe of the first issued command cancels the reissued command too early
 
 ### Fixed
 1. A player is a null mob instead of a player.
