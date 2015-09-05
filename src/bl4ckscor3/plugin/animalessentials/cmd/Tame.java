@@ -9,10 +9,8 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftAnimals;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftOcelot;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Ocelot.Type;
 import org.bukkit.entity.Player;
@@ -25,8 +23,6 @@ import org.bukkit.plugin.Plugin;
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class Tame implements IAECommand,Listener
 {
@@ -85,7 +81,7 @@ public class Tame implements IAECommand,Listener
 
 			((Tameable)entity).setOwner(event.getPlayer());
 			((Tameable)entity).setTamed(true);
-			((CraftAnimals)entity).setHealth(((CraftAnimals)entity).getMaxHealth());
+			(((LivingEntity) entity)).setHealth(((LivingEntity) entity).getMaxHealth());
 			
 			if(entity instanceof Ocelot)
 			{
@@ -104,7 +100,7 @@ public class Tame implements IAECommand,Listener
 						t = Type.SIAMESE_CAT;
 				}
 				
-				((CraftOcelot)entity).setCatType(t);
+				((Ocelot)entity).setCatType(t);
 			}
 			
 			//particle type | show particles 65k blocks away? (false = 255 block radius) | x coord of particle | y coord | z coord | x offset (area of effect) | y offset | z offset | speed of particles (some particles move, some don't) | amount of particles (the bigger the offset the bigger this has to be) | ?

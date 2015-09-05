@@ -8,9 +8,8 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftAnimals;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,8 +19,6 @@ import org.bukkit.plugin.Plugin;
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class Heal implements IAECommand,Listener
 {
@@ -76,7 +73,7 @@ public class Heal implements IAECommand,Listener
 				return;
 			}
 
-			if(((CraftAnimals)entity).getHealth() == ((CraftAnimals)entity).getMaxHealth())
+			if(((LivingEntity) entity).getHealth() == ((LivingEntity) entity).getMaxHealth())
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getType().getName() + "/() is already healed.");
 				event.setCancelled(true);
@@ -92,7 +89,7 @@ public class Heal implements IAECommand,Listener
 				player.playSound(entity.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
 			}
 
-			((CraftAnimals)entity).setHealth(((CraftAnimals)entity).getMaxHealth());
+			((LivingEntity) entity).setHealth(((LivingEntity) entity).getMaxHealth());
 			currentlyHealing.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal healed.");
