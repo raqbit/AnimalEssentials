@@ -76,7 +76,7 @@ public class Find implements IAECommand
 						.then(" at the following coordinates: ")
 						.then(ChatColor.BLUE + "X: " + ChatColor.RESET + x + ChatColor.BLUE + " Y: " + ChatColor.RESET + y + ChatColor.BLUE + " Z: " + ChatColor.RESET + z);
 				
-				if(pl.getConfig().getBoolean("find.allowUsersToTp") && p.hasPermission("aess.aetp"))
+				if(p.hasPermission("aess.aetp"))
 					msg.tooltip("Teleport to the animal.").command("/aetp " + worldName + " " + x + " " + y + " " + z + " " + pl.getConfig().getString("find.keyword"));
 				
 				msg.send(p);

@@ -34,12 +34,13 @@ public class Kill implements IAECommand,Listener
 	{
 		if(currentlyKilling.containsKey(p))
 		{
-			Utilities.sendChatMessage(p, "You can't kill multiple animals at a time. Please kill an animal or wait, then issue the command again.");
+			Utilities.sendChatMessage(p, "You can't kill multiple animals by issuing the command multiple times. Please use /()/ae kill <amount>()/ after rightclicking an animal or waiting.");
 			return;
 		}
 
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to kill. " + ChatColor.RED + " THIS IS IRREVERSIBLE!!");
+		Utilities.sendChatMessage(p, "Kills available: " + Integer.parseInt(args[1]));
 		currentlyKilling.put(p, new Killing(args.length == 1 ? 1 : Integer.parseInt(args[1])));
 		AECommands.setIssuingCmd(p, true);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
@@ -97,6 +98,7 @@ public class Kill implements IAECommand,Listener
 				currentlyKilling.get(event.getPlayer()).decreaseAmount();
 
 			Utilities.sendChatMessage(event.getPlayer(), "Animal killed.");
+			Utilities.sendChatMessage(event.getPlayer(), "Kills left: " + currentlyKilling.get(event.getPlayer()).getAmount());
 			event.setCancelled(true);
 		}
 	}

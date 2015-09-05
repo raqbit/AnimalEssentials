@@ -14,7 +14,9 @@ SOFTWARE USED UNDER THE [MIT-LICENSE](https://github.com/JustRamon/AnimalEssenti
 2. Animal Protect
 3. Money System
 4. (/ae clone (Clones the right-clicked animal))
-5 /ae language \<list|language\> (Shows a list of available languages/lists available languages)
+5. /ae language \<list|language\> (Shows a list of available languages/lists available languages)
+6. A permission to bypass the restriction to only tp/kill/name own animals.
+7. Make plugin version independant.
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)

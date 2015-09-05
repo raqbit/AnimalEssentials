@@ -2,12 +2,12 @@ name: AnimalEssentials
 main: bl4ckscor3.plugin.animalessentials.core.AnimalEssentials
 version: 0.1.0
 author: [bl4ckscor3,JustRamon]
-description: Several animal essentials such as renaming/teleporting and many others!
+description: Several animal essentials such as spawning, naming, teleporting and much more!
 commands:
     animalessentials:
         description: Main command.
         usage: /<command>
-        aliases: [ae, animaless, aess]
+        aliases: [ae,aess,animaless]
     aetp:
         description: Just a teleport command used for /ae find.
         usage: /<command>
@@ -30,6 +30,7 @@ permissions:
           aess.owner: true
           aess.tame: true
           aess.spawn: true
+          aess.aetp: true
         default: op
     aess.home.*:
         description: Gives access to all home commands.

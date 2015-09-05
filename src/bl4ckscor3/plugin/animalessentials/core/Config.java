@@ -18,7 +18,6 @@ public class Config
 		pl.getConfig().addDefault("update.force", true);
 		pl.getConfig().addDefault("update.check", true);
 		pl.getConfig().addDefault("find.onlyOwnAnimals", false);
-		pl.getConfig().addDefault("find.allowUsersToTp", true);
 		pl.getConfig().addDefault("find.keyword", "comesFromLink");
 		pl.getConfig().options().copyDefaults(true);
 		pl.saveConfig();
@@ -57,9 +56,6 @@ public class Config
 				"",
 				"	onlyOwnAnimals: When this option is enabled, only animals owned by the command sender are displayed.",
 				"                   When disabled, untamed animals will also show.",
-				"",
-				"	allowUsersToTp: This option allows users to click the coordinates and teleport to the animal.",
-				"                   NOTE: You need to set the permission \"aess.aetp\". Without it, teleporting will not work, even if this value is set to true",
 				"",
 				"	keyword: This is the keyword used to determine wether the command is coming from clicking the chat, or from actually inputting the command into the chat.",
 				"            It basically disabled users from using /aetp as a normal teleport command.",
