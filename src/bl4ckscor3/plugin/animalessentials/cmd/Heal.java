@@ -16,6 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
 
+import com.darkblade12.particleeffect.ParticleEffect;
+
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
@@ -61,7 +63,7 @@ public class Heal implements IAECommand,Listener
 
 			if(!Utilities.isAnimal(entity))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't heal this mob, it's " + Utilities.aN(entity.getType().getName(), false) + " /()" + (entity.getType().getName() == null ? "Player" : entity.getType().getName()) + "()/ and not an animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't heal this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null ? "Player" : entity.getType().name()) + "()/ and not an animal.");
 				event.setCancelled(true);
 				return;
 			}
@@ -75,19 +77,16 @@ public class Heal implements IAECommand,Listener
 
 			if(((LivingEntity) entity).getHealth() == ((LivingEntity) entity).getMaxHealth())
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getType().getName() + "/() is already healed.");
+																		  //getName is deprecated
+				Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getType().name() + "/() is already healed.");
 				event.setCancelled(true);
 				return;
 			}
 			
-			//particle type | show particles 65k blocks away? (false = 255 block radius) | x coord of particle | y coord | z coord | x offset (area of effect) | y offset | z offset | speed of particles (some particles move, some don't) | amount of particles (the bigger the offset the bigger this has to be) | ?
-			PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.HEART, false, (float)entity.getLocation().getX(), (float)entity.getLocation().getY(), (float)entity.getLocation().getZ(), 0.5F, 0.5F, 0.5F, 0.0F, 20, null);
-
-			for(Player player : Bukkit.getOnlinePlayers())
-			{
-				((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
-				player.playSound(entity.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
-			}
+			//x offset, y offset, z offset from the center, speed, amount, center, radius
+			ParticleEffect.HEART.display(0.5F, 0.5F, 0.5F, 0.0F, 20, entity.getLocation(), 255);
+			//Play the sound at the location
+			entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
 
 			((LivingEntity) entity).setHealth(((LivingEntity) entity).getMaxHealth());
 			currentlyHealing.remove(event.getPlayer());

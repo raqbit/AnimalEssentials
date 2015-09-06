@@ -8,7 +8,6 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,9 +19,10 @@ import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.save.Killing;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
-import net.md_5.bungee.api.ChatColor;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+
+import org.bukkit.ChatColor;
+
+import com.darkblade12.particleeffect.ParticleEffect;
 
 public class Kill implements IAECommand,Listener
 {
@@ -66,7 +66,7 @@ public class Kill implements IAECommand,Listener
 
 			if(!Utilities.isAnimal(entity))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't kill this mob, it's " + Utilities.aN(entity.getType().getName(), false) + " /()" + (entity.getType().getName() == null? "Player" : entity.getType().getName()) + "()/ and not an animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't kill this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null? "Player" : entity.getType().name()) + "()/ and not an animal.");
 				event.setCancelled(true);
 				return;
 			}
@@ -77,15 +77,10 @@ public class Kill implements IAECommand,Listener
 				event.setCancelled(true);
 				return;
 			}
-
-			//particle type | show particles 65k blocks away? (false = 255 block radius) | x coord of particle | y coord | z coord | x offset (area of effect) | y offset | z offset | speed of particles (some particles move, some don't) | amount of particles (the bigger the offset the bigger this has to be) | ?
-			PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.SMOKE_NORMAL, false, (float)entity.getLocation().getX(), (float)entity.getLocation().getY(), (float)entity.getLocation().getZ(), 0.0F, 0.0F, 0.0F, 0.5F, 100, null);
-
-			for(Player player : Bukkit.getOnlinePlayers())
-			{
-				((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
-				player.playSound(entity.getLocation(), Sound.FIZZ, 1.0F, 1.0F);
-			}
+			//x offset, y offset, z offset from the center, speed, amount, center, radius
+			ParticleEffect.SMOKE_NORMAL.display(0.5F, 0.0F, 0.0F, 0.0F, 100, entity.getLocation(), 255);
+			//Play the sound at the location
+			entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.FIZZ, 1.0F, 1.0F);
 
 			entity.remove();
 			Utilities.sendChatMessage(event.getPlayer(), "Animal killed.");

@@ -68,8 +68,8 @@ public class Find implements IAECommand
 				String worldName = e.getWorld().getName();
 				
 				FancyMessage msg = new FancyMessage(Utilities.getPrefix())
-						.then(Utilities.aN(e.getType().getName(), true) + " ")
-						.then(e.getType().getName()).color(ChatColor.BLUE)
+						.then(Utilities.aN(e.getType().name(), true) + " ")
+						.then(e.getType().name()).color(ChatColor.BLUE)
 						.then(" with the name ")
 						.then(((LivingEntity)e).getCustomName()).color(ChatColor.BLUE)
 						.then(" was spotted in world ")
