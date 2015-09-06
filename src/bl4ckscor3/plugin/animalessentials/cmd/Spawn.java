@@ -6,28 +6,22 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftAnimals;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHorse;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftOcelot;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPig;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftRabbit;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftSheep;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftWolf;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Ocelot;
+import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Rabbit;
+import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -36,6 +30,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+
+import com.darkblade12.particleeffect.ParticleEffect;
 
 import bl4ckscor3.plugin.animalessentials.save.Spawning;
 import bl4ckscor3.plugin.animalessentials.save.SpawningHorse;
@@ -47,8 +43,6 @@ import bl4ckscor3.plugin.animalessentials.save.SpawningTameable;
 import bl4ckscor3.plugin.animalessentials.save.SpawningWolf;
 import bl4ckscor3.plugin.animalessentials.save.Spawning.EnumSpawningType;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class Spawn implements IAECommand,Listener
 {
@@ -86,7 +80,7 @@ public class Spawn implements IAECommand,Listener
 			return;
 		
 		Player p = (Player)event.getWhoClicked();
-		Inventory inv = event.getClickedInventory();
+		Inventory inv = event.getInventory();
 		int slot = event.getSlot();
 
 		if(inv.getName().equals("Animal Selection"))
@@ -191,7 +185,7 @@ public class Spawn implements IAECommand,Listener
 				openHorseArmor(p);
 			else if(slot == 8) //spawning
 			{
-				CraftHorse h = (CraftHorse)p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
+				Horse h = (Horse)p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
 
 				if(s.hasCustomName())
 					h.setCustomName(s.getName());
@@ -205,7 +199,7 @@ public class Spawn implements IAECommand,Listener
 				{
 					h.setTamed(true);
 					h.setOwner(p);
-					h.setOwnerUUID(p.getUniqueId());
+					//h.setOwnerUUID(p); shouldn't be needed
 				}
 				else //just in case
 					h.setTamed(false);
@@ -263,7 +257,7 @@ public class Spawn implements IAECommand,Listener
 				openOcelotType(p);
 			else if(slot == 7) //spawning
 			{
-				CraftOcelot o = (CraftOcelot)p.getWorld().spawnEntity(p.getLocation(), EntityType.OCELOT);
+				Ocelot o = (Ocelot)p.getWorld().spawnEntity(p.getLocation(), EntityType.OCELOT);
 
 				if(s.hasCustomName())
 					o.setCustomName(s.getName());
@@ -280,7 +274,7 @@ public class Spawn implements IAECommand,Listener
 				{
 					o.setTamed(true);
 					o.setOwner(p);
-					o.setOwnerUUID(p.getUniqueId());
+					//o.setOwnerUUID(p.getUniqueId()); shouldn't be needed
 				}
 				else //just in case
 					o.setTamed(false);
@@ -316,7 +310,7 @@ public class Spawn implements IAECommand,Listener
 			}
 			else if(slot == 7) //spawning
 			{
-				CraftPig pig = (CraftPig)p.getWorld().spawnEntity(p.getLocation(), EntityType.PIG);
+				Pig pig = (Pig)p.getWorld().spawnEntity(p.getLocation(), EntityType.PIG);
 
 				if(s.hasCustomName())
 					pig.setCustomName(s.getName());
@@ -359,7 +353,7 @@ public class Spawn implements IAECommand,Listener
 				openRabbitType(p);
 			else if(slot == 7) //spawning
 			{
-				CraftRabbit r = (CraftRabbit)p.getWorld().spawnEntity(p.getLocation(), EntityType.RABBIT);
+				Rabbit r = (Rabbit)p.getWorld().spawnEntity(p.getLocation(), EntityType.valueOf("RABBIT"));
 
 				if(s.hasCustomName())
 					r.setCustomName(s.getName());
@@ -400,7 +394,7 @@ public class Spawn implements IAECommand,Listener
 				openSheepColors(p);
 			else if(slot == 7) //spawning
 			{
-				CraftSheep sheep = (CraftSheep)p.getWorld().spawnEntity(p.getLocation(), EntityType.SHEEP);
+				Sheep sheep = (Sheep)p.getWorld().spawnEntity(p.getLocation(), EntityType.SHEEP);
 
 				if(s.hasCustomName())
 					sheep.setCustomName(s.getName());
@@ -448,7 +442,7 @@ public class Spawn implements IAECommand,Listener
 				openCollarColors(p);
 			else if(slot == 7) //spawning
 			{
-				CraftWolf w = (CraftWolf)p.getWorld().spawnEntity(p.getLocation(), EntityType.WOLF);
+				Wolf w = (Wolf)p.getWorld().spawnEntity(p.getLocation(), EntityType.WOLF);
 
 				event.setCancelled(true);
 				
@@ -464,7 +458,7 @@ public class Spawn implements IAECommand,Listener
 				{
 					w.setTamed(true);
 					w.setOwner(p);
-					w.setOwnerUUID(p.getUniqueId());
+					//w.setOwnerUUID(p.getUniqueId()); shouldn't be needed
 					w.setHealth(w.getMaxHealth());
 				}
 				else //just in case
@@ -1100,16 +1094,13 @@ public class Spawn implements IAECommand,Listener
 	 */
 	private void sendParticlesAndMsg(Player p, Entity entity)
 	{
-		//particle type | show particles 65k blocks away? (false = 255 block radius) | x coord of particle | y coord | z coord | x offset (area of effect) | y offset | z offset | speed of particles (some particles move, some don't) | amount of particles (the bigger the offset the bigger this has to be) | ?
-		PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, false, (float)entity.getLocation().getX(), (float)entity.getLocation().getY(), (float)entity.getLocation().getZ(), 0.5F, 1.0F, 0.5F, 10.0F, 1000, null);
+		
+		//x offset, y offset, z offset from the center, speed, amount, center, radius
+		ParticleEffect.VILLAGER_HAPPY.display(0.5F, 1.0F, 0.5F, 10.0F, 1000, entity.getLocation(), 1);
+		//Play the sound at the location
+		entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2.0F, 1.0F);
 
-		for(Player player : Bukkit.getOnlinePlayers())
-		{
-			((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
-			player.playSound(entity.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2.0F, 1.0F);
-		}
-
-		((CraftAnimals)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
+		((LivingEntity)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
 		Utilities.sendChatMessage(p, "Animal spawned.");
 	}
 	

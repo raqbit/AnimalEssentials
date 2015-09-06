@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 public class Help implements IAECommand
 {

@@ -11,9 +11,8 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftAnimals;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,12 +21,12 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import com.darkblade12.particleeffect.ParticleEffect;
+
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.save.Teleporting;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class Teleport implements IAECommand,Listener
 {
@@ -45,7 +44,7 @@ public class Teleport implements IAECommand,Listener
 
 		String destination = args[1];
 		File folder = new File(pl.getDataFolder(), "playerStorage");
-		File f = new File(pl.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
+		File f = new File(pl.getDataFolder(), "playerStorage" + File.separator + p.getUniqueId() +".yml");
 		boolean tpToPlayer = false;
 		
 		if(!folder.exists())
@@ -97,7 +96,7 @@ public class Teleport implements IAECommand,Listener
 
 			if(!Utilities.isAnimal(entity))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't teleport this mob, it's " + Utilities.aN(entity.getType().getName(), false) + " /()" + (entity.getType().getName() == null ? "Player" : entity.getType().getName()) + "()/ and not an animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't teleport this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null ? "Player" : entity.getType().name()) + "()/ and not an animal.");
 				event.setCancelled(true);
 				return;
 			}
@@ -109,13 +108,8 @@ public class Teleport implements IAECommand,Listener
 				return;
 			}
 
-			//particle type | show particles 65k blocks away? (false = 255 block radius) | x coord of particle | y coord | z coord | x offset (area of effect) | y offset | z offset | speed of particles (some particles move, some don't) | amount of particles (the bigger the offset the bigger this has to be) | ?
-			PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.PORTAL, false, (float)entity.getLocation().getX(), (float)entity.getLocation().getY(), (float)entity.getLocation().getZ(), 0.0F, 0.0F, 0.0F, 10.0F, 3000, null);
-
-			for(Player player : Bukkit.getOnlinePlayers())
-			{
-				((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet); //sending the packet (CraftPlayer is the craftbukkit equivalent of Player)
-			}
+			//x offset, y offset, z offset from the center, speed, amount, center, range
+			ParticleEffect.PORTAL.display(0.0F, 0.0F, 10.0F, 0.0F, 3000, entity.getLocation(), 255);
 
 			TeleportRunnable task = new TeleportRunnable(event, entity);
 			task.runTaskLater(plugin, 50L);
@@ -149,7 +143,7 @@ public class Teleport implements IAECommand,Listener
 			if(t.shouldTpToPlayer())
 			{
 				entity.teleport(Bukkit.getPlayer(destination));
-				((CraftAnimals)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
+				((LivingEntity)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
 			}
 			else
 				entity.teleport(new Location(Bukkit.getWorld(yaml.getString(destination + ".world")), yaml.getDouble(destination + ".x"), yaml.getDouble(destination + ".y"), yaml.getDouble(destination + ".z")));

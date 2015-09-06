@@ -12,6 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.entity.LivingEntity;
 
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import mkremins.fanciful.FancyMessage;
@@ -37,10 +38,10 @@ public class Find implements IAECommand
 				if(!Utilities.isAnimal(e)) //just continuing with the next entity if it's not an animal
 					continue;
 				
-				if(e.getCustomName() == null) //just continuing with the next entity if it doesn't have a custom name
+				if(((LivingEntity)e).getCustomName() == null) //just continuing with the next entity if it doesn't have a custom name
 					continue;
 				
-				if(!e.getCustomName().equalsIgnoreCase(name)) //just continuing with the next entity if it's not having the name we're searching for
+				if(!((LivingEntity)e).getCustomName().equalsIgnoreCase(name)) //just continuing with the next entity if it's not having the name we're searching for
 					continue;
 				
 				if(pl.getConfig().getBoolean("find.onlyOwnAnimals"))
@@ -67,10 +68,10 @@ public class Find implements IAECommand
 				String worldName = e.getWorld().getName();
 				
 				FancyMessage msg = new FancyMessage(Utilities.getPrefix())
-						.then(Utilities.aN(e.getType().getName(), true) + " ")
-						.then(e.getType().getName()).color(ChatColor.BLUE)
+						.then(Utilities.aN(e.getType().name(), true) + " ")
+						.then(e.getType().name()).color(ChatColor.BLUE)
 						.then(" with the name ")
-						.then(e.getCustomName()).color(ChatColor.BLUE)
+						.then(((LivingEntity)e).getCustomName()).color(ChatColor.BLUE)
 						.then(" was spotted in world ")
 						.then(worldName).color(ChatColor.BLUE)
 						.then(" at the following coordinates: ")
