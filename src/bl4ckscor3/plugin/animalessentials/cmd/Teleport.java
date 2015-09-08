@@ -109,9 +109,10 @@ public class Teleport implements IAECommand,Listener
 			}
 
 			//x offset, y offset, z offset from the center, speed, amount, center, range
-			ParticleEffect.PORTAL.display(0.0F, 0.0F, 10.0F, 0.0F, 3000, entity.getLocation(), 255);
+			ParticleEffect.PORTAL.display(0.0F, 0.0F, 0.0F, 10.0F, 3000, entity.getLocation(), 255);
 
 			TeleportRunnable task = new TeleportRunnable(event, entity);
+			
 			task.runTaskLater(plugin, 50L);
 			event.setCancelled(true);
 		}
