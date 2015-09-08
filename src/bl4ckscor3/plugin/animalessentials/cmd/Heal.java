@@ -63,7 +63,7 @@ public class Heal implements IAECommand,Listener
 
 			if(!Utilities.isAnimal(entity))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't heal this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null ? "Player" : entity.getType().name()) + "()/ and not an animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't heal this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null ? "Player" : Utilities.capitalizeFirstLetter(entity.getType().name())) + "()/ and not an animal.");
 				event.setCancelled(true);
 				return;
 			}
@@ -78,16 +78,15 @@ public class Heal implements IAECommand,Listener
 			if(((LivingEntity) entity).getHealth() == ((LivingEntity) entity).getMaxHealth())
 			{
 																		  //getName is deprecated
-				Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getType().name() + "/() is already healed.");
+				Utilities.sendChatMessage(event.getPlayer(), "This /()" + Utilities.capitalizeFirstLetter(entity.getType().name()) + "()/ is already healed.");
 				event.setCancelled(true);
 				return;
 			}
 			
 			//x offset, y offset, z offset from the center, speed, amount, center, radius
-			ParticleEffect.HEART.display(0.5F, 0.5F, 0.5F, 0.0F, 20, entity.getLocation(), 255);
-			//Play the sound at the location
-			entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
-
+			ParticleEffect.HEART.display(0.5F, 0.5F, 0.5F, 10.0F, 10, entity.getLocation(), 255);
+			//play the sound at the location
+			entity.getWorld().playSound(entity.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
 			((LivingEntity) entity).setHealth(((LivingEntity) entity).getMaxHealth());
 			currentlyHealing.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);

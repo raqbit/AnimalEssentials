@@ -68,7 +68,7 @@ public class Tame implements IAECommand,Listener
 
 			if(!(entity instanceof Tameable))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't tame this mob, it's " + Utilities.aN(entity.getType().getName(), false) + " /()" + (entity.getType().getName() == null ? "Player" : entity.getType().getName()) + "()/ and not an tameable animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't tame this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null ? "Player" : Utilities.capitalizeFirstLetter(entity.getType().name())) + "()/ and not an tameable animal.");
 				event.setCancelled(true);
 				return;
 			}
@@ -106,13 +106,12 @@ public class Tame implements IAECommand,Listener
 				((Ocelot)entity).setCatType(t);
 			}
 			
-			Location newLoc = entity.getLocation();
-			newLoc.setY(entity.getLocation().getY() + 1);
+			Location particleLoc = entity.getLocation();
+			particleLoc.setY(entity.getLocation().getY() + 1);
 			//x offset, y offset, z offset from the center, speed, amount, center, range
-			ParticleEffect.CRIT_MAGIC.display(1.0F, 1.0F, 1.0F, 0.0F, 50, newLoc, 255);
+			ParticleEffect.FIREWORKS_SPARK.display(1.0F, 1.0F, 1.0F, 0.0F, 100, particleLoc, 255);
 			//Play the sound at the location
-			entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.CLICK, 1.0F, 1.0F);
-			
+			entity.getWorld().playSound(entity.getLocation(), Sound.CLICK, 1.0F, 1.0F);
 			currentlyTaming.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal tamed.");

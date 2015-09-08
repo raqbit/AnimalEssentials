@@ -34,6 +34,7 @@ import org.bukkit.plugin.Plugin;
 import com.darkblade12.particleeffect.ParticleEffect;
 
 import bl4ckscor3.plugin.animalessentials.save.Spawning;
+import bl4ckscor3.plugin.animalessentials.save.Spawning.EnumSpawningType;
 import bl4ckscor3.plugin.animalessentials.save.SpawningHorse;
 import bl4ckscor3.plugin.animalessentials.save.SpawningOcelot;
 import bl4ckscor3.plugin.animalessentials.save.SpawningPig;
@@ -41,7 +42,6 @@ import bl4ckscor3.plugin.animalessentials.save.SpawningRabbit;
 import bl4ckscor3.plugin.animalessentials.save.SpawningSheep;
 import bl4ckscor3.plugin.animalessentials.save.SpawningTameable;
 import bl4ckscor3.plugin.animalessentials.save.SpawningWolf;
-import bl4ckscor3.plugin.animalessentials.save.Spawning.EnumSpawningType;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Spawn implements IAECommand,Listener
@@ -78,7 +78,7 @@ public class Spawn implements IAECommand,Listener
 	{
 		if(event.getCurrentItem() == null) //check to prevent stupid stacktraces when clicking outside of inventory
 			return;
-		
+
 		Player p = (Player)event.getWhoClicked();
 		Inventory inv = event.getInventory();
 		int slot = event.getSlot();
@@ -118,9 +118,15 @@ public class Spawn implements IAECommand,Listener
 					openPig(p);
 					break;
 				case 6:
-					currentlySpawning.put(p, new SpawningRabbit(EnumSpawningType.RABBIT));
 					event.setCancelled(true);
-					openRabbit(p);
+					
+					if(!Utilities.getMinecraftVersion(p.getServer()).equals("1.7.10"))
+					{
+						currentlySpawning.put(p, new SpawningRabbit(EnumSpawningType.RABBIT));
+						openRabbit(p);
+					}
+					else
+						Utilities.sendChatMessage(p, "Rabbits are not available in the 1.7.10 version.");
 					break;
 				case 7:
 					currentlySpawning.put(p, new SpawningSheep(EnumSpawningType.SHEEP));
@@ -320,14 +326,14 @@ public class Spawn implements IAECommand,Listener
 				else
 					((Ageable)pig).setAdult();;
 
-				if(s.hasSaddle())
-					pig.setSaddle(true);
-				else //just in case
-					pig.setSaddle(false);
+					if(s.hasSaddle())
+						pig.setSaddle(true);
+					else //just in case
+						pig.setSaddle(false);
 
-				removeFromLists(p);
-				p.closeInventory();
-				sendParticlesAndMsg(p, pig);
+					removeFromLists(p);
+					p.closeInventory();
+					sendParticlesAndMsg(p, pig);
 			}
 			else if(slot == 8) //back
 				openMain(p);
@@ -445,7 +451,7 @@ public class Spawn implements IAECommand,Listener
 				Wolf w = (Wolf)p.getWorld().spawnEntity(p.getLocation(), EntityType.WOLF);
 
 				event.setCancelled(true);
-				
+
 				if(s.hasCustomName())
 					w.setCustomName(s.getName());
 
@@ -463,7 +469,7 @@ public class Spawn implements IAECommand,Listener
 				}
 				else //just in case
 					w.setTamed(false);
-				
+
 				if(s.hasColor())
 					w.setCollarColor(s.getColor());
 
@@ -911,7 +917,7 @@ public class Spawn implements IAECommand,Listener
 		addNamingButton(s, inv, 0);
 		addBabyButton(s, inv, 1);
 		addTamingButton(s, inv, 2, Material.BONE);
-		inv.setItem(3, getItemWithName(Material.CLAY, (short)0, (s.colorToInt() == -1 ? "Collar Color" : colorNames[s.colorToInt()]), null));
+		inv.setItem(3, getItemWithName(Material.CLAY_BALL, (short)0, (s.colorToInt() == -1 ? "Collar Color" : colorNames[s.colorToInt()]), null));
 		addSpawnButton(s, inv, 7);
 		addBackButton(inv, 8);
 		p.openInventory(inv);
@@ -921,7 +927,7 @@ public class Spawn implements IAECommand,Listener
 	{
 		Inventory inv = p.getServer().createInventory(p, 18, "Choose Collar Color");
 		int meta = 0;
-		
+
 		for(int i = 15; i >= 0; i--)
 		{
 			inv.setItem(i, getItemWithName(Material.INK_SACK, (short)meta++, colorNames[i], null));
@@ -930,7 +936,7 @@ public class Spawn implements IAECommand,Listener
 		addBackButton(inv, 17);
 		p.openInventory(inv);
 	}
-	
+
 	private void guiSpawnGeneric(InventoryClickEvent event, Player p, int slot, EntityType type)
 	{
 		Spawning g = currentlySpawning.get(p);
@@ -1094,16 +1100,14 @@ public class Spawn implements IAECommand,Listener
 	 */
 	private void sendParticlesAndMsg(Player p, Entity entity)
 	{
-		
 		//x offset, y offset, z offset from the center, speed, amount, center, radius
-		ParticleEffect.VILLAGER_HAPPY.display(0.5F, 1.0F, 0.5F, 10.0F, 1000, entity.getLocation(), 1);
-		//Play the sound at the location
-		entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2.0F, 1.0F);
-
+		ParticleEffect.VILLAGER_HAPPY.display(0.5F, 1.0F, 0.5F, 10.0F, 1000, entity.getLocation(), 255);
+		//play the sound at the location
+		entity.getWorld().playSound(entity.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2.0F, 1.0F);
 		((LivingEntity)entity).setNoDamageTicks(5*20); //no damage for 5 seconds
 		Utilities.sendChatMessage(p, "Animal spawned.");
 	}
-	
+
 	@Override
 	public String getAlias()
 	{

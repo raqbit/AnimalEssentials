@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -67,7 +68,7 @@ public class Name implements IAECommand,Listener
 
 			if(!Utilities.isAnimal(entity))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't name this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null ? "Player" : entity.getType().name()) + "()/ and not an animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't name this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null ? "Player" : Utilities.capitalizeFirstLetter(entity.getType().name())) + "()/ and not an animal.");
 				event.setCancelled(true);
 				return;
 			}
@@ -105,12 +106,14 @@ public class Name implements IAECommand,Listener
 					}
 				}
 			}
-			
-			//x offset, y offset, z offset from the center, speed, amount, center, radius
-			ParticleEffect.CLOUD.display(0.5F, (float)((LivingEntity)entity).getEyeHeight() + 0.5F, 0.5F, 0.0F, 20, entity.getLocation(), 255);
-			//Play the sound at the location
-			entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.CHICKEN_EGG_POP, 1.0F, 1.0F);
 
+			Location particleLoc = entity.getLocation();
+			
+			particleLoc.setY(particleLoc.getY() + (float)((LivingEntity)entity).getEyeHeight() + 0.5F);
+			//x offset, y offset, z offset from the center, speed, amount, center, radius
+			ParticleEffect.CLOUD.display(0.0F, 0.0F, 0.0F, 0.05F, 25, particleLoc, 255);
+			//play the sound at the location
+			entity.getWorld().playSound(entity.getLocation(), Sound.CHICKEN_EGG_POP, 1.0F, 1.0F);
 			((LivingEntity)entity).setCustomName(currentlyNaming.get(event.getPlayer()));
 			currentlyNaming.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);

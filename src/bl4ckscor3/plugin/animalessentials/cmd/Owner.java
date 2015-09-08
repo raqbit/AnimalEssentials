@@ -60,7 +60,7 @@ public class Owner implements IAECommand,Listener
 
 			if(!Utilities.isAnimal(entity) || !(entity instanceof Tameable))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't check the owner of this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null ? "Player" : entity.getType().name()) + "()/ and not a tameable animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't check the owner of this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null ? "Player" : Utilities.capitalizeFirstLetter(entity.getType().name())) + "()/ and not a tameable animal.");
 				event.setCancelled(true);
 				return;
 			}
@@ -68,13 +68,13 @@ public class Owner implements IAECommand,Listener
 			if(((Tameable)entity).isTamed())
 			{
 				if(((Tameable)entity).getOwner().getName().equals(event.getPlayer().getName()))
-					Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getType().name() + "()/ is owned by /()you()/.");
+					Utilities.sendChatMessage(event.getPlayer(), "This /()" + Utilities.capitalizeFirstLetter(entity.getType().name()) + "()/ is owned by /()you()/.");
 				else
-					Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getType().name() + "()/ is owned by /()" + ((Tameable)entity).getOwner().getName() + "()/.");
+					Utilities.sendChatMessage(event.getPlayer(), "This /()" + Utilities.capitalizeFirstLetter(entity.getType().name()) + "()/ is owned by /()" + ((Tameable)entity).getOwner().getName() + "()/.");
 			}
 			else
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "This /()" + entity.getType().name() + "()/ is not tamed.");
+				Utilities.sendChatMessage(event.getPlayer(), "This /()" + Utilities.capitalizeFirstLetter(entity.getType().name()) + "()/ is not tamed.");
 				return;
 			}
 

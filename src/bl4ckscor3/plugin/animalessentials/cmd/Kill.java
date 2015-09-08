@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Entity;
@@ -15,14 +16,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
 
+import com.darkblade12.particleeffect.ParticleEffect;
+
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
 import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.save.Killing;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
-
-import org.bukkit.ChatColor;
-
-import com.darkblade12.particleeffect.ParticleEffect;
 
 public class Kill implements IAECommand,Listener
 {
@@ -38,10 +37,12 @@ public class Kill implements IAECommand,Listener
 			return;
 		}
 
+		int kills = args.length == 1 || Integer.parseInt(args[1]) == 0 ? 1 : Integer.parseInt(args[1]);
+		
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to kill. " + ChatColor.RED + " THIS IS IRREVERSIBLE!!");
-		Utilities.sendChatMessage(p, "Kills available: " + (args.length == 1 ? 1 : Integer.parseInt(args[1])));
-		currentlyKilling.put(p, new Killing(args.length == 1 ? 1 : Integer.parseInt(args[1])));
+		Utilities.sendChatMessage(p, "Kills available: " + kills);
+		currentlyKilling.put(p, new Killing(kills));
 		AECommands.setIssuingCmd(p, true);
 		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
 			@Override
@@ -66,7 +67,7 @@ public class Kill implements IAECommand,Listener
 
 			if(!Utilities.isAnimal(entity))
 			{
-				Utilities.sendChatMessage(event.getPlayer(), "You can't kill this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null? "Player" : entity.getType().name()) + "()/ and not an animal.");
+				Utilities.sendChatMessage(event.getPlayer(), "You can't kill this mob, it's " + Utilities.aN(entity.getType().name(), false) + " /()" + (entity.getType().name() == null? "Player" : Utilities.capitalizeFirstLetter(entity.getType().name())) + "()/ and not an animal.");
 				event.setCancelled(true);
 				return;
 			}
@@ -78,7 +79,7 @@ public class Kill implements IAECommand,Listener
 				return;
 			}
 			//x offset, y offset, z offset from the center, speed, amount, center, radius
-			ParticleEffect.SMOKE_NORMAL.display(0.5F, 0.0F, 0.0F, 0.0F, 100, entity.getLocation(), 255);
+			ParticleEffect.SMOKE_NORMAL.display(0.0F, 0.0F, 0.0F, 0.5F, 100, entity.getLocation(), 255);
 			//Play the sound at the location
 			entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.FIZZ, 1.0F, 1.0F);
 

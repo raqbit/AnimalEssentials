@@ -2,6 +2,7 @@ package bl4ckscor3.plugin.animalessentials.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -146,5 +147,25 @@ public class Utilities
 	public static String getPrefix()
 	{
 		return ChatColor.GOLD + "[" + ChatColor.DARK_GREEN + pl.getDescription().getName() + ChatColor.GOLD + "] " + ChatColor.RESET;
+	}
+
+	/**
+	 * Gets the Minecraft version of the server the plugin is running on
+	 * @param server The server
+	 * @return The Minecraft version as a string
+	 */
+	public static String getMinecraftVersion(Server server)
+	{
+		return server.getVersion().split("MC: ")[1].replaceFirst("\\)", "");
+	}
+	
+	/**
+	 * Capitalizes the first letter of a string
+	 * @param line The string to capitalize the first letter of
+	 * @return The capitalized first letter including the rest of the string
+	 */
+	public static String capitalizeFirstLetter(String line)
+	{
+		return line.substring(0, 1).toUpperCase() + line.substring(1).toLowerCase();
 	}
 }
