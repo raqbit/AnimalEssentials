@@ -39,12 +39,15 @@ permissions:
           aess.home.edit: true
           aess.home.delete: true
           aess.home.list: true
+        default: true
     aess.reload:
         description: Permission to reload the configuration.
     aess.help:
         description: Permission to show the help menu and help for commands.
+        default: true
     aess.teleport:
         description: Permission to teleport the right-clicked animal to the specified home or player. Poof!
+        default: true
     aess.home.set:
         description: Permission to set the home in the current world with the current coordinates.
     aess.home.edit:
@@ -55,14 +58,17 @@ permissions:
         description: Permission to list all available homes.
     aess.name:
         description: Permission to name the right-clicked animal.
+        default: true
     aess.find:
         description: Permission to find an animal with the given name.
+        default: true
     aess.kill:
         description: Permission to kill the right-clicked animal.
     aess.heal:
         description: Permission to heal the right-clicked animal.
     aess.owner:
         description: Permission to show the owner of the right-clicked animal.
+        default: true
     aess.tame:
         description: Permission to tame the right-clicked animal.
     aess.spawn:
