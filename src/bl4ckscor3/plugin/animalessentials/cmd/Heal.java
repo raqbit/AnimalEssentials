@@ -3,6 +3,7 @@ package bl4ckscor3.plugin.animalessentials.cmd;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -16,22 +17,25 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.darkblade12.particleeffect.ParticleEffect;
 
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
-import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Heal implements IAECommand,Listener
 {
 	private static List<Player> currentlyHealing = new ArrayList<Player>();
+	private static HashMap<Player,Integer> taskIDs = new HashMap<Player,Integer>();
 	public static Plugin plugin;
 
 	@Override
 	public void exe(Plugin pl, CommandSender sender, Command cmd, String[] args) throws IOException
 	{
 		final Player p = (Player)sender;
+		
 		if(currentlyHealing.contains(p))
 		{
 			Utilities.sendChatMessage(p, "You can't heal multiple animals at a time. Please heal an animal or wait, then issue the command again.");
@@ -42,18 +46,11 @@ public class Heal implements IAECommand,Listener
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to heal.");
 		currentlyHealing.add(p);
 		AECommands.setIssuingCmd(p, true);
-		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
-			@Override
-			public void run()
-			{
-				if(currentlyHealing.contains(p))
-				{
-					currentlyHealing.remove(p);
-					AECommands.setIssuingCmd(p, false);
-					Utilities.sendChatMessage(p, "You ran out of time to select an animal to heal. Use /()/ae heal()/ to start again.");
-				}
-			}
-		}, 10L * 20); //10 seconds * 20 (server ticks/second)
+		
+		AbortRunnable task = new AbortRunnable(p);
+
+		task.runTaskLater(pl, 10 * 20L);
+		taskIDs.put(p, task.getTaskId());
 	}
 
 	@EventHandler
@@ -61,7 +58,7 @@ public class Heal implements IAECommand,Listener
 	{
 		if(currentlyHealing.contains(event.getPlayer()))
 		{
-			final Entity entity = event.getRightClicked();
+			Entity entity = event.getRightClicked();
 
 			if(!Utilities.isAnimal(entity))
 			{
@@ -79,7 +76,6 @@ public class Heal implements IAECommand,Listener
 
 			if(((LivingEntity) entity).getHealth() == ((LivingEntity) entity).getMaxHealth())
 			{
-																		  //getName is deprecated
 				Utilities.sendChatMessage(event.getPlayer(), "This /()" + Utilities.capitalizeFirstLetter(entity.getType().name()) + "()/ is already healed.");
 				event.setCancelled(true);
 				return;
@@ -94,9 +90,45 @@ public class Heal implements IAECommand,Listener
 			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal healed.");
 			event.setCancelled(true);
+			Bukkit.getScheduler().cancelTask(taskIDs.get(event.getPlayer()));
+			taskIDs.remove(event.getPlayer());
 		}
 	}
 
+	public class AbortRunnable extends BukkitRunnable implements BukkitTask
+	{
+		private Player p;
+		
+		public AbortRunnable(Player player)
+		{
+			p = player;
+		}
+		
+		@Override
+		public void run()
+		{
+			if(currentlyHealing.contains(p))
+			{
+				currentlyHealing.remove(p);
+				AECommands.setIssuingCmd(p, false);
+				Utilities.sendChatMessage(p, "You ran out of time to select an animal to heal. Use /()/ae heal()/ to start again.");
+				taskIDs.remove(p);
+			}
+		}
+
+		@Override
+		public Plugin getOwner()
+		{
+			return plugin;
+		}
+
+		@Override
+		public boolean isSync()
+		{
+			return false;
+		}
+	}
+	
 	@Override
 	public String getAlias()
 	{
@@ -132,6 +164,6 @@ public class Heal implements IAECommand,Listener
 	@Override
 	public String getSyntax()
 	{
-		return "<heal>";
+		return "";
 	}
 }

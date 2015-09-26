@@ -16,17 +16,19 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.darkblade12.particleeffect.ParticleEffect;
 
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
-import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.save.Killing;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Kill implements IAECommand,Listener
 {
 	private static HashMap<Player,Killing> currentlyKilling = new HashMap<Player,Killing>();
+	private static HashMap<Player,Integer> taskIDs = new HashMap<Player,Integer>();
 	public static Plugin plugin;
 
 	@Override
@@ -40,25 +42,18 @@ public class Kill implements IAECommand,Listener
 			return;
 		}
 
-		int kills = args.length == 1 || Integer.parseInt(args[1]) == 0 ? 1 : Integer.parseInt(args[1]);
+		int kills = args.length == 1 || Integer.parseInt(args[1]) <= 0 ? 1 : Integer.parseInt(args[1]);
 		
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to kill. " + ChatColor.RED + " THIS IS IRREVERSIBLE!!");
 		Utilities.sendChatMessage(p, "Kills available: " + kills);
 		currentlyKilling.put(p, new Killing(kills));
 		AECommands.setIssuingCmd(p, true);
-		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
-			@Override
-			public void run()
-			{
-				if(currentlyKilling.containsKey(p))
-				{
-					currentlyKilling.remove(p);
-					AECommands.setIssuingCmd(p, false);
-					Utilities.sendChatMessage(p, "You ran out of time to select an animal to kill. Use /()/ae kill()/ to start again.");
-				}
-			}
-		}, 10L * 20); //10 seconds * 20 (server ticks/second)
+		
+		AbortRunnable task = new AbortRunnable(p);
+
+		task.runTaskLater(pl, 10 * 20L);
+		taskIDs.put(p, task.getTaskId());
 	}
 
 	@EventHandler
@@ -102,9 +97,45 @@ public class Kill implements IAECommand,Listener
 			}
 
 			event.setCancelled(true);
+			Bukkit.getScheduler().cancelTask(taskIDs.get(event.getPlayer()));
+			taskIDs.remove(event.getPlayer());
 		}
 	}
 
+	public class AbortRunnable extends BukkitRunnable implements BukkitTask
+	{
+		private Player p;
+		
+		public AbortRunnable(Player player)
+		{
+			p = player;
+		}
+		
+		@Override
+		public void run()
+		{
+			if(currentlyKilling.containsKey(p))
+			{
+				currentlyKilling.remove(p);
+				AECommands.setIssuingCmd(p, false);
+				Utilities.sendChatMessage(p, "You ran out of time to select an animal to kill. Use /()/ae kill()/ to start again.");
+				taskIDs.remove(p);
+			}
+		}
+
+		@Override
+		public Plugin getOwner()
+		{
+			return plugin;
+		}
+
+		@Override
+		public boolean isSync()
+		{
+			return false;
+		}
+	}
+	
 	@Override
 	public String getAlias()
 	{

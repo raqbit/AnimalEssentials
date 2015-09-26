@@ -21,16 +21,18 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.darkblade12.particleeffect.ParticleEffect;
 
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
-import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Name implements IAECommand,Listener
 {
-	public static HashMap<Player, String> currentlyNaming = new HashMap<Player, String>();
+	public static HashMap<Player,String> currentlyNaming = new HashMap<Player,String>();
+	private static HashMap<Player,Integer> taskIDs = new HashMap<Player,Integer>();
 	public static Plugin plugin;
 
 	@Override
@@ -48,18 +50,11 @@ public class Name implements IAECommand,Listener
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to name.");
 		currentlyNaming.put(p, putNameTogether(args));
 		AECommands.setIssuingCmd(p, true);
-		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
-			@Override
-			public void run()
-			{
-				if(currentlyNaming.containsKey(p))
-				{
-					currentlyNaming.remove(p);
-					AECommands.setIssuingCmd(p, false);
-					Utilities.sendChatMessage(p, "You ran out of time to select an animal to name. Use /()/ae name()/ to start again.");
-				}
-			}
-		}, 10L * 20); //10 seconds * 20 (server ticks/second)
+
+		AbortRunnable task = new AbortRunnable(p);
+
+		task.runTaskLater(pl, 10 * 20L);
+		taskIDs.put(p, task.getTaskId());
 	}
 
 	@EventHandler
@@ -122,6 +117,8 @@ public class Name implements IAECommand,Listener
 			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal named.");
 			event.setCancelled(true);
+			Bukkit.getScheduler().cancelTask(taskIDs.get(event.getPlayer()));
+			taskIDs.remove(event.getPlayer());
 		}
 	}
 
@@ -135,6 +132,40 @@ public class Name implements IAECommand,Listener
 		}
 		
 		return s.trim();
+	}
+	
+	public class AbortRunnable extends BukkitRunnable implements BukkitTask
+	{
+		private Player p;
+		
+		public AbortRunnable(Player player)
+		{
+			p = player;
+		}
+		
+		@Override
+		public void run()
+		{
+			if(currentlyNaming.containsKey(p))
+			{
+				currentlyNaming.remove(p);
+				AECommands.setIssuingCmd(p, false);
+				Utilities.sendChatMessage(p, "You ran out of time to select an animal to name. Use /()/ae name()/ to start again.");
+				taskIDs.remove(p);
+			}
+		}
+
+		@Override
+		public Plugin getOwner()
+		{
+			return plugin;
+		}
+
+		@Override
+		public boolean isSync()
+		{
+			return false;
+		}
 	}
 	
 	@Override

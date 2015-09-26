@@ -3,6 +3,7 @@ package bl4ckscor3.plugin.animalessentials.cmd;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -21,16 +22,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import com.darkblade12.particleeffect.ParticleEffect;
 
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
-import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Tame implements IAECommand,Listener
 {
 	private static List<Player> currentlyTaming = new ArrayList<Player>();
+	private static HashMap<Player,Integer> taskIDs = new HashMap<Player,Integer>();
 	public static Plugin plugin;
 
 	@Override
@@ -48,18 +51,11 @@ public class Tame implements IAECommand,Listener
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to tame.");
 		currentlyTaming.add(p);
 		AECommands.setIssuingCmd(p, true);
-		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
-			@Override
-			public void run()
-			{
-				if(currentlyTaming.contains(p))
-				{
-					currentlyTaming.remove(p);
-					AECommands.setIssuingCmd(p, false);
-					Utilities.sendChatMessage(p, "You ran out of time to select an animal to tame. Use /()/ae tame()/ to start again.");
-				}
-			}
-		}, 10L * 20); //10 seconds * 20 (server ticks/second)
+		
+		AbortRunnable task = new AbortRunnable(p);
+
+		task.runTaskLater(pl, 10 * 20L);
+		taskIDs.put(p, task.getTaskId());
 	}
 
 	@EventHandler
@@ -119,6 +115,42 @@ public class Tame implements IAECommand,Listener
 			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal tamed.");
 			event.setCancelled(true);
+			Bukkit.getScheduler().cancelTask(taskIDs.get(event.getPlayer()));
+			taskIDs.remove(event.getPlayer());
+		}
+	}
+	
+	public class AbortRunnable extends BukkitRunnable implements BukkitTask
+	{
+		private Player p;
+		
+		public AbortRunnable(Player player)
+		{
+			p = player;
+		}
+		
+		@Override
+		public void run()
+		{
+			if(currentlyTaming.contains(p))
+			{
+				currentlyTaming.remove(p);
+				AECommands.setIssuingCmd(p, false);
+				Utilities.sendChatMessage(p, "You ran out of time to select an animal to tame. Use /()/ae tame()/ to start again.");
+				taskIDs.remove(p);
+			}
+		}
+
+		@Override
+		public Plugin getOwner()
+		{
+			return plugin;
+		}
+
+		@Override
+		public boolean isSync()
+		{
+			return false;
 		}
 	}
 

@@ -25,13 +25,13 @@ import org.bukkit.scheduler.BukkitTask;
 import com.darkblade12.particleeffect.ParticleEffect;
 
 import bl4ckscor3.plugin.animalessentials.core.AECommands;
-import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.save.Teleporting;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Teleport implements IAECommand,Listener
 {
-	private static HashMap<Player, Teleporting> currentlyTeleporting = new HashMap<Player, Teleporting>();
+	private static HashMap<Player,Teleporting> currentlyTeleporting = new HashMap<Player,Teleporting>();
+	private static HashMap<Player,Integer> taskIDs = new HashMap<Player,Integer>();
 	public static Plugin plugin;
 	
 	@Override
@@ -75,19 +75,11 @@ public class Teleport implements IAECommand,Listener
 		plugin = pl;
 		currentlyTeleporting.put(p, new Teleporting(yaml, destination, tpToPlayer));
 		AECommands.setIssuingCmd(p, true);
-		Utilities.sendChatMessage(p, "Please rightclick the animal you want to teleport.");
-		Bukkit.getScheduler().runTaskLater(AnimalEssentials.instance, new Runnable(){
-			@Override
-			public void run()
-			{
-				if(currentlyTeleporting.containsKey(p))
-				{
-					currentlyTeleporting.remove(p);
-					AECommands.setIssuingCmd(p, false);
-					Utilities.sendChatMessage(p, "You ran out of time to select an animal to teleport. Use /()/ae tp()/ to start again.");
-				}
-			}
-		}, 10L * 20); //10 seconds * 20 (server ticks/second)
+		
+		AbortRunnable task = new AbortRunnable(p);
+		
+		task.runTaskLater(pl, 10 * 20L); //10 seconds * 20 (server ticks/second)
+		taskIDs.put(p, task.getTaskId());
 	}
 
 	@EventHandler
@@ -121,6 +113,40 @@ public class Teleport implements IAECommand,Listener
 		}
 	}
 
+	public class AbortRunnable extends BukkitRunnable implements BukkitTask
+	{
+		private Player p;
+		
+		public AbortRunnable(Player player)
+		{
+			p = player;
+		}
+		
+		@Override
+		public void run()
+		{
+			if(currentlyTeleporting.containsKey(p))
+			{
+				currentlyTeleporting.remove(p);
+				AECommands.setIssuingCmd(p, false);
+				Utilities.sendChatMessage(p, "You ran out of time to select an animal to teleport. Use /()/ae tp()/ to start again.");
+				taskIDs.remove(p);
+			}
+		}
+
+		@Override
+		public Plugin getOwner()
+		{
+			return plugin;
+		}
+
+		@Override
+		public boolean isSync()
+		{
+			return false;
+		}	
+	}
+	
 	public class TeleportRunnable extends BukkitRunnable implements BukkitTask
 	{
 		private PlayerInteractEntityEvent event;
@@ -154,7 +180,7 @@ public class Teleport implements IAECommand,Listener
 		
 			currentlyTeleporting.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);
-			Bukkit.getScheduler().cancelTask(getTaskId());
+			Bukkit.getScheduler().cancelTask(taskIDs.get(event.getPlayer()));
 			Utilities.sendChatMessage(event.getPlayer(), "Animal teleported.");
 		}
 
