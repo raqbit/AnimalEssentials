@@ -9,10 +9,11 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.entity.LivingEntity;
 
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import mkremins.fanciful.FancyMessage;
@@ -20,7 +21,7 @@ import mkremins.fanciful.FancyMessage;
 public class Find implements IAECommand
 {
 	@Override
-	public void exe(Plugin pl, Player p, Command cmd, String[] args) throws IOException
+	public void exe(Plugin pl, CommandSender sender, Command cmd, String[] args) throws IOException
 	{
 		HashMap<World,List<Entity>> entityWorlds = new HashMap<World,List<Entity>>();
 		List<Entity> foundAnimals = new ArrayList<Entity>();
@@ -44,9 +45,9 @@ public class Find implements IAECommand
 				if(!((LivingEntity)e).getCustomName().equalsIgnoreCase(name)) //just continuing with the next entity if it's not having the name we're searching for
 					continue;
 				
-				if(pl.getConfig().getBoolean("find.onlyOwnAnimals"))
+				if(pl.getConfig().getBoolean("find.onlyOwnAnimals") && sender instanceof Player)
 				{
-					if(Utilities.isOwnedBy(p, e, false))
+					if(Utilities.isOwnedBy((Player)sender, e, false))
 						foundAnimals.add(e);
 					else
 						continue;
@@ -57,7 +58,7 @@ public class Find implements IAECommand
 		}
 		
 		if(foundAnimals.isEmpty())
-			Utilities.sendChatMessage(p, "No animal was found with the name /()" + name + "()/.");
+			Utilities.sendMessage(sender, "No animal was found with the name /()" + name + "()/.");
 		else
 		{
 			for(Entity e : foundAnimals)
@@ -77,10 +78,10 @@ public class Find implements IAECommand
 						.then(" at the following coordinates: ")
 						.then(ChatColor.BLUE + "X: " + ChatColor.RESET + x + ChatColor.BLUE + " Y: " + ChatColor.RESET + y + ChatColor.BLUE + " Z: " + ChatColor.RESET + z);
 				
-				if(p.hasPermission("aess.aetp"))
+				if(sender.hasPermission("aess.aetp"))
 					msg.tooltip("Teleport to the animal.").command("/aetp " + worldName + " " + x + " " + y + " " + z + " " + pl.getConfig().getString("find.keyword"));
 				
-				msg.send(p);
+				msg.send(sender);
 			}
 		}
 	}

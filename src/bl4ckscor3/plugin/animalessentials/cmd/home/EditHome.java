@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -16,8 +17,9 @@ import bl4ckscor3.plugin.animalessentials.util.Utilities;
 public class EditHome implements IAECommand
 {
 	@Override
-	public void exe(Plugin pl, Player p, Command cmd, String[] args) throws IOException
+	public void exe(Plugin pl, CommandSender sender, Command cmd, String[] args) throws IOException
 	{
+		Player p = (Player)sender;
 		File folder = new File(pl.getDataFolder(), "playerStorage");
 		File f = new File(pl.getDataFolder(), "playerStorage/" + p.getUniqueId() +".yml");
 		

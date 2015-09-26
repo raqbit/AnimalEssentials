@@ -11,6 +11,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -68,9 +69,9 @@ public class Spawn implements IAECommand,Listener
 	};
 
 	@Override
-	public void exe(Plugin pl, Player p, Command cmd, String[] args) throws IOException
+	public void exe(Plugin pl, CommandSender sender, Command cmd, String[] args) throws IOException
 	{
-		openMain(p);
+		openMain((Player)sender);
 	}
 
 	@EventHandler

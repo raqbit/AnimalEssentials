@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -34,8 +35,10 @@ public class Teleport implements IAECommand,Listener
 	public static Plugin plugin;
 	
 	@Override
-	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
+	public void exe(Plugin pl, CommandSender sender, Command cmd, String[] args) throws IOException
 	{
+		final Player p = (Player)sender;
+		
 		if(currentlyTeleporting.containsKey(p))
 		{
 			Utilities.sendChatMessage(p, "You can't teleport multiple animals at a time. Please teleport an animal or wait, then issue the command again.");

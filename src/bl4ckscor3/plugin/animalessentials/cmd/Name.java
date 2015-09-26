@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -33,8 +34,10 @@ public class Name implements IAECommand,Listener
 	public static Plugin plugin;
 
 	@Override
-	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
+	public void exe(Plugin pl, CommandSender sender, Command cmd, String[] args) throws IOException
 	{
+		final Player p = (Player)sender;
+		
 		if(currentlyNaming.containsKey(p))
 		{
 			Utilities.sendChatMessage(p, "You can't name multiple animals at a time. Please name an animal or wait, then issue the command again.");

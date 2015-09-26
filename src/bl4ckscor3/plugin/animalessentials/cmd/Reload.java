@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.Command;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
@@ -12,15 +12,12 @@ import bl4ckscor3.plugin.animalessentials.util.Utilities;
 public class Reload implements IAECommand
 {
 	@Override
-	public void exe(Plugin pl, Player p, Command cmd, String[] args)
+	public void exe(Plugin pl, CommandSender sender, Command cmd, String[] args)
 	{
 		pl.reloadConfig();
 		pl.saveConfig();
 		
-		if(p == null)
-			Utilities.sendConsoleMessage("Config successfully reloaded!");
-		else
-			Utilities.sendChatMessage(p, "Config successfully reloaded!");
+		Utilities.sendMessage(sender, "Config successfully reloaded!");
 	}
 
 	@Override

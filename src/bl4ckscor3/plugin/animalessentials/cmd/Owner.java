@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
@@ -25,8 +26,10 @@ public class Owner implements IAECommand,Listener
 	public static Plugin plugin;
 
 	@Override
-	public void exe(Plugin pl, final Player p, Command cmd, String[] args) throws IOException
+	public void exe(Plugin pl, CommandSender sender, Command cmd, String[] args) throws IOException
 	{
+		final Player p = (Player)sender;
+		
 		if(currentlyChecking.contains(p))
 		{
 			Utilities.sendChatMessage(p, "You can't check the owner of multiple animals at a time. Please check the owner of one animal or wait, then issue the command again.");

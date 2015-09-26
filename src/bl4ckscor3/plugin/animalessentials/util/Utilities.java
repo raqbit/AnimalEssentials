@@ -3,6 +3,7 @@ package bl4ckscor3.plugin.animalessentials.util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -39,6 +40,17 @@ public class Utilities
 		p.sendMessage(getPrefix() + msg);
 	}
 
+	/**
+	 * Sends a message to the person defined in the sender param
+	 * @param sender The person to send the message to
+	 * @param msg The message to send
+	 */
+	public static void sendMessage(CommandSender sender, String msg)
+	{
+		msg = msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
+		sender.sendMessage(getPrefix() + msg);
+	}
+	
 	/**
 	 * Checks if the player owns the entity
 	 * @param player The player who could be the owner
