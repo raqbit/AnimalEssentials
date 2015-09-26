@@ -76,7 +76,7 @@ public class Find implements IAECommand
 						.then(" was spotted in world ")
 						.then(worldName).color(ChatColor.BLUE)
 						.then(" at the following coordinates: ")
-						.then(ChatColor.BLUE + "X: " + ChatColor.RESET + x + ChatColor.BLUE + " Y: " + ChatColor.RESET + y + ChatColor.BLUE + " Z: " + ChatColor.RESET + z);
+						.then(Utilities.parseColorCodes(Utilities.getFormattedCoordinates(x, y, z)));
 				
 				if(sender.hasPermission("aess.aetp"))
 					msg.tooltip("Teleport to the animal.").command("/aetp " + worldName + " " + x + " " + y + " " + z + " " + pl.getConfig().getString("find.keyword"));

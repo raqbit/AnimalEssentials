@@ -25,8 +25,7 @@ public class Utilities
 	 */
 	public static void sendConsoleMessage(String msg)
 	{
-		msg = msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
-		Bukkit.getConsoleSender().sendMessage(getPrefix() + msg);
+		Bukkit.getConsoleSender().sendMessage(getPrefix() + parseColorCodes(msg));
 	}
 
 	/**
@@ -36,8 +35,7 @@ public class Utilities
 	 */
 	public static void sendChatMessage(Player p, String msg)
 	{
-		msg = msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
-		p.sendMessage(getPrefix() + msg);
+		p.sendMessage(getPrefix() + parseColorCodes(msg));
 	}
 
 	/**
@@ -47,8 +45,12 @@ public class Utilities
 	 */
 	public static void sendMessage(CommandSender sender, String msg)
 	{
-		msg = msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
-		sender.sendMessage(getPrefix() + msg);
+		sender.sendMessage(getPrefix() + parseColorCodes(msg));
+	}
+	
+	public static String parseColorCodes(String msg)
+	{
+		return msg.replace("/()", ChatColor.BLUE.toString()).replace("()/", ChatColor.RESET.toString()); //"/()" is an in-string replacement for blue color and "()/" is an in-string replacement for resetting it
 	}
 	
 	/**
@@ -122,7 +124,7 @@ public class Utilities
 	 */
 	public static String getFormattedCoordinates(int x, int y, int z)
 	{
-		return "/()X: ()/" + x + "/() Y: ()/" + y + "/() Z: ()/" + z + "";
+		return "X:/()" + x + "()/ - Y:/()" + y + "()/ - Z:/()" + z + "()/";
 	}
 
 	/**
