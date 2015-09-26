@@ -70,7 +70,7 @@ public class Find implements IAECommand
 				
 				FancyMessage msg = new FancyMessage(Utilities.getPrefix())
 						.then(Utilities.aN(e.getType().name(), true) + " ")
-						.then(e.getType().name()).color(ChatColor.BLUE)
+						.then(Utilities.capitalizeFirstLetter(e.getType().name())).color(ChatColor.BLUE)
 						.then(" with the name ")
 						.then(((LivingEntity)e).getCustomName()).color(ChatColor.BLUE)
 						.then(" was spotted in world ")
