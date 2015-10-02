@@ -15,6 +15,7 @@ public class Config
 		pl.getConfig().options().header(getHeader());
 		pl.getConfig().addDefault("shouldNamingUseNametag", true);
 		pl.getConfig().addDefault("allowMultipleCommands", false);
+		pl.getConfig().addDefault("playerDamageWhenTamed", false);
 		pl.getConfig().addDefault("update.force", true);
 		pl.getConfig().addDefault("update.check", true);
 		pl.getConfig().addDefault("find.onlyOwnAnimals", false);
@@ -44,6 +45,8 @@ public class Config
 				"",
 				"allowMultipleCommands: When this is set to true, users will be able to issue multiple AnimalEssentials commands at a time. ",
 				"                       When set to false, it prevents users from, for instance, killing and naming their animal at the same time.",
+				"",
+				"playerDamageWhenTamed: If set to true, other players can hurt your tamed animals.",
 				"",
 				"update: Options for the update checker",
 				"",

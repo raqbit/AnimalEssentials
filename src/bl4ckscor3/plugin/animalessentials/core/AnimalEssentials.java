@@ -14,6 +14,7 @@ import bl4ckscor3.plugin.animalessentials.cmd.Owner;
 import bl4ckscor3.plugin.animalessentials.cmd.Spawn;
 import bl4ckscor3.plugin.animalessentials.cmd.Tame;
 import bl4ckscor3.plugin.animalessentials.cmd.Teleport;
+import bl4ckscor3.plugin.animalessentials.listener.EntityDamageByEntityListener;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class AnimalEssentials extends JavaPlugin
@@ -29,9 +30,9 @@ public class AnimalEssentials extends JavaPlugin
 		instance = this; //setting the instance so we can use it in any other class without needing to pass the variable through countless methods
 		getCommand("animalessentials").setExecutor(new AECommands()); //registers the command executor to the command "animalessentials"
 		getCommand("aetp").setExecutor(new AECommands()); //registers the command executor to the command "aetp"
-		Utilities.registerEvents(this, new Teleport(), new Name(), new Kill(), new Heal(), new Owner(), new Tame(), new Spawn());
-		Config.createConfig(this); //setting up the config
-		
+		Utilities.registerEvents(instance, new Teleport(), new Name(), new Kill(), new Heal(), new Owner(), new Tame(), new Spawn(), new EntityDamageByEntityListener(instance));
+		Config.createConfig(instance); //setting up the config
+
 		if(getConfig().getBoolean("update.check"))
 			checkForUpdate();
 		else
