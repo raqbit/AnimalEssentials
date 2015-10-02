@@ -67,7 +67,7 @@ public class Heal implements IAECommand,Listener
 				return;
 			}
 
-			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
+			if(!event.getPlayer().hasPermission("aess.heal.bypass") && !Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't heal it.");
 				event.setCancelled(true);
@@ -152,7 +152,7 @@ public class Heal implements IAECommand,Listener
 	@Override
 	public String getPermission()
 	{
-		return "ae.heal";
+		return "aess.heal";
 	}
 
 	@Override

@@ -11,43 +11,66 @@ commands:
     aetp:
         description: Just a teleport command used for /ae find.
         usage: /<command>
-        
+
 permissions:
     aess.*:
         description: Gives acces to all commands of AnimalEssentials.
         children:
-          aess.reload: true
-          aess.help: true
-          aess.teleport: true
-          aess.home.set: true
-          aess.home.edit: true
-          aess.home.delete: true
-          aess.home.list: true
-          aess.name: true
-          aess.find: true
-          aess.kill: true
-          aess.heal: true
-          aess.owner: true
-          aess.tame: true
-          aess.spawn: true
-          aess.aetp: true
+            aess.reload: true
+            aess.help: true
+            aess.teleport: true
+            aess.home.set: true
+            aess.home.edit: true
+            aess.home.delete: true
+            aess.home.list: true
+            aess.name: true
+            aess.find: true
+            aess.kill: true
+            aess.heal: true
+            aess.owner: true
+            aess.tame: true
+            aess.spawn: true
+            aess.aetp: true
         default: op
     aess.home.*:
         description: Gives access to all home commands.
         children:
-          aess.home.set: true
-          aess.home.edit: true
-          aess.home.delete: true
-          aess.home.list: true
+            aess.home.set: true
+            aess.home.edit: true
+            aess.home.delete: true
+            aess.home.list: true
         default: true
-    aess.reload:
-        description: Permission to reload the configuration.
+    aess.bypass:
+        description: Gives access to all bypass permissions of this plugin.
+        children:
+            aess.teleport.bypass: true
+            aess.name.bypass: true
+            aess.kill.bypass: true
+            aess.heal.bypass: true
+        default: op
+
     aess.help:
         description: Permission to show the help menu and help for commands.
         default: true
     aess.teleport:
         description: Permission to teleport the right-clicked animal to the specified home or player. Poof!
         default: true
+    aess.teleport.bypass:
+        description: Permission to teleport any animal.
+    aess.name:
+        description: Permission to name the right-clicked animal.
+        default: true
+    aess.name.bypass:
+        description: Permission to name any animal.
+    aess.find:
+        description: Permission to find an animal with the given name.
+        default: true
+    aess.owner:
+        description: Permission to show the owner of the right-clicked animal.
+        default: true
+
+    aess.reload:
+        description: Permission to reload the configuration.
     aess.home.set:
         description: Permission to set the home in the current world with the current coordinates.
     aess.home.edit:
@@ -56,19 +79,14 @@ permissions:
         description: Permission to get rid of an existing home.
     aess.home.list:
         description: Permission to list all available homes.
-    aess.name:
-        description: Permission to name the right-clicked animal.
-        default: true
-    aess.find:
-        description: Permission to find an animal with the given name.
-        default: true
     aess.kill:
         description: Permission to kill the right-clicked animal.
+    aess.kill.bypass:
+        description: Permission to kill any animal.
     aess.heal:
         description: Permission to heal the right-clicked animal.
-    aess.owner:
-        description: Permission to show the owner of the right-clicked animal.
-        default: true
+    aess.heal.bypass:
+        description: Permission to heal any animal.
     aess.tame:
         description: Permission to tame the right-clicked animal.
     aess.spawn:

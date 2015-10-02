@@ -71,7 +71,7 @@ public class Name implements IAECommand,Listener
 				return;
 			}
 
-			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
+			if(!event.getPlayer().hasPermission("aess.name.bypass") && !Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't name it.");
 				event.setCancelled(true);

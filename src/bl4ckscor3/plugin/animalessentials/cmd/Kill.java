@@ -70,7 +70,7 @@ public class Kill implements IAECommand,Listener
 				return;
 			}
 
-			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
+			if(!event.getPlayer().hasPermission("aess.kill.bypass") && !Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't kill it.");
 				event.setCancelled(true);

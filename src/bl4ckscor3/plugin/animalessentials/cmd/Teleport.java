@@ -96,7 +96,7 @@ public class Teleport implements IAECommand,Listener
 				return;
 			}
 			
-			if(!Utilities.isOwnedBy(event.getPlayer(), entity, true))
+			if(!event.getPlayer().hasPermission("aess.teleport.bypass") && !Utilities.isOwnedBy(event.getPlayer(), entity, true))
 			{
 				Utilities.sendChatMessage(event.getPlayer(), "This is not your animal, you can't teleport it.");
 				event.setCancelled(true);
