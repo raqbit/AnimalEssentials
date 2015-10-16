@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import bl4ckscor3.plugin.animalessentials.cmd.Clone;
 import bl4ckscor3.plugin.animalessentials.cmd.Find;
 import bl4ckscor3.plugin.animalessentials.cmd.Heal;
 import bl4ckscor3.plugin.animalessentials.cmd.Help;
@@ -28,30 +29,32 @@ import bl4ckscor3.plugin.animalessentials.cmd.home.DeleteHome;
 import bl4ckscor3.plugin.animalessentials.cmd.home.EditHome;
 import bl4ckscor3.plugin.animalessentials.cmd.home.ListHomes;
 import bl4ckscor3.plugin.animalessentials.cmd.home.SetHome;
+import bl4ckscor3.plugin.animalessentials.util.CustomArrayList;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class AECommands implements CommandExecutor
 {
-	private static final List<IAECommand> cmds = new ArrayList<IAECommand>();
+	private static final CustomArrayList<IAECommand> cmds = new CustomArrayList<IAECommand>();
 	private static final AnimalEssentials pl = AnimalEssentials.instance;
 	private static final List<Player> currentlyIssuing = new ArrayList<Player>();
-	
+
 	public AECommands()
 	{
-		cmds.add(new Reload()); //adding this command to the list so we can access it below and in help
-		cmds.add(new SetHome());
-		cmds.add(new EditHome());
-		cmds.add(new DeleteHome());
-		cmds.add(new ListHomes());
-		cmds.add(new Teleport());
-		cmds.add(new Name());
-		cmds.add(new Find());
-		cmds.add(new Kill());
-		cmds.add(new Heal());
-		cmds.add(new Owner());
-		cmds.add(new Tame());
-		cmds.add(new Spawn());
-		cmds.add(new Help(cmds)); //make sure that this is always last
+		cmds.addEverything(new Reload(), //adding this command to the list so we can access it below and in help
+				new SetHome(),
+				new EditHome(),
+				new DeleteHome(),
+				new ListHomes(),
+				new Teleport(),
+				new Name(),
+				new Find(),
+				new Kill(),
+				new Heal(),
+				new Owner(),
+				new Tame(),
+				new Spawn(),
+				new Clone(),
+				new Help(cmds)); //make sure that this is always last
 	}
 
 	@Override
@@ -66,7 +69,7 @@ public class AECommands implements CommandExecutor
 				Utilities.sendConsoleMessage("Commandblocks are not supported by this plugin.");
 				return true;
 			}
-			
+
 			if(sender instanceof Player)
 				p  = (Player)sender;
 
@@ -76,20 +79,20 @@ public class AECommands implements CommandExecutor
 					Utilities.sendChatMessage(p, "You are not allowed to use this command.");
 				else
 					Bukkit.getPlayer(p.getName()).teleport(new Location(Bukkit.getWorld(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3])));
-				
+
 				return true;
 			}
-			
+
 			if(!pl.getConfig().getBoolean("allowMultipleCommands") && isIssuingCmd(p))
 			{
 				Utilities.sendChatMessage(p, "You cannot execute a second AnimalEssentials command while you still need to rightclick an animal. This is a safety precaution so you can't name and kill your animal at the same time, for instance.");
-				
+
 				if(p.isOp())
 					Utilities.sendChatMessage(p, "This function can be turned off in the config file.");
-				
+
 				return true;
 			}
-			
+
 			if(args.length != 0)
 			{
 				for(IAECommand c : cmds) //for each command in the commands list...
@@ -146,7 +149,7 @@ public class AECommands implements CommandExecutor
 
 		return true;
 	}
-	
+
 	/**
 	 * Checks if a player is currently issuing a command
 	 * @param p The player to check
@@ -156,7 +159,7 @@ public class AECommands implements CommandExecutor
 	{
 		return currentlyIssuing.contains(p);
 	}
-	
+
 	/**
 	 * Sets a player currently issuing a command or not
 	 * @param p The player

@@ -31,6 +31,7 @@ permissions:
             aess.tame: true
             aess.spawn: true
             aess.aetp: true
+            aess.clone: true
         default: op
     aess.home.*:
         description: Gives access to all home commands.
@@ -93,3 +94,5 @@ permissions:
         description: Permission to spawn an animal using the GUI.
     aess.aetp:
         description: Permission to teleport to animals using /ae find.
+    aess.clone:
+        description: Permission to clone the right-clicked animal.

@@ -14,9 +14,8 @@ The licenses for these projects can be found in the directories by their respect
 
 1. Add WG support to prevent people from spawning animals in areas that are not their's.
 2. Money System
-3. (/ae clone (Clones the right-clicked animal))
-4. /ae language \<list|language\> (Shows a list of available languages/lists available languages)
-5. https://www.reddit.com/r/admincraft/comments/3jfvbj/pet\_protection\_plugin\_to\_rule\_them\_all\_i\_hope\_so/
+3. /ae language \<list|language\> (Shows a list of available languages/lists available languages)
+4. https://www.reddit.com/r/admincraft/comments/3jfvbj/pet\_protection\_plugin\_to\_rule\_them\_all\_i\_hope\_so/
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
@@ -41,6 +40,7 @@ The licenses for these projects can be found in the directories by their respect
 20. Define amount of kills (eg. /ae kill 6)
 21. Make plugin version independent.
 22. A permission to bypass the restriction to only tp/kill/name own animals.
+23. /ae clone (Clones the right-clicked animal)
 
 -----
 

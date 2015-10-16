@@ -7,6 +7,7 @@ import java.net.URL;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import bl4ckscor3.plugin.animalessentials.cmd.Clone;
 import bl4ckscor3.plugin.animalessentials.cmd.Heal;
 import bl4ckscor3.plugin.animalessentials.cmd.Kill;
 import bl4ckscor3.plugin.animalessentials.cmd.Name;
@@ -30,7 +31,7 @@ public class AnimalEssentials extends JavaPlugin
 		instance = this; //setting the instance so we can use it in any other class without needing to pass the variable through countless methods
 		getCommand("animalessentials").setExecutor(new AECommands()); //registers the command executor to the command "animalessentials"
 		getCommand("aetp").setExecutor(new AECommands()); //registers the command executor to the command "aetp"
-		Utilities.registerEvents(instance, new Teleport(), new Name(), new Kill(), new Heal(), new Owner(), new Tame(), new Spawn(), new EntityDamageByEntityListener(instance));
+		Utilities.registerEvents(instance, new Teleport(), new Name(), new Kill(), new Heal(), new Owner(), new Tame(), new Spawn(), new Clone(), new EntityDamageByEntityListener(instance));
 		Config.createConfig(instance); //setting up the config
 
 		if(getConfig().getBoolean("update.check"))

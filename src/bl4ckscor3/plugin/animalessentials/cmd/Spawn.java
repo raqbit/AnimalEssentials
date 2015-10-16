@@ -281,7 +281,6 @@ public class Spawn implements IAECommand,Listener
 				{
 					o.setTamed(true);
 					o.setOwner(p);
-					//o.setOwnerUUID(p.getUniqueId()); shouldn't be needed
 				}
 				else //just in case
 					o.setTamed(false);
