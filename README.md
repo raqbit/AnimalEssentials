@@ -16,6 +16,7 @@ The licenses for these projects can be found in the directories by their respect
 2. Money System
 3. /ae language \<list|language\> (Shows a list of available languages/lists available languages)
 4. https://www.reddit.com/r/admincraft/comments/3jfvbj/pet\_protection\_plugin\_to\_rule\_them\_all\_i\_hope\_so/
+5. Have correct mob name show (instead of e.g. Pig_zombie)
 
 ### Done
 1. /ae \<home|sethome|listhomes|delhome|edithome\> ([AnimalTeleport](https://github.com/JustRamon/AnimalTeleport) functionality with new look and commands.)
