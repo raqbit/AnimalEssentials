@@ -1,4 +1,6 @@
 #AnimalEssentials Changelog:
+####v1.2.1
+- Fixed bug where you couldn't interact with entities.
 ####v1.2.0
 - Added configurable option to disallow players from hurting other people's tamed animals
 - Added bypass permission to enable players to kill/name/heal/etc. other people's tamed animals
