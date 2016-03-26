@@ -111,7 +111,7 @@ public class Name implements IAECommand,Listener
 			//x offset, y offset, z offset from the center, speed, amount, center, radius
 			ParticleEffect.CLOUD.display(0.0F, 0.0F, 0.0F, 0.05F, 25, particleLoc, 255);
 			//play the sound at the location
-			entity.getWorld().playSound(entity.getLocation(), Sound.CHICKEN_EGG_POP, 1.0F, 1.0F);
+			entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1.0F, 1.0F);
 			((LivingEntity)entity).setCustomName(currentlyNaming.get(event.getPlayer()));
 			currentlyNaming.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);

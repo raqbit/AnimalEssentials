@@ -79,7 +79,7 @@ public class Kill implements IAECommand,Listener
 			//x offset, y offset, z offset from the center, speed, amount, center, radius
 			ParticleEffect.SMOKE_NORMAL.display(0.0F, 0.0F, 0.0F, 0.5F, 100, entity.getLocation(), 255);
 			//Play the sound at the location
-			entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.FIZZ, 1.0F, 1.0F);
+			entity.getLocation().getWorld().playSound(entity.getLocation(), Sound.ENTITY_TNT_PRIMED, 1.0F, 1.0F);
 
 			entity.remove();
 			Utilities.sendChatMessage(event.getPlayer(), "Animal killed.");

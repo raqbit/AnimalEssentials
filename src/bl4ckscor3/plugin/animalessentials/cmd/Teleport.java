@@ -167,7 +167,7 @@ public class Teleport implements IAECommand,Listener
 			
 			for(Player player : Bukkit.getOnlinePlayers())
 			{
-				player.playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+				player.playSound(entity.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
 			}
 
 			if(t.shouldTpToPlayer())

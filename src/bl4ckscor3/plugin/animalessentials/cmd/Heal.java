@@ -84,7 +84,7 @@ public class Heal implements IAECommand,Listener
 			//x offset, y offset, z offset from the center, speed, amount, center, radius
 			ParticleEffect.HEART.display(0.5F, 0.5F, 0.5F, 10.0F, 10, entity.getLocation(), 255);
 			//play the sound at the location
-			entity.getWorld().playSound(entity.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
+			entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
 			((LivingEntity) entity).setHealth(((LivingEntity) entity).getMaxHealth());
 			currentlyHealing.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);

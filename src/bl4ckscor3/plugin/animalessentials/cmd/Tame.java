@@ -110,7 +110,7 @@ public class Tame implements IAECommand,Listener
 			//x offset, y offset, z offset from the center, speed, amount, center, range
 			ParticleEffect.FIREWORKS_SPARK.display(1.0F, 1.0F, 1.0F, 0.0F, 100, particleLoc, 255);
 			//Play the sound at the location
-			entity.getWorld().playSound(entity.getLocation(), Sound.CLICK, 1.0F, 1.0F);
+			entity.getWorld().playSound(entity.getLocation(), Sound.UI_BUTTON_CLICK, 1.0F, 1.0F);
 			currentlyTaming.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);
 			Utilities.sendChatMessage(event.getPlayer(), "Animal tamed.");

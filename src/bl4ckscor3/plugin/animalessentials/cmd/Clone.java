@@ -163,7 +163,7 @@ public class Clone implements IAECommand,Listener
 			//x offset, y offset, z offset from the center, speed, amount, center, radius
 			ParticleEffect.VILLAGER_HAPPY.display(0.5F, 1.0F, 0.5F, 10.0F, 1000, entity.getLocation(), 255);
 			//play the sound at the location
-			entity.getWorld().playSound(entity.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2.0F, 1.0F);
+			entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_FIREWORK_LARGE_BLAST, 2.0F, 1.0F);
 			currentlyCloning.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);
 			event.setCancelled(true);
