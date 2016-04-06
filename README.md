@@ -3,7 +3,7 @@ All the essentials for your animals.
 
 ----
 - [AnimalEssentials](https://github.com/JustRamon/AnimalEssentials) is licensed under GPLv2
-- [fanciful by mkremins](https://github.com/mkremins/fanciful) in licensed under the MIT license
+- [fanciful by mkremins](https://github.com/mkremins/fanciful) is licensed under the MIT license
 - [gson by  Google](https://github.com/google/gson) is licensed under the Apache v2 license
 
 The licenses for these projects can be found in the directories by their respective authors.
