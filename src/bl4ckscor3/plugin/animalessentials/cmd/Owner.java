@@ -1,7 +1,6 @@
 package bl4ckscor3.plugin.animalessentials.cmd;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,7 @@ import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Owner implements IAECommand,Listener
 {
-	private static List<Player> currentlyChecking = new ArrayList<Player>();
+	private static HashMap<Player,Boolean> currentlyChecking = new HashMap<Player,Boolean>();
 	private static HashMap<Player,Integer> taskIDs = new HashMap<Player,Integer>();
 	public static Plugin plugin;
 
@@ -33,7 +32,7 @@ public class Owner implements IAECommand,Listener
 	{
 		final Player p = (Player)sender;
 		
-		if(currentlyChecking.contains(p))
+		if(currentlyChecking.containsKey(p))
 		{
 			Utilities.sendChatMessage(p, "You can't check the owner of multiple animals at a time. Please check the owner of one animal or wait, then issue the command again.");
 			return;
@@ -41,7 +40,7 @@ public class Owner implements IAECommand,Listener
 
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to check the owner of.");
-		currentlyChecking.add(p);
+		currentlyChecking.put(p, true);
 		AECommands.setIssuingCmd(p, true);
 	
 		AbortRunnable task = new AbortRunnable(p);
@@ -53,8 +52,10 @@ public class Owner implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(final PlayerInteractEntityEvent event)
 	{
-		if(currentlyChecking.contains(event.getPlayer()))
+		if(currentlyChecking.containsKey(event.getPlayer()) && currentlyChecking.get(event.getPlayer()))
 		{
+			currentlyChecking.put(event.getPlayer(), false);
+			
 			final Entity entity = event.getRightClicked();
 
 			if(!Utilities.isAnimal(entity) || !(entity instanceof Tameable))
@@ -97,7 +98,7 @@ public class Owner implements IAECommand,Listener
 		@Override
 		public void run()
 		{
-			if(currentlyChecking.contains(p))
+			if(currentlyChecking.containsKey(p))
 			{
 				currentlyChecking.remove(p);
 				AECommands.setIssuingCmd(p, false);

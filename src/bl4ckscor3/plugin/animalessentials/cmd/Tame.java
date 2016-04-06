@@ -1,7 +1,6 @@
 package bl4ckscor3.plugin.animalessentials.cmd;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,7 @@ import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Tame implements IAECommand,Listener
 {
-	private static List<Player> currentlyTaming = new ArrayList<Player>();
+	private static HashMap<Player,Boolean> currentlyTaming = new HashMap<Player,Boolean>();
 	private static HashMap<Player,Integer> taskIDs = new HashMap<Player,Integer>();
 	public static Plugin plugin;
 
@@ -41,7 +40,7 @@ public class Tame implements IAECommand,Listener
 	{
 		final Player p = (Player)sender;
 		
-		if(currentlyTaming.contains(p))
+		if(currentlyTaming.containsKey(p))
 		{
 			Utilities.sendChatMessage(p, "You can't tame multiple animals at a time. Please tame an animal or wait, then issue the command again.");
 			return;
@@ -49,7 +48,7 @@ public class Tame implements IAECommand,Listener
 
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to tame.");
-		currentlyTaming.add(p);
+		currentlyTaming.put(p, true);
 		AECommands.setIssuingCmd(p, true);
 		
 		AbortRunnable task = new AbortRunnable(p);
@@ -61,8 +60,10 @@ public class Tame implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
 	{
-		if(currentlyTaming.contains(event.getPlayer()))
+		if(currentlyTaming.containsKey(event.getPlayer()) && currentlyTaming.get(event.getPlayer()))
 		{
+			currentlyTaming.put(event.getPlayer(), false);
+			
 			Entity entity = event.getRightClicked();
 
 			if(!(entity instanceof Tameable))
@@ -132,7 +133,7 @@ public class Tame implements IAECommand,Listener
 		@Override
 		public void run()
 		{
-			if(currentlyTaming.contains(p))
+			if(currentlyTaming.containsKey(p))
 			{
 				currentlyTaming.remove(p);
 				AECommands.setIssuingCmd(p, false);

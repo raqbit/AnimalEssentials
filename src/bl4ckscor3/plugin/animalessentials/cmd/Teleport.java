@@ -73,6 +73,7 @@ public class Teleport implements IAECommand,Listener
 			tpToPlayer = false;
 
 		plugin = pl;
+		Utilities.sendChatMessage(p, "Please rightclick the animal you want to teleport.");
 		currentlyTeleporting.put(p, new Teleporting(yaml, destination, tpToPlayer));
 		AECommands.setIssuingCmd(p, true);
 		
@@ -85,8 +86,10 @@ public class Teleport implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(final PlayerInteractEntityEvent event)
 	{
-		if(currentlyTeleporting.containsKey(event.getPlayer()))
+		if(currentlyTeleporting.containsKey(event.getPlayer()) && currentlyTeleporting.get(event.getPlayer()).enabled())
 		{
+			currentlyTeleporting.get(event.getPlayer()).disable();
+			
 			final Entity entity = event.getRightClicked();
 
 			if(!Utilities.isAnimal(entity))
@@ -106,7 +109,7 @@ public class Teleport implements IAECommand,Listener
 			//x offset, y offset, z offset from the center, speed, amount, center, range
 			ParticleEffect.PORTAL.display(0.0F, 0.0F, 0.0F, 10.0F, 3000, entity.getLocation(), 255);
 
-			TeleportRunnable task = new TeleportRunnable(event, entity);
+			TeleportRunnable task = new TeleportRunnable(event.getPlayer(), entity);
 			
 			task.runTaskLater(plugin, 50L);
 			event.setCancelled(true);
@@ -149,19 +152,19 @@ public class Teleport implements IAECommand,Listener
 	
 	public class TeleportRunnable extends BukkitRunnable implements BukkitTask
 	{
-		private PlayerInteractEntityEvent event;
+		private Player p;
 		private Entity entity;
 		
-		public TeleportRunnable(PlayerInteractEntityEvent e, Entity en)
+		public TeleportRunnable(Player player, Entity en)
 		{
-			event = e;
+			p = player;
 			entity = en;
 		}
 		
 		@Override
 		public void run()
 		{
-			Teleporting t = currentlyTeleporting.get(event.getPlayer());
+			Teleporting t = currentlyTeleporting.get(p);
 			YamlConfiguration yaml = t.getYamlConfiguration();
 			String destination = t.getDestination();
 			
@@ -178,10 +181,10 @@ public class Teleport implements IAECommand,Listener
 			else
 				entity.teleport(new Location(Bukkit.getWorld(yaml.getString(destination + ".world")), yaml.getDouble(destination + ".x"), yaml.getDouble(destination + ".y"), yaml.getDouble(destination + ".z")));
 		
-			currentlyTeleporting.remove(event.getPlayer());
-			AECommands.setIssuingCmd(event.getPlayer(), false);
-			Bukkit.getScheduler().cancelTask(taskIDs.get(event.getPlayer()));
-			Utilities.sendChatMessage(event.getPlayer(), "Animal teleported.");
+			currentlyTeleporting.remove(p);
+			AECommands.setIssuingCmd(p, false);
+			Bukkit.getScheduler().cancelTask(taskIDs.get(p));
+			Utilities.sendChatMessage(p, "Animal teleported.");
 		}
 
 		@Override

@@ -40,7 +40,9 @@ public class AECommands implements CommandExecutor
 
 	public AECommands()
 	{
-		cmds.addEverything(new Reload(), //adding this command to the list so we can access it below and in help
+		if(cmds.size() == 0)
+		{
+			cmds.addEverything(new Reload(), //adding this command to the list so we can access it below and in help
 				new SetHome(),
 				new EditHome(),
 				new DeleteHome(),
@@ -55,8 +57,9 @@ public class AECommands implements CommandExecutor
 				new Spawn(),
 				new Clone(),
 				new Help(cmds)); //make sure that this is always last
+		}
 	}
-
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{

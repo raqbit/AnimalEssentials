@@ -1,7 +1,6 @@
 package bl4ckscor3.plugin.animalessentials.cmd;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +39,7 @@ import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Clone implements IAECommand,Listener
 {
-	private static List<Player> currentlyCloning = new ArrayList<Player>();
+	private static HashMap<Player,Boolean> currentlyCloning = new HashMap<Player,Boolean>();
 	private static HashMap<Player,Integer> taskIDs = new HashMap<Player,Integer>();
 	public static Plugin plugin;
 
@@ -49,7 +48,7 @@ public class Clone implements IAECommand,Listener
 	{
 		final Player p = (Player)sender;
 
-		if(currentlyCloning.contains(p))
+		if(currentlyCloning.containsKey(p))
 		{
 			Utilities.sendChatMessage(p, "You can't clone multiple animals at a time. Please clone one or wait, then issue the command again.");
 			return;
@@ -57,7 +56,7 @@ public class Clone implements IAECommand,Listener
 
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to clone.");
-		currentlyCloning.add(p);
+		currentlyCloning.put(p, true);
 		AECommands.setIssuingCmd(p, true);
 
 		AbortRunnable task = new AbortRunnable(p);
@@ -69,10 +68,9 @@ public class Clone implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(final PlayerInteractEntityEvent event)
 	{
-		event.setCancelled(true);
-		
-		if(currentlyCloning.contains(event.getPlayer()))
+		if(currentlyCloning.containsKey(event.getPlayer()) && currentlyCloning.get(event.getPlayer()))
 		{
+			currentlyCloning.put(event.getPlayer(), false);
 			final Entity e = event.getRightClicked();
 
 			if(!Utilities.isAnimal(e))
@@ -166,9 +164,11 @@ public class Clone implements IAECommand,Listener
 			entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_FIREWORK_LARGE_BLAST, 2.0F, 1.0F);
 			currentlyCloning.remove(event.getPlayer());
 			AECommands.setIssuingCmd(event.getPlayer(), false);
+			Utilities.sendChatMessage(event.getPlayer(), "Animal cloned.");
 			event.setCancelled(true);
 			Bukkit.getScheduler().cancelTask(taskIDs.get(event.getPlayer()));
 			taskIDs.remove(event.getPlayer());
+			event.setCancelled(true);
 		}
 	}
 
@@ -184,7 +184,7 @@ public class Clone implements IAECommand,Listener
 		@Override
 		public void run()
 		{
-			if(currentlyCloning.contains(p))
+			if(currentlyCloning.containsKey(p))
 			{
 				currentlyCloning.remove(p);
 				AECommands.setIssuingCmd(p, false);

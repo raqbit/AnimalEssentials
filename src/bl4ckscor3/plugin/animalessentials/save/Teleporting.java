@@ -7,6 +7,7 @@ public class Teleporting
 	private YamlConfiguration yaml;
 	private String destination;
 	private boolean tpToPlayer;
+	private boolean enabled = true;
 	
 	/**
 	 * Saves data for an animal to be teleported.
@@ -34,5 +35,15 @@ public class Teleporting
 	public boolean shouldTpToPlayer()
 	{
 		return tpToPlayer;
+	}
+	
+	public boolean enabled()
+	{
+		return enabled;
+	}
+	
+	public void disable()
+	{
+		enabled = false;
 	}
 }

@@ -1,7 +1,6 @@
 package bl4ckscor3.plugin.animalessentials.cmd;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +26,7 @@ import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Heal implements IAECommand,Listener
 {
-	private static List<Player> currentlyHealing = new ArrayList<Player>();
+	private static HashMap<Player,Boolean> currentlyHealing = new HashMap<Player,Boolean>();
 	private static HashMap<Player,Integer> taskIDs = new HashMap<Player,Integer>();
 	public static Plugin plugin;
 
@@ -36,7 +35,7 @@ public class Heal implements IAECommand,Listener
 	{
 		final Player p = (Player)sender;
 		
-		if(currentlyHealing.contains(p))
+		if(currentlyHealing.containsKey(p))
 		{
 			Utilities.sendChatMessage(p, "You can't heal multiple animals at a time. Please heal an animal or wait, then issue the command again.");
 			return;
@@ -44,7 +43,7 @@ public class Heal implements IAECommand,Listener
 		
 		plugin = pl;
 		Utilities.sendChatMessage(p, "Please rightclick the animal you want to heal.");
-		currentlyHealing.add(p);
+		currentlyHealing.put(p, true);
 		AECommands.setIssuingCmd(p, true);
 		
 		AbortRunnable task = new AbortRunnable(p);
@@ -56,8 +55,10 @@ public class Heal implements IAECommand,Listener
 	@EventHandler
 	public void onPlayerInteractEntity(final PlayerInteractEntityEvent event)
 	{
-		if(currentlyHealing.contains(event.getPlayer()))
+		if(currentlyHealing.containsKey(event.getPlayer()) && currentlyHealing.get(event.getPlayer()))
 		{
+			currentlyHealing.put(event.getPlayer(), false);
+			
 			Entity entity = event.getRightClicked();
 
 			if(!Utilities.isAnimal(entity))
@@ -107,7 +108,7 @@ public class Heal implements IAECommand,Listener
 		@Override
 		public void run()
 		{
-			if(currentlyHealing.contains(p))
+			if(currentlyHealing.containsKey(p))
 			{
 				currentlyHealing.remove(p);
 				AECommands.setIssuingCmd(p, false);
