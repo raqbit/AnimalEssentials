@@ -66,7 +66,7 @@ public class AnimalEssentials extends JavaPlugin
 			{
 				if(getConfig().getBoolean("update.force"))
 				{
-					Utilities.sendConsoleMessage(ChatColor.RED + "There is a new version (" + major + "." + minor + "." + bugfix + ") available here: "); //TODO: Insert thread link!
+					Utilities.sendConsoleMessage(ChatColor.RED + "There is a new version (" + major + "." + minor + "." + bugfix + ") available here: http://dev.bukkit.org/bukkit-plugins/animalessentials/");
 					Utilities.sendConsoleMessage(ChatColor.RED + "It is highly suggested to update to this version!");
 					Utilities.sendConsoleMessage(ChatColor.RED + "You can't use the plugin until you update it.");
 					getServer().getPluginManager().disablePlugin(this);
@@ -74,7 +74,7 @@ public class AnimalEssentials extends JavaPlugin
 				}
 				else
 				{
-					Utilities.sendConsoleMessage(ChatColor.RED + "There is a new version (" + major + "." + minor + "." + bugfix + ") available here: "); //TODO: Insert thread link!
+					Utilities.sendConsoleMessage(ChatColor.RED + "There is a new version (" + major + "." + minor + "." + bugfix + ") available here: http://dev.bukkit.org/bukkit-plugins/animalessentials/");
 					Utilities.sendConsoleMessage(ChatColor.RED + "It is highly suggested to update to this version!");
 				}
 			}
