@@ -1,4 +1,4 @@
-package bl4ckscor3.plugin.animalessentials.core;
+package bl4ckscor3.plugin.animalessentials;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -24,7 +24,10 @@ public class AnimalEssentials extends JavaPlugin
 	 * The instance of this plugin
 	 */
 	public static AnimalEssentials instance;
-	public static String secret;
+	/**
+	 * A random string used for verifying a correct /aetp teleport
+	 */
+	private String aetpString;
 	
 	@Override
 	public void onEnable()
@@ -34,8 +37,7 @@ public class AnimalEssentials extends JavaPlugin
 		getCommand("aetp").setExecutor(new AECommands()); //registers the command executor to the command "aetp"
 		Utilities.registerEvents(instance, new Teleport(), new Name(), new Kill(), new Heal(), new Owner(), new Tame(), new Spawn(), new Clone(), new EntityDamageByEntityListener(instance));
 		Config.createConfig(instance); //setting up the config
-
-		secret = Utilities.getRandString(10); //Getting secret for aetp
+		aetpString = Utilities.getRandomString(10);
 		
 		if(getConfig().getBoolean("update.check"))
 			checkForUpdate();
@@ -92,5 +94,13 @@ public class AnimalEssentials extends JavaPlugin
 		}
 
 		Utilities.sendConsoleMessage("AnimalEssentials successfully enabled."); //sending this message to the console
+	}
+	
+	/**
+	 * @return The randomly generated verification string for /aetp teleportation
+	 */
+	public String getAetpString()
+	{
+		return aetpString;
 	}
 }

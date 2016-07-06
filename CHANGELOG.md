@@ -1,5 +1,8 @@
 #AnimalEssentials Changelog:
-####v1.2.0
+####v1.2.1
+- Removed keyword used for /aetp and added a randomly generated string which gets renewed each reload
+
+##v1.2.0
 - Everything updated for 1.9 Bukkit/Spigot. This version has not been tested on a 1.8.x server
 - Added /ae clone to clone animals
 - Added configurable option to disallow players from hurting other people's tamed animals
@@ -11,9 +14,9 @@
 - Fixed not being able to interact with entities
 - Fixed commands in help menu showing twice
 
-####v1.1.0
+##v1.1.0
 - Plugin works on every craftbukkit version now
 - Fixed setting the amount of /ae kill to 0 giving unlimited kills
 
-##v1.0.0
+#v1.0.0
 - Initial release

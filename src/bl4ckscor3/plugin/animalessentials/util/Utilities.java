@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.Listener;
 
-import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
+import bl4ckscor3.plugin.animalessentials.AnimalEssentials;
 
 public class Utilities
 {
@@ -185,15 +185,22 @@ public class Utilities
 		return line.substring(0, 1).toUpperCase() + line.substring(1).toLowerCase();
 	}
 	
-	public static String getRandString(int size)
+	/**
+	 * Generates a random string out of upper and lower cased characters
+	 * @param length The length of the string to be generated
+	 * @return The randomly generated string
+	 */
+	public static String getRandomString(int length)
 	{
-		String randString = "";
-		Random random = new Random();
-		String chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
-		for (int i = 0; i <= size; i++)
+		String output = "";
+		Random r = new Random();
+		String characters = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+		
+		for(int i = 0; i <= length; i++)
 		{
-			randString = randString + chars.charAt(random.nextInt(chars.length()));
+			output = output + characters.charAt(r.nextInt(characters.length()));
 		}
-		return randString;
+		
+		return output;
 	}
 }

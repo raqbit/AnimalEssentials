@@ -21,7 +21,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.darkblade12.particleeffect.ParticleEffect;
 
-import bl4ckscor3.plugin.animalessentials.core.AECommands;
+import bl4ckscor3.plugin.animalessentials.AECommands;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Heal implements IAECommand,Listener

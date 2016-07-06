@@ -18,7 +18,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import bl4ckscor3.plugin.animalessentials.core.AECommands;
+import bl4ckscor3.plugin.animalessentials.AECommands;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 
 public class Owner implements IAECommand,Listener

@@ -1,4 +1,4 @@
-package bl4ckscor3.plugin.animalessentials.core;
+package bl4ckscor3.plugin.animalessentials;
 
 import org.bukkit.plugin.Plugin;
 
@@ -58,10 +58,6 @@ public class Config
 				"",
 				"	onlyOwnAnimals: When this option is enabled, only animals owned by the player are displayed.",
 				"                  When disabled, untamed animals will also show.",
-				"",
-				"	keyword: This is the keyword used to determine wether the command is coming from clicking the chat, or from actually inputting the command into the chat.",
-				"           It basically disabled users from using /aetp as a normal teleport command.",
-				"           You can change this to anything, and it will still work. Think of it as a password needed to execute the command.",
 				"############################################################################################################################################### #",
 		};
 		String all = "";

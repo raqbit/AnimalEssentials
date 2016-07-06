@@ -15,7 +15,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
+import bl4ckscor3.plugin.animalessentials.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import mkremins.fanciful.FancyMessage;
 
@@ -24,8 +24,8 @@ public class Find implements IAECommand
 	@Override
 	public void exe(Plugin pl, CommandSender sender, Command cmd, String[] args) throws IOException
 	{
-		HashMap<World,List<Entity>> entityWorlds = new HashMap<World,List<Entity>>();
-		List<Entity> foundAnimals = new ArrayList<Entity>();
+		HashMap<World,List<Entity>> entityWorlds = new HashMap<>();
+		List<Entity> foundAnimals = new ArrayList<>();
 		String name = putNameTogether(args);
 		
 		for(World w : pl.getServer().getWorlds()) //looping through all the worlds on the server
@@ -80,7 +80,7 @@ public class Find implements IAECommand
 						.then(Utilities.parseColorCodes(Utilities.getFormattedCoordinates(x, y, z)));
 				
 				if(sender.hasPermission("aess.aetp"))
-					msg.tooltip("Teleport to the animal.").command("/aetp " + worldName + " " + x + " " + y + " " + z + " " + AnimalEssentials.secret);
+					msg.tooltip("Teleport to the animal.").command("/aetp " + worldName + " " + x + " " + y + " " + z + " " + AnimalEssentials.instance.getAetpString());
 				
 				msg.send(sender);
 			}
