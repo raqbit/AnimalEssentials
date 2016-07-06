@@ -19,7 +19,6 @@ public class Config
 		pl.getConfig().addDefault("update.force", true);
 		pl.getConfig().addDefault("update.check", true);
 		pl.getConfig().addDefault("find.onlyOwnAnimals", false);
-		pl.getConfig().addDefault("find.keyword", "comesFromLink");
 		pl.getConfig().options().copyDefaults(true);
 		pl.saveConfig();
 		Utilities.sendConsoleMessage("Config successfully created/enabled!");

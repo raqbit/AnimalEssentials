@@ -1,5 +1,7 @@
 package bl4ckscor3.plugin.animalessentials.util;
 
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -181,5 +183,17 @@ public class Utilities
 	public static String capitalizeFirstLetter(String line)
 	{
 		return line.substring(0, 1).toUpperCase() + line.substring(1).toLowerCase();
+	}
+	
+	public static String getRandString(int size)
+	{
+		String randString = "";
+		Random random = new Random();
+		String chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+		for (int i = 0; i <= size; i++)
+		{
+			randString = randString + chars.charAt(random.nextInt(chars.length()));
+		}
+		return randString;
 	}
 }

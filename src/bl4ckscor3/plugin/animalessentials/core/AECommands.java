@@ -78,7 +78,7 @@ public class AECommands implements CommandExecutor
 
 			if(cmd.getName().equals("aetp"))
 			{
-				if(args.length <= 4 || !args[4].equals(pl.getConfig().get("find.keyword"))) //if no fifth argument exists or the fifth argument is not comesFromLink then we don't let the player execute the command
+				if(args.length <= 4 || !args[4].equals(AnimalEssentials.secret)) //if no fifth argument exists or the fifth argument is not comesFromLink then we don't let the player execute the command
 					Utilities.sendChatMessage(p, "You are not allowed to use this command.");
 				else
 					Bukkit.getPlayer(p.getName()).teleport(new Location(Bukkit.getWorld(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3])));

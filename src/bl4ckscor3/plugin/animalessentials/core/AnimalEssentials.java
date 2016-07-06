@@ -24,6 +24,7 @@ public class AnimalEssentials extends JavaPlugin
 	 * The instance of this plugin
 	 */
 	public static AnimalEssentials instance;
+	public static String secret;
 	
 	@Override
 	public void onEnable()
@@ -34,6 +35,8 @@ public class AnimalEssentials extends JavaPlugin
 		Utilities.registerEvents(instance, new Teleport(), new Name(), new Kill(), new Heal(), new Owner(), new Tame(), new Spawn(), new Clone(), new EntityDamageByEntityListener(instance));
 		Config.createConfig(instance); //setting up the config
 
+		secret = Utilities.getRandString(10); //Getting secret for aetp
+		
 		if(getConfig().getBoolean("update.check"))
 			checkForUpdate();
 		else

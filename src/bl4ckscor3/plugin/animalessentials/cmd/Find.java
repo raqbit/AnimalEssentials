@@ -15,6 +15,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import bl4ckscor3.plugin.animalessentials.core.AnimalEssentials;
 import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import mkremins.fanciful.FancyMessage;
 
@@ -79,7 +80,7 @@ public class Find implements IAECommand
 						.then(Utilities.parseColorCodes(Utilities.getFormattedCoordinates(x, y, z)));
 				
 				if(sender.hasPermission("aess.aetp"))
-					msg.tooltip("Teleport to the animal.").command("/aetp " + worldName + " " + x + " " + y + " " + z + " " + pl.getConfig().getString("find.keyword"));
+					msg.tooltip("Teleport to the animal.").command("/aetp " + worldName + " " + x + " " + y + " " + z + " " + AnimalEssentials.secret);
 				
 				msg.send(sender);
 			}
