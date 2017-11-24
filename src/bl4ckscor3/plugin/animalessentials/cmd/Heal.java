@@ -1,11 +1,9 @@
 package bl4ckscor3.plugin.animalessentials.cmd;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
+import bl4ckscor3.plugin.animalessentials.AECommands;
+import bl4ckscor3.plugin.animalessentials.util.Utilities;
 import org.bukkit.Bukkit;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,10 +17,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import com.darkblade12.particleeffect.ParticleEffect;
-
-import bl4ckscor3.plugin.animalessentials.AECommands;
-import bl4ckscor3.plugin.animalessentials.util.Utilities;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class Heal implements IAECommand,Listener
 {
@@ -83,7 +81,7 @@ public class Heal implements IAECommand,Listener
 			}
 			
 			//x offset, y offset, z offset from the center, speed, amount, center, radius
-			ParticleEffect.HEART.display(0.5F, 0.5F, 0.5F, 10.0F, 10, entity.getLocation(), 255);
+			entity.getWorld().spawnParticle(Particle.HEART, entity.getLocation(), 10, 0.5F, 0.5F, 0.5F, 10.0F);
 			//play the sound at the location
 			entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
 			((LivingEntity) entity).setHealth(((LivingEntity) entity).getMaxHealth());

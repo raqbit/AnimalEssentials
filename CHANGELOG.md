@@ -1,4 +1,6 @@
 #AnimalEssentials Changelog:
+####v1.2.2
+- Fix compatibility for 1.12
 ####v1.2.1
 - Removed keyword used for /aetp and added a randomly generated string which gets renewed each reload
 

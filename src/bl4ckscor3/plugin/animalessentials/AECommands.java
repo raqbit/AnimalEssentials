@@ -38,7 +38,7 @@ public class AECommands implements CommandExecutor
 	private static final AnimalEssentials pl = AnimalEssentials.instance;
 	private static final List<Player> currentlyIssuing = new ArrayList<>();
 
-	public AECommands()
+	AECommands()
 	{
 		if(cmds.size() == 0)
 		{

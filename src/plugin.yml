@@ -1,6 +1,6 @@
 name: AnimalEssentials
-main: bl4ckscor3.plugin.animalessentials.core.AnimalEssentials
-version: 1.2.1
+main: bl4ckscor3.plugin.animalessentials.AnimalEssentials
+version: 1.2.2
 author: [bl4ckscor3,JustRamon]
 description: Several animal essentials such as spawning, naming, teleporting and much more!
 commands:
